@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fdcbcaafaa2a1d4a9bf70818c9b35fe0",
+    "content-hash": "66b840ac02217f665e67a5c1ea3b3f65",
     "packages": [
         {
             "name": "calebporzio/awesome-helpers",
@@ -705,6 +705,74 @@
             "time": "2021-03-02T16:53:12+00:00"
         },
         {
+            "name": "laravelcollective/html",
+            "version": "v6.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/LaravelCollective/html.git",
+                "reference": "ae15b9c4bf918ec3a78f092b8555551dd693fde3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/ae15b9c4bf918ec3a78f092b8555551dd693fde3",
+                "reference": "ae15b9c4bf918ec3a78f092b8555551dd693fde3",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "^6.0|^7.0|^8.0",
+                "illuminate/routing": "^6.0|^7.0|^8.0",
+                "illuminate/session": "^6.0|^7.0|^8.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "illuminate/view": "^6.0|^7.0|^8.0",
+                "php": ">=7.2.5"
+            },
+            "require-dev": {
+                "illuminate/database": "^6.0|^7.0|^8.0",
+                "mockery/mockery": "~1.0",
+                "phpunit/phpunit": "~8.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "6.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Collective\\Html\\HtmlServiceProvider"
+                    ],
+                    "aliases": {
+                        "Form": "Collective\\Html\\FormFacade",
+                        "Html": "Collective\\Html\\HtmlFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Collective\\Html\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adam Engebretson",
+                    "email": "adam@laravelcollective.com"
+                },
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com"
+                }
+            ],
+            "description": "HTML and Form Builders for the Laravel Framework",
+            "homepage": "https://laravelcollective.com",
+            "time": "2020-12-15T20:20:05+00:00"
+        },
+        {
             "name": "league/commonmark",
             "version": "1.5.7",
             "source": {
@@ -941,6 +1009,52 @@
                 }
             ],
             "time": "2021-01-18T20:58:21+00:00"
+        },
+        {
+            "name": "lesichkovm/laravel-advanced-route",
+            "version": "v1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lesichkovm/laravel-advanced-route.git",
+                "reference": "99ad2cc08372773073b833119ea1dbec3fbfdc3f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lesichkovm/laravel-advanced-route/zipball/99ad2cc08372773073b833119ea1dbec3fbfdc3f",
+                "reference": "99ad2cc08372773073b833119ea1dbec3fbfdc3f",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "5.*|6.*|7.*|8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/AdvancedRoute.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Milan Lesichkov",
+                    "email": "lesichkovm@gmail.com",
+                    "homepage": "http://lesichkov.co.uk",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "Advanced route class for Laravel - restoring implicit controllers to the framework.",
+            "homepage": "http://github.com/lesichkovm/laravel-advanced-route",
+            "keywords": [
+                "advanced",
+                "laravel",
+                "lesichkov",
+                "php",
+                "route"
+            ],
+            "time": "2020-07-08T11:55:29+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -4994,16 +5108,16 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.12.2",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "245710e971a030f42e08f4912863805570f23d39"
+                "reference": "be1996ed8adc35c3fd795488a653f4b518be70ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/245710e971a030f42e08f4912863805570f23d39",
-                "reference": "245710e971a030f42e08f4912863805570f23d39",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/be1996ed8adc35c3fd795488a653f4b518be70ea",
+                "reference": "be1996ed8adc35c3fd795488a653f4b518be70ea",
                 "shasum": ""
             },
             "require": {
@@ -5053,7 +5167,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2020-12-19T10:15:11+00:00"
+            "time": "2021-03-17T13:42:18+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5334,16 +5448,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.5.14",
+            "version": "8.5.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "c25f79895d27b6ecd5abfa63de1606b786a461a3"
+                "reference": "038d4196d8e8cb405cd5e82cedfe413ad6eef9ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c25f79895d27b6ecd5abfa63de1606b786a461a3",
-                "reference": "c25f79895d27b6ecd5abfa63de1606b786a461a3",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/038d4196d8e8cb405cd5e82cedfe413ad6eef9ef",
+                "reference": "038d4196d8e8cb405cd5e82cedfe413ad6eef9ef",
                 "shasum": ""
             },
             "require": {
@@ -5423,7 +5537,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-01-17T07:37:30+00:00"
+            "time": "2021-03-17T07:27:54+00:00"
         },
         {
             "name": "scrivo/highlight.php",

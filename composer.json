@@ -16,6 +16,8 @@
         "realrashid/sweet-alert": "^3.1",
         "jeroennoten/laravel-adminlte": "^2.0.2",
         "calebporzio/awesome-helpers": "^2.4",
+        "lesichkovm/laravel-advanced-route": "^1.7",
+        "laravelcollective/html": "^6.0",
         "yajra/laravel-datatables-oracle": "^9.8"
     },
     "require-dev": {
@@ -39,6 +41,9 @@
         "psr-4": {
             "App\\": "app/"
         },
+        "files": [
+            "app/Global.php"
+        ],
         "classmap": [
             "database/seeds",
             "database/factories"
