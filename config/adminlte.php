@@ -154,6 +154,31 @@ return [
             'icon' => false,
         ],
         [
+            'text' => 'Review & Approval Text Book',
+            'url'  => '#',
+            'icon' => false,
+        ],
+        [
+            'text' => 'Entry RPS',
+            'url'  => '#',
+            'icon' => false,
+        ],
+        [
+            'text' => 'Entry OR',
+            'url'  => '#',
+            'icon' => false,
+        ],
+        [
+            'text' => 'Review & Approval RPS',
+            'url'  => '#',
+            'icon' => false,
+        ],
+        [
+            'text' => 'Review & Approval OR',
+            'url'  => '#',
+            'icon' => false,
+        ],
+        [
             'text' => 'User Management',
             'url'  => 'user-management',
             'icon' => false,
