@@ -20,10 +20,12 @@ class Dosen extends Model
 
         self::creating(function ($model) {
             $model->password_plain = $model->password;
+            $model->password = \Hash::make($model->password);
         });
 
         self::updating(function ($model) {
             $model->password_plain = $model->password;
+            $model->password = \Hash::make($model->password);
         });
     }
 }
