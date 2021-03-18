@@ -160,7 +160,7 @@ return [
         ],
         [
             'text' => 'Entry RPS',
-            'url'  => '#',
+            'url'  => 'rps',
             'icon' => false,
         ],
         [

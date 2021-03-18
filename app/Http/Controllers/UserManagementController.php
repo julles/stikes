@@ -30,6 +30,7 @@ class UserManagementController extends Controller
 
     public function getIndex()
     {
+        // dd(auth()->attempt(["email" => "admin@admin.com", "password" => 123]));
         return view("user-management.index");
     }
 

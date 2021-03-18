@@ -19,6 +19,7 @@ class Dosen extends Model
         parent::boot();
 
         self::creating(function ($model) {
+            $model->flag_login = 1;
             $model->password_plain = $model->password;
             $model->password = \Hash::make($model->password);
         });
