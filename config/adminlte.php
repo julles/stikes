@@ -144,6 +144,11 @@ return [
             ],
         ],
         [
+            'text' => 'Assign Dosen',
+            'url'  => 'assign-dosen',
+            'icon' => false,
+        ],
+        [
             'text' => 'User Management',
             'url'  => 'user-management',
             'icon' => false,

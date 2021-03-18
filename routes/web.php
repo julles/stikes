@@ -3,6 +3,7 @@
 Route::view('/', 'auth.login');
 
 Auth::routes();
+// dd(\Hash::make('123'));
 
 Route::get('/home', function () {
     return view('home');
@@ -11,6 +12,7 @@ Route::get('/home', function () {
 Route::middleware('auth')->group(function () {
     AdvancedRoute::controllers([
         '/dosen' => 'DosenController',
+        '/assign-dosen' => 'AssignDosenController',
         '/user-management' => 'UserManagementController',
     ]);
 });
