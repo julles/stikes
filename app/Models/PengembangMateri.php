@@ -18,4 +18,19 @@ class PengembangMateri extends Model
     {
         return $this->hasOne(PmAssign::class, 'id_pm');
     }
+
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class, "id_semester");
+    }
+
+    public function matakuliah()
+    {
+        return $this->belongsTo(MataKuliah::class, "id_matakuliah");
+    }
+
+    public function text_book()
+    {
+        return $this->hasOne(TextBook::class, "id_pm");
+    }
 }

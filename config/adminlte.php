@@ -149,6 +149,11 @@ return [
             'icon' => false,
         ],
         [
+            'text' => 'Input Text Book',
+            'url'  => 'input-text-book',
+            'icon' => false,
+        ],
+        [
             'text' => 'User Management',
             'url'  => 'user-management',
             'icon' => false,

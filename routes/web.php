@@ -13,6 +13,7 @@ Route::middleware('auth')->group(function () {
     AdvancedRoute::controllers([
         '/dosen' => 'DosenController',
         '/assign-dosen' => 'AssignDosenController',
+        '/input-text-book' => 'InputTextBookController',
         '/user-management' => 'UserManagementController',
     ]);
 });
