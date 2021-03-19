@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\PengembangMateri;
+use App\Models\TextBook;
 use App\Services\RpsService;
 use Illuminate\Http\Request;
 
 class RpsController extends Controller
 {
-    public function __construct(PengembangMateri $pengembangMateri)
+    public function __construct(PengembangMateri $pengembangMateri, TextBook $textBook)
     {
         $this->pengembangMateri = $pengembangMateri;
         $this->__route = "rps";
         $this->service = (new RpsService())->setRoute("rps");
+        $this->textBook = $textBook;
+
         view()->share("__route", $this->__route);
         view()->share("__menu", "RPS");
     }
@@ -29,10 +32,10 @@ class RpsController extends Controller
 
     public function getDetail($id)
     {
-        $pengembangMateri = $this->pengembangMateri->findOrFail($id);
+        $textBook = $this->textBook->findOrFail($id);
 
         return view("rps.form", [
-            "model" => $pengembangMateri,
+            "model" => $textBook,
             "titleAction" => "Input RPS"
         ]);
     }

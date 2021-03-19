@@ -28,7 +28,7 @@ class RpsService
 
     public function getData(Request $request)
     {
-        $model = PengembangMateri::select('pengembang_materi.id_pm as id_pm', 'nama_semester', 'mk_nama', 'title')
+        $model = PengembangMateri::select('pengembang_materi.id_pm as id_pm', 'nama_semester', 'mk_nama', 'title', 'id_text_book')
             ->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
             ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")
             ->join("text_book", 'text_book.id_pm', '=', 'pengembang_materi.id_pm')
@@ -37,7 +37,7 @@ class RpsService
         return \Table::of($model)
             ->addColumn('action', function ($model) {
 
-                return \Html::link($this->route . "/detail/" . $model->id_pm, 'Input', ["class" => "btn btn-primary btn-sm"]);
+                return \Html::link($this->route . "/detail/" . $model->id_text_book, 'Input', ["class" => "btn btn-primary btn-sm"]);
             })
             ->make();
     }

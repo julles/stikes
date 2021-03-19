@@ -36,7 +36,7 @@
                         @include("rps.partials.topik")
                     </div>
                     <div id="summary">
-                        <p>summary</p>
+                        @include("rps.partials.summary")
                     </div>
                 </div>
             </div>

@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <div class="box box-success">
                 <div class="box-header">
-                    &nbps;
+                    &nbsp;
                 </div>
                 <div class="box-body">
                     <table class="table table-bordered" id = "table">
