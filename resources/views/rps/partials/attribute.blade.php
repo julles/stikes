@@ -3,11 +3,11 @@
         <div class="col-md-6">
             <div class="form-group">
                 <div class="form-group">
-                    {!! Form::label("Peta Komeptensi") !!}
+                    {!! Form::label("Peta Kompetensi") !!} <small>(PDF)</small>
                     @include("components.file",["name" => "peta_kompetensi"])
                 </div>
                 <div class="form-group">
-                    {!! Form::label("Rubik Penilaian") !!}
+                    {!! Form::label("Rubrik Penilaian") !!} <small>(PDF)</small>
                     @include("components.file",["name" => "rubik_penilaian"])
                 </div>
                 <div class="form-group">

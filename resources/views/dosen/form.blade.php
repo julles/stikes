@@ -52,7 +52,7 @@
                             {!! Form::textarea("alamat",null,["class"=>"form-control"]) !!}
                         </div>
                         <div class="form-group">
-                            {!! Form::label("foto") !!}
+                            {!! Form::label("foto") !!} <small>(jpg,png)</small>
                             @include("components.file",["name" => "foto"])
                         </div>
                         

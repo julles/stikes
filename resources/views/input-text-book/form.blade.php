@@ -56,7 +56,7 @@
                             {!! Form::text("kategori",null,["class"=>"form-control"]) !!}
                         </div>
                         <div class="form-group">
-                            {!! Form::label("Gambabr Cover") !!}
+                            {!! Form::label("Gambar Cover") !!} <small>(jpg,png)</small>
                             @include("components.file",["name" => "gbr_cover"])
                         </div>
                     </div>
