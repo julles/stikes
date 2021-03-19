@@ -34,7 +34,7 @@
 
             selects += "</select>";
 
-           $('#topik_tbody').append(`<tr id="R${++rowIdx}"> 
+           $('#topik_tbody').append(`<tr id="T${++rowIdx}"> 
                     <td class="row-index text-center"> 
                         <input type = "text" class = "form-control" name = "sesi[]" />
                     </td> 
@@ -48,13 +48,13 @@
                         <input type = "text" class = "form-control" name = "sub_topik[]" />
                     </td> 
                     <td class="text-center"> 
-                        <button type = "button" class = "btn btn-danger btn-sm remove_cp">X</button>
+                        <button type = "button" class = "btn btn-danger btn-sm remove_topik">X</button>
                     </td> 
                 </tr>`
             ); 
         });
 
-        $('#button_topik').on('click', '.remove_cp', function () { 
+        $('#topik_tbody').on('click', '.remove_topik', function () { 
 
             // Getting all the rows next to the 
             // row containing the clicked button 
@@ -78,7 +78,7 @@
                 idx.html(`Row ${dig - 1}`); 
 
                 // Modifying row id. 
-                $(this).attr('id', `R${dig - 1}`); 
+                $(this).attr('id', `T${dig - 1}`); 
             }); 
 
             // Removing the current row. 
