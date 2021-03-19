@@ -3,15 +3,18 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>Sesi</th>
+                    <th>Topik</th>
                     <th>CP</th>
+                    <th>Sub Topik</th>
                     <th>-</th>
                 </tr>
             </thead>
-            <tbody id = "cp_tbody">
+            <tbody id = "topik_tbody">
                 
             </tbody>
         </table>
-        <button type = "button" class = "btn btn-success btn-sm" id = "button_cp">
+        <button type = "button" class = "btn btn-success btn-sm" id = "button_topik">
         +
         </button>
     </div>
@@ -21,10 +24,28 @@
 <script>
     $(document).ready(function(){
         var rowIdx = 0; 
-        $("#button_cp").on("click",function(){
-           $('#cp_tbody').append(`<tr id="R${++rowIdx}"> 
+        $("#button_topik").on("click",function(){
+            
+            var selects = "<select class = 'form-control' name = 'cp_select'>";
+            selects += "<option value = ''></option>";
+            $("#cp_tbody :text").each(function(){
+                selects += "<option value = '"+$(this).val()+"'>"+$(this).val()+"</option>";
+            });
+
+            selects += "</select>";
+
+           $('#topik_tbody').append(`<tr id="R${++rowIdx}"> 
                     <td class="row-index text-center"> 
-                        <input type = "text" class = "form-control" name = "cp[]" class = "cp_text" />
+                        <input type = "text" class = "form-control" name = "sesi[]" />
+                    </td> 
+                    <td class="row-index text-center"> 
+                        <input type = "text" class = "form-control" name = "topik[]" />
+                    </td> 
+                    <td class="row-index text-center"> 
+                        ${selects}
+                    </td> 
+                    <td class="row-index text-center"> 
+                        <input type = "text" class = "form-control" name = "sub_topik[]" />
                     </td> 
                     <td class="text-center"> 
                         <button type = "button" class = "btn btn-danger btn-sm remove_cp">X</button>
@@ -33,7 +54,7 @@
             ); 
         });
 
-        $('#cp_tbody').on('click', '.remove_cp', function () { 
+        $('#button_topik').on('click', '.remove_cp', function () { 
 
             // Getting all the rows next to the 
             // row containing the clicked button 
