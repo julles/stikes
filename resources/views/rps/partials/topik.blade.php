@@ -11,6 +11,7 @@
                 </tr>
             </thead>
             <tbody id = "topik_tbody">
+                @if(!empty($rps->sesi))
                 @foreach($rps->sesi as $sesi)
                     <tr id="topic{{ $loop->index }}"> 
                         <td class="row-index text-center"> 
@@ -32,7 +33,9 @@
                             <button type = "button" class = "btn btn-danger btn-sm remove_topik">X</button>
                         </td> 
                     </tr>
+                
                 @endforeach
+                @endif
             </tbody>
         </table>
         <button type = "button" class = "btn btn-success btn-sm" id = "button_topik">

@@ -8,6 +8,7 @@
                 </tr>
             </thead>
             <tbody id = "cp_tbody">
+                @if(!empty(@$rps->cp))
                 @if(count(@$rps->cp) >0)
                     @foreach($rps->cp as $cp)
                         <tr id="{{ $loop->index }}"> 
@@ -19,6 +20,7 @@
                             </td> 
                         </tr>
                     @endforeach
+                @endif
                 @endif
             </tbody>
         </table>
