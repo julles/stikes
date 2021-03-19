@@ -34,7 +34,7 @@ class RpsController extends Controller
     public function getDetail($id)
     {
         $textBook = $this->textBook->findOrFail($id);
-        $rps = RpsTemp::whereIdPm($textBook->id_pm)->first();
+        $rps = RpsTemp::where("id_text_book", $id)->first();
         $rpsValue = json_decode(@$rps->value);
 
         return view("rps.form", [
@@ -48,6 +48,7 @@ class RpsController extends Controller
     {
         $textBook = $this->textBook->findOrFail($id);
         RpsTemp::updateOrcreate([
+            "id_text_book" => $textBook->id_text_book,
             "id_pm" => $textBook->id_pm,
         ], [
             "value" => json_encode($request->all()),

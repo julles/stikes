@@ -37,7 +37,7 @@ class RpsService
 
         return \Table::of($model)
             ->addColumn('status', function ($model) {
-                $check = RpsTemp::whereIdPm($model->id_pm)->count();
+                $check = RpsTemp::where('id_text_book', $model->id_text_book)->count();
 
                 return $check > 0 ? "Sudah Terisi" : "Belum Terisi";
             })
