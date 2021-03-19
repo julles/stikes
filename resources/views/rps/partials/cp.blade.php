@@ -8,7 +8,18 @@
                 </tr>
             </thead>
             <tbody id = "cp_tbody">
-                
+                @if(count(@$rps->cp) >0)
+                    @foreach($rps->cp as $cp)
+                        <tr id="{{ $loop->index }}"> 
+                            <td class="row-index text-center"> 
+                                <input type = "text" value = "{{ $cp }}" class = "form-control" name = "cp[]" class = "cp_text" />
+                            </td> 
+                            <td class="text-center"> 
+                                <button type = "button" class = "btn btn-danger btn-sm remove_cp">X</button>
+                            </td> 
+                        </tr>
+                    @endforeach
+                @endif
             </tbody>
         </table>
         <button type = "button" class = "btn btn-success btn-sm" id = "button_cp">

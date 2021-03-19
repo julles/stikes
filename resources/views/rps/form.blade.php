@@ -21,7 +21,7 @@
                         <li><a href="#attribute">Attribubte</a></li>
                         <li><a href="#cp">CP</a></li>
                         <li><a href="#topik">Topik</a></li>
-                        <li><a href="#summary">Summary</a></li>
+                        <li><a onclick = "return summary();" href="#summary">Summary</a></li>
                     </ul>
                     <div id="text_book">
                         @include("rps.partials.text_book")

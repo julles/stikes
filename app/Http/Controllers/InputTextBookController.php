@@ -37,7 +37,6 @@ class InputTextBookController extends Controller
     {
         $pengembangMateri = $this->pengembangMateri->findOrFail($id);
         $model = $pengembangMateri->text_book()->count() > 0 ? $pengembangMateri->text_book : $this->textBook;
-
         return view("input-text-book.form", [
             "pengembangMateri" => $pengembangMateri,
             "model" => $model,

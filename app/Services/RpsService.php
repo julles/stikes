@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Singleton\Component;
 use Illuminate\Http\Request;
 use App\Models\PengembangMateri;
+use App\Models\RpsTemp;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -35,6 +36,11 @@ class RpsService
             ->orderBy("id_pm", "desc");
 
         return \Table::of($model)
+            ->addColumn('status', function ($model) {
+                $check = RpsTemp::whereIdPm($model->id_pm)->count();
+
+                return $check > 0 ? "Sudah Terisi" : "Belum Terisi";
+            })
             ->addColumn('action', function ($model) {
 
                 return \Html::link($this->route . "/detail/" . $model->id_text_book, 'Input', ["class" => "btn btn-primary btn-sm"]);

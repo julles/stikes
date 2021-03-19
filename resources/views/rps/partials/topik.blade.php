@@ -11,7 +11,28 @@
                 </tr>
             </thead>
             <tbody id = "topik_tbody">
-                
+                @foreach($rps->sesi as $sesi)
+                    <tr id="topic{{ $loop->index }}"> 
+                        <td class="row-index text-center"> 
+                            <input type = "text" value = "{{ $sesi }}" class = "form-control" name = "sesi[]" />
+                        </td> 
+                        <td class="row-index text-center"> 
+                            <input type = "text" value = "{{ @$rps->topik[$loop->index] }}" class = "form-control" name = "topik[]" />
+                        </td> 
+                        <td class="row-index text-center"> 
+{{--                             
+                            @if(count(@$rps->cp_select) > 0)
+
+                            @endif --}}
+                        </td> 
+                        <td class="row-index text-center"> 
+                            <input type = "text" value = "{{ @$rps->sub_topik[$loop->index] }}" class = "form-control" name = "sub_topik[]" />
+                        </td> 
+                        <td class="text-center"> 
+                            <button type = "button" class = "btn btn-danger btn-sm remove_topik">X</button>
+                        </td> 
+                    </tr>
+                @endforeach
             </tbody>
         </table>
         <button type = "button" class = "btn btn-success btn-sm" id = "button_topik">
@@ -21,6 +42,9 @@
 </div>
 
 @push("js")
+
+
+
 <script>
     $(document).ready(function(){
         var rowIdx = 0; 

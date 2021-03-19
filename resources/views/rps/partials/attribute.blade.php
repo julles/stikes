@@ -12,22 +12,22 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label("Strategi Pembelajaran") !!}
-                    {!! Form::text("deskripsi_mata_kuliah",null,["class"=>"form-control"]) !!}
+                    {!! Form::text("strategi_pembelajaran",@$rps->strategi_pembelajaran,["class"=>"form-control"]) !!}
                 </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 {!! Form::label("Deskripsi Mata Kuliah") !!}
-                {!! Form::text("deskripsi_mata_kuliah",null,["class"=>"form-control"]) !!}
+                {!! Form::text("deskripsi_mata_kuliah",@$rps->deskripsi_mata_kuliah,["class"=>"form-control"]) !!}
             </div>
             <div class="form-group">
                 {!! Form::label("Metode Peniliaian") !!}
-                {!! Form::text("metode_penilaian",null,["class"=>"form-control"]) !!}
+                {!! Form::text("metode_penilaian",@$rps->metode_penilaian,["class"=>"form-control"]) !!}
             </div>
             <div class="form-group">
                 {!! Form::label("Media Pembelajaran") !!}
-                {!! Form::text("media_pembelajaran",null,["class"=>"form-control"]) !!}
+                {!! Form::text("media_pembelajaran",@$rps->media_pembelajaran,["class"=>"form-control"]) !!}
             </div>
         </div>
     </div>

@@ -20,7 +20,8 @@
                                 <th width = "30%">Semester</th>
                                 <th width = "30%">Mata Kuliah</th>
                                 <th width = "30%">Text Book</th>
-                                <th width = "10%">Action</th>
+                                <th width = "5%">Status</th>
+                                <th width = "5%">Action</th>
                             </tr>
                         </thead>
                         <tbody id = "tbody">
@@ -51,6 +52,7 @@ $(function() {
             { data: 'nama_semester', name: 'semester.nama_semester' },
             { data: 'mk_nama', name: 'matakuliah.mk_nama' },
             { data: 'title', name: 'text_book.title' },
+            { data: 'status', name: 'status' ,searchable:false},
             { data: 'action', name: 'action' ,searchable:false}
         ]
     });

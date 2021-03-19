@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PengembangMateri;
+use App\Models\RpsTemp;
 use App\Models\TextBook;
 use App\Services\RpsService;
 use Illuminate\Http\Request;
@@ -33,10 +34,26 @@ class RpsController extends Controller
     public function getDetail($id)
     {
         $textBook = $this->textBook->findOrFail($id);
+        $rps = RpsTemp::whereIdPm($textBook->id_pm)->first();
+        $rpsValue = json_decode(@$rps->value);
 
         return view("rps.form", [
             "model" => $textBook,
-            "titleAction" => "Input RPS"
+            "titleAction" => "Input RPS",
+            "rps" => $rpsValue,
         ]);
+    }
+
+    public function postDetail(Request $request, $id)
+    {
+        $textBook = $this->textBook->findOrFail($id);
+        RpsTemp::updateOrcreate([
+            "id_pm" => $textBook->id_pm,
+        ], [
+            "value" => json_encode($request->all()),
+        ]);
+
+        toast('Data telah diupdate', 'success');
+        return redirect($this->__route);
     }
 }
