@@ -46,15 +46,10 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
-    // protected function attemptLogin(Request $request)
-    // {
-    //     $attempt = auth()->attempt([
-    //         // "email" => $request->email,
-    //         // "password" => $request->password,
-    //         "email" => "",
-    //         "password" => "",
-    //     ]);
 
-    //     dd($attempt);
-    // }
+
+    public function username()
+    {
+        return 'nip';
+    }
 }
