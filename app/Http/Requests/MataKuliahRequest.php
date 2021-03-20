@@ -23,10 +23,10 @@ class MataKuliahRequest extends FormRequest
      */
     public function rules()
     {
-        $plus = !empty(request()->segment(3)) ?  "mk_kode," . request()->segment(3) . ",id_matakuliah" : "";
+        $plus = !empty(request()->segment(3)) ?  ",mk_kode," . request()->segment(3) . ",id_matakuliah" : "";
 
         return [
-            "mk_kode" => "required|max:20|unique:matakuliah," . $plus,
+            "mk_kode" => "required|max:20|unique:matakuliah" . $plus,
             "mk_nama" => "required|max:80"
         ];
     }
