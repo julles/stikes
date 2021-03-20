@@ -137,6 +137,11 @@ return [
             'icon' => false,
             'submenu' => [
                 [
+                    'text' => 'Semester',
+                    'url'  => '/semester',
+                    'icon' => false,
+                ],
+                [
                     'text' => 'Dosen',
                     'url'  => '/dosen',
                     'icon' => false,

@@ -11,4 +11,15 @@ class Semester extends Model
     protected $table = "semester";
 
     public $timestamps = false;
+
+    public $guarded = [];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function ($model) {
+            $model->kode_semester = \Str::random(5);
+        });
+    }
 }

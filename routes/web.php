@@ -15,5 +15,6 @@ Route::middleware('auth')->group(function () {
         '/input-text-book' => 'InputTextBookController',
         '/user-management' => 'UserManagementController',
         '/rps' => 'RpsController',
+        '/semester' => 'SemesterController',
     ]);
 });
