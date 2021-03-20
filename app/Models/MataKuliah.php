@@ -11,4 +11,6 @@ class MataKuliah extends Model
     protected $table = "matakuliah";
 
     public $timestamps = false;
+
+    public $guarded = [];
 }

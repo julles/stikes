@@ -16,5 +16,6 @@ Route::middleware('auth')->group(function () {
         '/user-management' => 'UserManagementController',
         '/rps' => 'RpsController',
         '/semester' => 'SemesterController',
+        '/mata-kuliah' => 'MataKuliahController',
     ]);
 });

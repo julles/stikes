@@ -142,6 +142,11 @@ return [
                     'icon' => false,
                 ],
                 [
+                    'text' => 'Mata Kuliah',
+                    'url'  => '/mata-kuliah',
+                    'icon' => false,
+                ],
+                [
                     'text' => 'Dosen',
                     'url'  => '/dosen',
                     'icon' => false,
