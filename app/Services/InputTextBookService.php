@@ -33,8 +33,11 @@ class InputTextBookService
 
         return \Table::of($model)
             ->addColumn('action', function ($model) {
+                $textBook = TextBook::where("id_pm", $model->id_pm)->first();
 
-                return \Html::link($this->route . "/detail/" . $model->id_pm, 'Input', ["class" => "btn btn-primary btn-sm"]);
+                $name = !empty(@$textBook->id_text_book) ? "Edit" : "Input";
+
+                return \Html::link($this->route . "/detail/" . $model->id_pm, $name, ["class" => "btn btn-primary btn-sm"]);
             })
             ->make();
     }

@@ -20,7 +20,7 @@
                         <li><a href="#text_book">Text Book</a></li>
                         <li><a href="#attribute">Attribubte</a></li>
                         <li><a href="#cp">CP</a></li>
-                        <li><a href="#topik">Topik</a></li>
+                        <li><a href="#topik" onclick = "return getCp();">Topic</a></li>
                         <li><a onclick = "return summary();" href="#summary">Summary</a></li>
                     </ul>
                     <div id="text_book">

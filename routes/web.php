@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+
 Route::view('/', 'auth.login');
 
 Auth::routes();
@@ -18,4 +20,8 @@ Route::middleware('auth')->group(function () {
         '/semester' => 'SemesterController',
         '/mata-kuliah' => 'MataKuliahController',
     ]);
+});
+
+Route::get("parse-str", function () {
+    return request()->all();
 });

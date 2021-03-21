@@ -4,11 +4,13 @@
             <div class="form-group">
                 <div class="form-group">
                     {!! Form::label("Peta Kompetensi") !!} <small>(PDF)</small>
-                    @include("components.file",["name" => "peta_kompetensi"])
+                    {{-- @include("components.file",["name" => "peta_kompetensi"]) --}}
+                    {!! Form::file('peta_kompetensi', ["class" => "form-control","id" => "peta_kompetensi"]) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label("Rubrik Penilaian") !!} <small>(PDF)</small>
-                    @include("components.file",["name" => "rubik_penilaian"])
+                    {{-- @include("components.file",["name" => "rubik_penilaian"]) --}}
+                    {!! Form::file('rubrik_penilaian', ["class" => "form-control","id" => "rubrik_penilaian"]) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label("Strategi Pembelajaran") !!}

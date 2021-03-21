@@ -4,7 +4,7 @@
             <thead>
                 <tr>
                     <th>Sesi</th>
-                    <th>Topik</th>
+                    <th>Topic</th>
                     <th>CP</th>
                     <th>Sub Topik</th>
                     <th>-</th>
@@ -49,11 +49,17 @@
 
 
 <script>
+
+    function getCp(){
+        //
+    }
+
     $(document).ready(function(){
-        var rowIdx = 0; 
+        var rowIdx = 0;
+        var rowIdx2 = -1; 
         $("#button_topik").on("click",function(){
             
-            var selects = "<select class = 'form-control' name = 'cp_select'>";
+            var selects = "<select class = 'form-control select2_cp'  multiple = 'true' name = 'cp_select[]'>";
             selects += "<option value = ''></option>";
             $("#cp_tbody :text").each(function(){
                 selects += "<option value = '"+$(this).val()+"'>"+$(this).val()+"</option>";
@@ -72,14 +78,28 @@
                         ${selects}
                     </td> 
                     <td class="row-index text-center"> 
-                        <input type = "text" class = "form-control" name = "sub_topik[]" />
+                        <select name = "sub_topik_${rowIdx2}[]" class = "form-control select2_tag"  multiple="multiple">
+                        
+                        </select> <br/>
+                        <small>Enter jika ingin multiple</small>
                     </td> 
                     <td class="text-center"> 
                         <button type = "button" class = "btn btn-danger btn-sm remove_topik">X</button>
                     </td> 
                 </tr>`
             ); 
+
+            $(".select2_tag").select2({
+                tags: true,
+            });
+
+            $(".select2_cp").select2();
+
+            
         });
+
+        
+        
 
         $('#topik_tbody').on('click', '.remove_topik', function () { 
 

@@ -8,7 +8,7 @@
             <tbody>
                 <tr>
                     <td class = "active">Peta Kompetensi</td>
-                    <td></td>
+                    <td id = "td_peta_kompetensi"></td>
                     
                     
                     <td class = "active">Strategi Pembelajaran</td>
@@ -16,7 +16,7 @@
                 </tr>
                 <tr>
                     <td class = "active">Rubik Penilaian</td>
-                    <td></td>
+                    <td id = "td_rubrik_penilaian"></td>
                     
                     
                     <td class = "active">Deskripsi Mata Kuliahh</td>
@@ -50,7 +50,15 @@
     <hr>
     <div class="col-md-12">
         <table class = "table" id = "table_summary_topic">
-            
+            <thead>
+                <tr>
+                    <th>Sesi</th>
+                    <th>Topic</th>
+                    <th>CP</th>
+                    <th>Sub Topik</th>
+                </tr>
+            </thead>
+            <tbody id = "tbody_summary_topic"></tbody>
         </table>
     </div>
 </div>
@@ -62,6 +70,8 @@
         $("#td_deskripsi_mata_kuliah").html($('[name="deskripsi_mata_kuliah"]').val());
         $("#td_metode_penilaian").html($('[name="metode_penilaian"]').val());
         $("#td_media_pembelajaran").html($('[name="media_pembelajaran"]').val());
+        $("#td_peta_kompetensi").html($('[name="peta_kompetensi"]').val().replace(/C:\\fakepath\\/i, ''));
+        $("#td_rubrik_penilaian").html($('[name="rubrik_penilaian"]').val().replace(/C:\\fakepath\\/i, ''));
 
         var topics = "";
         topicLoop = 1;
@@ -73,14 +83,36 @@
 
         $("#table_summary_pembelajaran").html(topics);
 
-        topicClone = $("#topik_tbody").clone();
-        $("#table_summary_topic").html(topicClone)
-
+        
         $("#table_summary_topic .remove_topik").remove();
         $("#table_summary_topic").find("input").each(function(){
             value = $(this).attr('name','not');
-
         });
+
+        
+        $.ajax({
+            url: "/parse-str",
+            data: $("#topik_tbody :input").serialize(),
+            success: function(res){
+
+                var topics = "";
+
+                for(a=0;a<res.sesi.length;a++){
+                    paramSubTopik = "sub_topik_" + a;
+                    topics += "<tr>";
+                        topics+= "<td>"+ res.sesi[a] +"</td>";
+                        topics+= "<td>"+ res.topik[a] +"</td>";
+                        topics+= "<td>"+ res.cp_select[a].toString() +"</td>";
+                        topics+= "<td>"+ res.sesi[a] +"</td>";
+                        //topics+= "<td>"+ res.sub_topik_a+"</td>";
+                    topics += "</tr>";
+
+                }
+
+                $("#tbody_summary_topic").html(topics);
+            },
+        });
+        
 
     }
 </script>
