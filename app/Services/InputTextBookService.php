@@ -38,7 +38,7 @@ class InputTextBookService
                     'text_book.title',
                     'text_book.tahun'
                    )
-            ->whereIn('text_book.status',[0,3])
+            // ->whereIn('text_book.status',[0,3])
             ->whereIn('pengembang_materi.id_pm',$pm)
             ->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
             ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")
@@ -59,9 +59,14 @@ class InputTextBookService
             ->addColumn('action', function ($model) {
                 $textBook = TextBook::where("id_pm", $model->id_pm)->first();
 
+                $class = "btn btn-primary btn-sm ";
                 $name = !empty(@$textBook->id_text_book) ? "Edit" : "Input";
 
-                return \Html::link($this->route . "/detail/" . $model->id_pm, $name, ["class" => "btn btn-primary btn-sm"]);
+                if (@$textBook->status == 2) {
+                    $class .= ' disabled';
+                }
+
+                return \Html::link($this->route . "/detail/" . $model->id_pm, $name, ["class" => $class]);
             })
             ->make();
     }
