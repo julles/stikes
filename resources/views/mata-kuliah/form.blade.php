@@ -16,11 +16,11 @@
             {!! Form::model($model,["id" =>"form","method"=>"post","files"=>true]) !!}
             <div class="box-body">
                 <div class="form-group">
-                    {!! Form::label("kode") !!}
+                    {!! Form::label("Kode Mata Kuliah") !!}
                     {!! Form::text("mk_kode",null,["class"=>"form-control"]) !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::label("mk_nama") !!}
+                    {!! Form::label("Nama Mata Kuliah") !!}
                     {!! Form::text("mk_nama",null,["class"=>"form-control"]) !!}
                 </div>
             </div>

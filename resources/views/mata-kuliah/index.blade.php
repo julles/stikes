@@ -17,8 +17,8 @@
                     <table class="table table-bordered" id = "table">
                         <thead>
                             <tr>
-                                <th width = "20%%">Kode</th>
-                                <th width = "70%">Mata Kuliah</th>
+                                <th width = "20%%">Kode Mata Kuliah</th>
+                                <th width = "70%">Nama Mata Kuliah</th>
                                 <th width = "10%">Action</th>
                             </tr>
                         </thead>
