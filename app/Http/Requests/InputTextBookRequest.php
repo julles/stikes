@@ -28,6 +28,7 @@ class InputTextBookRequest extends FormRequest
             "author" => "required|max:100",
             "isbn" => "required|max:100",
             "tahun" => "required|max:4",
+            "kategori" => "max:15",
         ];
     }
 }
