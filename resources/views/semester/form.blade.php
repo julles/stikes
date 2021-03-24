@@ -16,7 +16,7 @@
             {!! Form::model($model,["id" =>"form","method"=>"post","files"=>true]) !!}
             <div class="box-body">
                 <div class="form-group">
-                    {!! Form::label("Nama Semester") !!}
+                    {!! Form::label("Nama Semester Penugasan") !!}
                     {!! Form::text("nama_semester",null,["class"=>"form-control"]) !!}
                 </div>
                 <div class="form-group">
