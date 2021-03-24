@@ -38,7 +38,7 @@ class UserManagementController extends Controller
     {
         return view("user-management.form", [
             "model" => $this->model,
-            "titleAction" => "Create",
+            "titleAction" => "Tambah Data",
             "roles" => $this->masterDataRepository->roles(),
         ]);
     }
@@ -54,7 +54,7 @@ class UserManagementController extends Controller
     {
         return view("user-management.form", [
             "model" => $this->model->findOrFail($id),
-            "titleAction" => "Edit",
+            "titleAction" => "Edit Data",
             "roles" => $this->masterDataRepository->roles(),
         ]);
     }

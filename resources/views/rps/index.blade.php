@@ -3,7 +3,7 @@
 @extends('adminlte::page')
 
 @section('content_header')
-    <h1>{{ $__menu }}</h1>
+    <h1>Entry Rencana Pembelajaran Semester (RPS)</h1>
 @stop
 
 @section('content')

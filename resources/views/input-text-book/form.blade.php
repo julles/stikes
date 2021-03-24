@@ -64,7 +64,7 @@
             </div>
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary btn-sm">
-                    Submit
+                    Save
                 </button>
 
                 <a href="{{ url($__route) }}" class="btn btn-default btn-sm">

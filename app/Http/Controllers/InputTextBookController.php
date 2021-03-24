@@ -40,7 +40,7 @@ class InputTextBookController extends Controller
         return view("input-text-book.form", [
             "pengembangMateri" => $pengembangMateri,
             "model" => $model,
-            "titleAction" => "Input Text Book",
+            "titleAction" => "Text Book",
         ]);
     }
 

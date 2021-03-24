@@ -32,7 +32,7 @@
             </div>
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary btn-sm">
-                    {{ request()->segment(2) == "create" ? "Save" : "Edit" }}
+                    {{ request()->segment(2) == "create" ? "Save" : "Save" }}
                 </button>
 
                 <a href="{{ url($__route) }}" class="btn btn-default btn-sm">

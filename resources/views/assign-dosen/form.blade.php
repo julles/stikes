@@ -45,7 +45,7 @@
             </div>
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary btn-sm">
-                    {{ $titleAction == "Tambah Data" ? "Simpan" : "Edit" }}
+                    {{ $titleAction == "Tambah Data" ? "Save" : "Save" }}
                 </button>
 
                 <a href="{{ url($__route) }}" class="btn btn-default btn-sm">

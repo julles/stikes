@@ -34,7 +34,7 @@ class DosenController extends Controller
     {
         return view("dosen.form", [
             "model" => $this->model,
-            "titleAction" => "Create",
+            "titleAction" => "Tambah Data",
         ]);
     }
 
@@ -49,7 +49,7 @@ class DosenController extends Controller
     {
         return view("dosen.form", [
             "model" => $this->model->findOrFail($id),
-            "titleAction" => "Edit",
+            "titleAction" => "Edit Data",
         ]);
     }
 
