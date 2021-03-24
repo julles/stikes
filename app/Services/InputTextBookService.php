@@ -6,7 +6,9 @@ use App\Http\Requests\InputTextBookRequest;
 use App\Singleton\Component;
 use Illuminate\Http\Request;
 use App\Models\PengembangMateri;
+use App\Models\PmAssign;
 use App\Models\TextBook;
+use Auth;
 
 class InputTextBookService
 {
@@ -26,7 +28,11 @@ class InputTextBookService
 
     public function getData(Request $request)
     {
+        $user = Auth::user();
+        $pm = pmAssign::where('sme_id',$user->id)->pluck('id_pm');
+
         $model = PengembangMateri::select('id_pm', 'nama_semester', 'mk_nama')
+            ->whereIn('id_pm',$pm)
             ->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
             ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")
             ->orderBy("id_pm", "desc");
