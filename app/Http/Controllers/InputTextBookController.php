@@ -9,7 +9,6 @@ use App\Models\Semester;
 use App\Models\TextBook;
 use Illuminate\Http\Request;
 use App\services\InputTextBookService;
-use Auth;
 
 class InputTextBookController extends Controller
 {
@@ -31,9 +30,6 @@ class InputTextBookController extends Controller
 
     public function getIndex()
     {
-        $user = Auth::user();
-        $pm = $this->pmAssign->where('sme_id',$user->id)->pluck('id_pm');
-        
         return view("input-text-book.index");
     }
 
