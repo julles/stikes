@@ -165,7 +165,7 @@ return [
         ],
         [
             'text' => 'Review & Approval Text Book',
-            'url'  => '#',
+            'url'  => 'review-text-book',
             'icon' => false,
         ],
         [

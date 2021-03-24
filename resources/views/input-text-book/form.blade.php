@@ -37,6 +37,25 @@
                             {!! Form::label("ISBN") !!}
                             {!! Form::text("isbn",null,["class"=>"form-control"]) !!}
                         </div>
+                        <hr>
+
+                        @if($model->reviewer_commen)
+                            <div class="row mb-3">
+                                <div class="col">
+                                    {!! Form::label("Reviewer Notes") !!}
+                                    {!! Form::textarea("reviewer_commen",null,["class"=>"form-control","row"=>"10",'readonly'=>true]) !!}
+                                </div>
+                            </div>
+                        @endif
+
+                        @if($model->approv_commen)
+                            <div class="row mb-3">
+                                <div class="col">
+                                    {!! Form::label("Kajur Notes") !!}
+                                    {!! Form::textarea("approv_commen",null,["class"=>"form-control","row"=>"10",'readonly'=>true]) !!}
+                                </div>
+                            </div>
+                        @endif
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">

@@ -15,6 +15,7 @@ Route::middleware('auth')->group(function () {
         '/dosen' => 'DosenController',
         '/assign-dosen' => 'AssignDosenController',
         '/input-text-book' => 'InputTextBookController',
+        '/review-text-book' => 'ReviewTextBookController',
         '/user-management' => 'UserManagementController',
         '/rps' => 'RpsController',
         '/semester' => 'SemesterController',

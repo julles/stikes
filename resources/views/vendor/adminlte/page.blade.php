@@ -58,7 +58,13 @@
 
                     <ul class="nav navbar-nav">
                         <li>
+                            <a href="javasript:void(0)">
+                                <i class="fa fa-fw fa-user"></i>NIP : {{ Auth::user()->nip }}    
+                            </a>
+                        </li>
+                        <li>
                             <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+
                                 <i class="fa fa-fw fa-power-off"></i> {{ __('adminlte::adminlte.log_out') }}
                             </a>
                             <form id="logout-form" action="{{ url(config('adminlte.logout_url', 'auth/logout')) }}" method="POST" style="display: none;">

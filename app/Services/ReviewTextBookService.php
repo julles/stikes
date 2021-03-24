@@ -2,7 +2,7 @@
 
 namespace App\services;
 
-use App\Http\Requests\InputTextBookRequest;
+use App\Http\Requests\ReviewTextBookRequest;
 use App\Singleton\Component;
 use Illuminate\Http\Request;
 use App\Models\PengembangMateri;
@@ -10,7 +10,7 @@ use App\Models\PmAssign;
 use App\Models\TextBook;
 use Auth;
 
-class InputTextBookService
+class ReviewTextBookService
 {
     private $route;
 
@@ -19,7 +19,7 @@ class InputTextBookService
         $this->route = "";
     }
 
-    public function setRoute($route = ""): InputTextBookService
+    public function setRoute($route = ""): ReviewTextBookService
     {
         $this->route = $route;
 
@@ -29,7 +29,9 @@ class InputTextBookService
     public function getData(Request $request)
     {
         $user = Auth::user();
-        $pm = pmAssign::where('sme_id',$user->id)->pluck('id_pm');
+        $pm = pmAssign::where('reviewer_id',$user->id)
+                        ->orWhere('approval_id',$user->id)
+                        ->pluck('id_pm');
         
         $model = PengembangMateri::
             select('pengembang_materi.id_pm', 
@@ -38,12 +40,12 @@ class InputTextBookService
                     'text_book.title',
                     'text_book.tahun'
                    )
-            ->whereIn('text_book.status',[0,3])
+            ->whereIn('text_book.status',[0,1,2])
             ->whereIn('pengembang_materi.id_pm',$pm)
             ->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
             ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")
-            ->leftJoin("text_book", "text_book.id_pm", "=", "pengembang_materi.id_pm")
-            ->orderBy("pengembang_materi.status", "desc")
+            ->join("text_book", "text_book.id_pm", "=", "pengembang_materi.id_pm")
+            ->orderBy("pengembang_materi.status", "asc")
             ->orderBy("id_pm", "desc");
 
         return \Table::of($model)
@@ -57,16 +59,67 @@ class InputTextBookService
                 return $ret;
             })
             ->addColumn('action', function ($model) {
-                $textBook = TextBook::where("id_pm", $model->id_pm)->first();
-
-                $name = !empty(@$textBook->id_text_book) ? "Edit" : "Input";
-
-                return \Html::link($this->route . "/detail/" . $model->id_pm, $name, ["class" => "btn btn-primary btn-sm"]);
+                return \Html::link($this->route . "/detail/" . $model->id_pm, 'View', ["class" => "btn btn-primary btn-sm"]);
             })
             ->make();
     }
 
-    public function updateOrCreate(InputTextBookRequest $request, $id)
+    public function ReviewOrApproval(ReviewTextBookRequest $request, $id)
+    {
+        $user = Auth::user();
+        $pengembangMateri = PengembangMateri::with('pm_assign')->findOrFail($id);
+
+        $model = $pengembangMateri->text_book()->first();
+
+        // check status dosen
+        if ($pengembangMateri->pm_assign->reviewer_id == $user->id) {
+
+            $inputs = [
+                        'reviewer_commen' => $request->reviewer_commen,
+                        'reviewer_date' => date("Y-m-d H:i:s"),
+                        'reviewer_user' => $user->id
+            ];
+
+            if ($request->status == 1) {
+                $inputs['status'] = 1;
+            }else{
+                $inputs['status'] = 3;
+            }
+
+        }elseif($pengembangMateri->pm_assign->approval_id == $user->id){
+
+            $inputs = [
+                        'approv_commen' => $request->approv_commen,
+                        'approv_date' => date("Y-m-d H:i:s"),
+                        'approv_user' => $user->id
+            ];
+
+            if ($request->status == 1) {
+                $inputs['status'] = 2;
+            }else{
+                $inputs['status'] = 3;
+            }
+        }
+
+        $model->update($inputs);
+    }
+
+    public function userStatus($id)
+    {
+        $user = Auth::user();
+        $pengembangMateri = PengembangMateri::findOrFail($id);
+
+        $status = false;
+        if ($pengembangMateri->pm_assign->reviewer_id == $user->id) {
+            $status = 'reviewer';
+        }elseif($pengembangMateri->pm_assign->approval_id == $user->id){
+            $status = 'approv';
+        }
+
+        return $status;
+    }
+
+    public function updateOrCreate(ReviewTextBookRequest $request, $id)
     {
         $pengembangMateri = PengembangMateri::findOrFail($id);
 
@@ -90,7 +143,6 @@ class InputTextBookService
         $inputs = $request->all();
         $inputs["gbr_cover"] = $fotoName;
         $inputs["id_pm"] = $id;
-        $inputs["status"] = 0;
         unset($inputs["delete_gbr_cover"]);
         unset($inputs["semester"]);
         unset($inputs["mata_kuliah"]);

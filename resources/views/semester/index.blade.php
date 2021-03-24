@@ -17,7 +17,7 @@
                     <table class="table table-bordered" id = "table">
                         <thead>
                             <tr>
-                                <th width = "30%">Nama Semester</th>
+                                <th width = "30%">Nama Semester Penugasan</th>
                                 <th width = "30%">Dari</th>
                                 <th width = "30%">Sampai</th>
                                 <th width = "10%">Action</th>
