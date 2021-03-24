@@ -18,7 +18,7 @@
                 <div id="tabs">
                     <ul>
                         <li><a href="#text_book">Text Book</a></li>
-                        <li><a href="#attribute">Attribubte</a></li>
+                        <li><a href="#attribute">Attribute</a></li>
                         <li><a href="#cp">CP</a></li>
                         <li><a href="#topik" onclick = "return getCp();">Topic</a></li>
                         <li><a onclick = "return summary();" href="#summary">Summary</a></li>

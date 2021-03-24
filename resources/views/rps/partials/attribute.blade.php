@@ -24,7 +24,7 @@
                 {!! Form::text("deskripsi_mata_kuliah",@$rps->deskripsi_mata_kuliah,["class"=>"form-control"]) !!}
             </div>
             <div class="form-group">
-                {!! Form::label("Metode Peniliaian") !!}
+                {!! Form::label("Metode Penilaian") !!}
                 {!! Form::text("metode_penilaian",@$rps->metode_penilaian,["class"=>"form-control"]) !!}
             </div>
             <div class="form-group">
