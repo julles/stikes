@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'title' => 'STIKES',
+    'title' => 'STIKES | RS Husada Jakarta',
 
     'title_prefix' => '',
 
@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'logo' => '<b>STI</b>KES',
+    'logo' => '<small>STIKES <span class="font-15">RS Husada Jakarta</span></small>',
 
     'logo_mini' => '<b>S</b>T',
 
