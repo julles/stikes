@@ -38,6 +38,21 @@ class RpsController extends Controller
 
     public function getDetail($id)
     {
+
+        $pm = PengembangMateri::
+            select('pengembang_materi.id_pm', 
+                    'semester.nama_semester', 
+                    'matakuliah.mk_kode',
+                    'matakuliah.mk_nama'
+                   )
+            ->where('pengembang_materi.id_pm',$id)
+            ->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
+            ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")
+            ->first();
+
+        $titleAction = $pm->nama_semester." • ".$pm->mk_kode." • ".$pm->mk_nama;
+        // Semester, Kode Mata Kuliah dan Nama Mata Kuliah
+        // dd($titleAction);
         $textBook = $this->textBook->where('id_pm',$id)->first();
         $rps = Rps::find($id);
         $metodePenilaian = MetodePenilaian::get();
@@ -69,7 +84,7 @@ class RpsController extends Controller
             "metodePenilaian" => $metodePenilaian,
             "totalSubTopic" => $totalSubTopic,
             "topic" => $topic,
-            "titleAction" => "Input RPS",
+            "titleAction" => $titleAction,
             "rps" => $rps,
         ]);
     }

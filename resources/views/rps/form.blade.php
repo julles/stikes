@@ -15,7 +15,7 @@
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header">
-                {{ $titleAction }}
+                {!! $titleAction !!}
             </div>
             {!! Form::model($model,["id" =>"form","method"=>"post","files"=>true]) !!}
             <div class="box-body">
