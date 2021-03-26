@@ -102,9 +102,17 @@
                     topics += "<tr>";
                         topics+= "<td>"+ res.sesi[a] +"</td>";
                         topics+= "<td>"+ res.topik[a] +"</td>";
-                        topics+= "<td>"+ res.cp_select[a].toString() +"</td>";
-                        topics+= "<td>"+ res.sesi[a] +"</td>";
-                        //topics+= "<td>"+ res.sub_topik_a+"</td>";
+                        topics+= "<td>"+ res.cp_select[a] +"</td>";
+                        console.log(res);
+                        topics+= "<td>";
+                            // $.each( res.sub_topik[a], function( key, value ) {
+                            //   topics+= value+"<br>";
+                            // });
+                        topics+= "</td>";
+                        // topics+= "<td>"+ res.sub_topik_a+"</td>";
+
+
+
                     topics += "</tr>";
 
                 }

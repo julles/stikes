@@ -6,6 +6,10 @@
 <h1>Entry Rencana Pembelajaran Semester (RPS)</h1>
 @stop
 
+@section('css')
+  <link rel="stylesheet" href="{{ asset('vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.css')}}">
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-md-12">
@@ -57,10 +61,12 @@
 
 @push("js")
 {!! JsValidator::formRequest('App\Http\Requests\InputTextBookRequest', '#form'); !!}
+
+<script src="{{ asset('vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')}}"></script>
 <script>
-$(function() {
-    $( "#tabs" ).tabs();
-});
+    $(function() {
+        $( "#tabs" ).tabs();
+    });
 </script>
 @endpush
 

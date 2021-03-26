@@ -3,7 +3,7 @@
 @extends('adminlte::page')
 
 @section('content_header')
-    <h1>Entry Rencana Pembelajaran Semester (RPS)</h1>
+    <h1>{{ $__menu }}</h1>
 @stop
 
 @section('content')
@@ -11,17 +11,18 @@
         <div class="col-md-12">
             <div class="box box-success">
                 <div class="box-header">
-                    &nbsp;
+                
                 </div>
                 <div class="box-body">
                     <table class="table table-bordered" id = "table">
                         <thead>
                             <tr>
-                                <th width = "30%">Semester</th>
-                                <th width = "30%">Mata Kuliah</th>
-                                <th width = "30%">Text Book</th>
-                                <th width = "5%">Status</th>
-                                <th width = "5%">Action</th>
+                                <th width = "20%">Semester</th>
+                                <th width = "20%">Mata Kuliah</th>
+                                <th width = "20%">Judul Buku</th>
+                                <th width = "10%">Tahun Terbit</th>
+                                <th width = "20%">Status</th>
+                                <th width = "20%">Action</th>
                             </tr>
                         </thead>
                         <tbody id = "tbody">
@@ -35,6 +36,7 @@
 @stop
 
 @push('js')
+
 <script>
 $(function() {
     var table = $('#table').DataTable({
@@ -47,11 +49,12 @@ $(function() {
                 $(row).addClass('danger');
             }
         },
-        ordering:false,
+        ordering:true,
         columns: [
             { data: 'nama_semester', name: 'semester.nama_semester' },
             { data: 'mk_nama', name: 'matakuliah.mk_nama' },
             { data: 'title', name: 'text_book.title' },
+            { data: 'tahun', name: 'text_book.tahun' },
             { data: 'status', name: 'status' ,searchable:false},
             { data: 'action', name: 'action' ,searchable:false}
         ]

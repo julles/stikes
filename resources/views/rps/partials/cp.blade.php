@@ -4,40 +4,54 @@
             <thead>
                 <tr>
                     <th>CP</th>
-                    <th>-</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody id = "cp_tbody">
-                @if(!empty(@$rps->cp))
-                @if(count(@$rps->cp) >0)
-                    @foreach($rps->cp as $cp)
-                        <tr id="{{ $loop->index }}"> 
+
+                @if(!empty($capaianPembelajaran))
+                    @foreach($capaianPembelajaran as $key => $v)
+                        <tr id="R0"> 
                             <td class="row-index text-center"> 
-                                <input type = "text" value = "{{ $cp }}" class = "form-control" name = "cp[]" class = "cp_text" />
+                                <input type = "text" class = "form-control" name = "capaian_pembelajaran[]" class = "cp_text" value="{{ $v }}" />
                             </td> 
                             <td class="text-center"> 
-                                <button type = "button" class = "btn btn-danger btn-sm remove_cp">X</button>
+                                @if($key != 0)
+                                    <button type = "button" class = "btn btn-danger btn-sm remove_cp">X</button>
+                                @endif
                             </td> 
                         </tr>
                     @endforeach
-                @endif
+                @else
+                    <tr id="R0"> 
+                        <td class="row-index text-center"> 
+                            <input type = "text" class = "form-control" name = "capaian_pembelajaran[]" class = "cp_text" />
+                        </td> 
+                        <td class="text-center"> 
+                            
+                        </td> 
+                    </tr>
                 @endif
             </tbody>
         </table>
-        <button type = "button" class = "btn btn-success btn-sm" id = "button_cp">
-        +
-        </button>
+        <div class="row">
+            <div class="col text-center">
+                <button type = "button" class = "btn btn-success btn-sm" id = "button_cp">
+                + Add CP
+                </button>  
+            </div>
+        </div>
     </div>
 </div>
 
 @push("js")
 <script>
     $(document).ready(function(){
-        var rowIdx = 0; 
+        var rowIdx = 1; 
         $("#button_cp").on("click",function(){
            $('#cp_tbody').append(`<tr id="R${++rowIdx}"> 
                     <td class="row-index text-center"> 
-                        <input type = "text" class = "form-control" name = "cp[]" class = "cp_text" />
+                        <input type = "text" class = "form-control" name = "capaian_pembelajaran[]" class = "cp_text" />
                     </td> 
                     <td class="text-center"> 
                         <button type = "button" class = "btn btn-danger btn-sm remove_cp">X</button>
@@ -58,7 +72,6 @@
                 
                 // Getting <tr> id. 
                 var id = $(this).attr('id'); 
-                console.log(id);
 
                 // Getting the <p> inside the .row-index class. 
                 var idx = $(this).children('.row-index').children('input'); 
