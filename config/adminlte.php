@@ -180,7 +180,7 @@ return [
         ],
         [
             'text' => 'Review & Approval RPS',
-            'url'  => '#',
+            'url'  => 'review-rps',
             'icon' => false,
         ],
         [

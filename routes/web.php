@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
         '/review-text-book' => 'ReviewTextBookController',
         '/user-management' => 'UserManagementController',
         '/rps' => 'RpsController',
+        '/review-rps' => 'ReviewRpsController',
         '/semester' => 'SemesterController',
         '/mata-kuliah' => 'MataKuliahController',
     ]);

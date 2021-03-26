@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\RpsRequest;
 use Auth;
 
-class RpsService
+class ReviewRpsService
 {
     private $route;
 
@@ -24,7 +24,7 @@ class RpsService
         $this->route = "";
     }
 
-    public function setRoute($route = ""): RpsService
+    public function setRoute($route = ""): ReviewRpsService
     {
         $this->route = $route;
 
@@ -34,7 +34,9 @@ class RpsService
     public function getData(Request $request)
     {
         $user = Auth::user();
-        $pm = pmAssign::where('sme_id',$user->id)->pluck('id_pm');
+        $pm = pmAssign::where('reviewer_id',$user->id)
+                        ->orWhere('approval_id',$user->id)
+                        ->pluck('id_pm');
         
         $model = PengembangMateri::
             select('pengembang_materi.id_pm', 

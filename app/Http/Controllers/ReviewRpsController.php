@@ -7,19 +7,19 @@ use App\Models\Rps;
 use App\Models\TextBook;
 use App\Models\Topic;
 use App\Models\MetodePenilaian;
-use App\Services\RpsService;
+use App\Services\ReviewRpsService;
 use Illuminate\Http\Request;
 use App\Http\Requests\RpsRequest;
 
-class RpsController extends Controller
+class ReviewRpsController extends Controller
 {
-    public function __construct(PengembangMateri $pengembangMateri, TextBook $textBook, RpsService $RpsService)
+    public function __construct(PengembangMateri $pengembangMateri, TextBook $textBook, ReviewRpsService $ReviewRpsService)
     {
         $this->pengembangMateri = $pengembangMateri;
-        $this->__route = "rps";
-        $this->service = (new RpsService())->setRoute("rps");
+        $this->__route = "review-rps";
+        $this->service = (new ReviewRpsService())->setRoute("review-rps");
         $this->textBook = $textBook;
-        $this->RpsService = $RpsService;
+        $this->ReviewRpsService = $ReviewRpsService;
 
         view()->share("__route", $this->__route);
         view()->share("__menu", "RPS");
@@ -81,15 +81,15 @@ class RpsController extends Controller
             "metodePenilaian" => $metodePenilaian,
             "totalSubTopic" => $totalSubTopic,
             "topic" => $topic,
+            "review_stat" => true,
             "titleAction" => $titleAction,
             "rps" => $rps,
-            "review_stat" => false,
         ]);
     }
 
     public function postDetail(RpsRequest $request, $id)
     {
-        $this->RpsService->updateOrcreate($request, $id);
+        $this->ReviewRpsService->updateOrcreate($request, $id);
         toast('Data telah diupdate', 'success');
 
         return redirect($this->__route);
