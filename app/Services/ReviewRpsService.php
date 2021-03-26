@@ -72,6 +72,60 @@ class ReviewRpsService
             ->make();
     }
 
+    public function userStatus($id)
+    {
+        $user = Auth::user();
+        $pengembangMateri = PengembangMateri::findOrFail($id);
+
+        $status = false;
+        if ($pengembangMateri->pm_assign->reviewer_id == $user->id) {
+            $status = 'reviewer';
+        }elseif($pengembangMateri->pm_assign->approval_id == $user->id){
+            $status = 'approv';
+        }
+
+        return $status;
+    }
+
+    public function ReviewOrApproval(RpsRequest $request, $id)
+    {
+        $user = Auth::user();
+        $pengembangMateri = PengembangMateri::with('pm_assign')->findOrFail($id);
+        $model = $pengembangMateri->rps()->first();
+
+        // check status dosen
+        if ($pengembangMateri->pm_assign->reviewer_id == $user->id) {
+
+            $inputs = [
+                        'reviewer_commen' => $request->reviewer_commen,
+                        'reviewer_date' => date("Y-m-d H:i:s"),
+                        'reviewer_user' => $user->id
+            ];
+
+            if ($request->status == 1) {
+                $inputs['status'] = 1;
+            }else{
+                $inputs['status'] = 3;
+            }
+
+        }elseif($pengembangMateri->pm_assign->approval_id == $user->id){
+
+            $inputs = [
+                        'approv_commen' => $request->approv_commen,
+                        'approv_date' => date("Y-m-d H:i:s"),
+                        'approv_user' => $user->id
+            ];
+
+            if ($request->status == 1) {
+                $inputs['status'] = 2;
+            }else{
+                $inputs['status'] = 3;
+            }
+        }
+
+        $model->update($inputs);
+    }
+
     public function updateOrcreate(RpsRequest $request, $id)
     {
 

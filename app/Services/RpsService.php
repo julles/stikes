@@ -62,10 +62,17 @@ class RpsService
                 return $ret;
             })
             ->addColumn('action', function ($model) {
+
                 $check = Rps::where("id", $model->id_pm)->first();
-                $name = !empty(@$check) ? "View" : "Input";
-                
-                return \Html::link($this->route . "/detail/" . $model->id_pm, $name, ["class" => "btn btn-primary"]);
+                $class = "btn btn-primary btn-sm ";
+                $name = !empty(@$check->id) ? "Edit" : "Input";
+
+                if (@$check->status == 2 || @$check->status == 1) {
+                    $class .= ' disabled';
+                }
+
+                return \Html::link($this->route . "/detail/" . $model->id_pm, $name, ["class" => $class]);
+
             })
             ->make();
     }

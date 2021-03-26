@@ -33,4 +33,9 @@ class PengembangMateri extends Model
     {
         return $this->hasOne(TextBook::class, "id_pm");
     }
+
+    public function rps()
+    {
+        return $this->hasOne(Rps::class, "id");
+    }
 }

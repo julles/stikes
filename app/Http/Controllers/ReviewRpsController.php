@@ -74,6 +74,8 @@ class ReviewRpsController extends Controller
 
         }
 
+        $userStatus = $this->service->userStatus($id);
+        
         return view("rps.form", [
             "model" => $textBook,
             "metodePenilaianChecked" => $metodePenilaianChecked,
@@ -81,6 +83,7 @@ class ReviewRpsController extends Controller
             "metodePenilaian" => $metodePenilaian,
             "totalSubTopic" => $totalSubTopic,
             "topic" => $topic,
+            "userStatus" => $userStatus,
             "review_stat" => true,
             "titleAction" => $titleAction,
             "rps" => $rps,
@@ -89,7 +92,7 @@ class ReviewRpsController extends Controller
 
     public function postDetail(RpsRequest $request, $id)
     {
-        $this->ReviewRpsService->updateOrcreate($request, $id);
+        $this->ReviewRpsService->ReviewOrApproval($request, $id);
         toast('Data telah diupdate', 'success');
 
         return redirect($this->__route);
