@@ -36,6 +36,7 @@ class InputTextBookService
                     'semester.nama_semester', 
                     'matakuliah.mk_nama',
                     'text_book.title',
+                    'text_book.kategori',
                     'text_book.tahun'
                    )
             // ->whereIn('text_book.status',[0,3])
@@ -80,14 +81,14 @@ class InputTextBookService
         $gbr_cover = $request->file("gbr_cover");
         $fotoName  = $model->gbr_cover;
 
-        if ($request->delete_foto != $model->gbr_cover) {
-            $fotoName = "";
-            \Storage::delete(contents_path($model->gbr_cover));
-        }
-
         if (!empty($gbr_cover)) {
+            
+            if ($request->delete_foto != $model->gbr_cover) {
+                $fotoName = "";
+                \Storage::delete(contents_path($model->gbr_cover));
+            }
 
-            $fotoName = \Str::random(5) . "." . $gbr_cover->getClientOriginalExtension();
+            $fotoName = $id . "-book_cover." . $gbr_cover->getClientOriginalExtension();
 
             $gbr_cover->storeAs("public/contents", $fotoName);
         }

@@ -19,6 +19,7 @@
                             <tr>
                                 <th width = "20%">Semester</th>
                                 <th width = "20%">Mata Kuliah</th>
+                                <th width = "10%">Kategori</th>
                                 <th width = "20%">Judul Buku</th>
                                 <th width = "10%">Tahun Terbit</th>
                                 <th width = "20%">Status</th>
@@ -53,6 +54,7 @@ $(function() {
         columns: [
             { data: 'nama_semester', name: 'semester.nama_semester' },
             { data: 'mk_nama', name: 'matakuliah.mk_nama' },
+            { data: 'kategori', name: 'text_book.kategori' },
             { data: 'title', name: 'text_book.title' },
             { data: 'tahun', name: 'text_book.tahun' },
             { data: 'status', name: 'status' ,searchable:false},

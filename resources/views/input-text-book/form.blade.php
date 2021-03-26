@@ -72,7 +72,8 @@
                         </div>
                         <div class="form-group">
                             {!! Form::label("Kategori") !!}
-                            {!! Form::text("kategori",null,["class"=>"form-control"]) !!}
+
+                            {!! Form::select("kategori",['UTAMA'=>'UTAMA','PENDUKUNG'=>'PENDUKUNG'],null,["class"=>"form-control"]) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label("Gambar Cover") !!} <small>(jpg,png)</small>

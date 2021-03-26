@@ -38,6 +38,7 @@ class ReviewTextBookService
                     'semester.nama_semester', 
                     'matakuliah.mk_nama',
                     'text_book.title',
+                    'text_book.kategori',
                     'text_book.tahun'
                    )
             ->whereIn('text_book.status',[0,1,2])

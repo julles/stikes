@@ -43,6 +43,7 @@ class ReviewRpsService
                     'semester.nama_semester', 
                     'matakuliah.mk_nama',
                     'text_book.title',
+                    'text_book.kategori',
                     'text_book.tahun'
                    )
             ->where('text_book.status',2)
