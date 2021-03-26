@@ -61,7 +61,7 @@ class RpsController extends Controller
             }
                                         // dd($topic);
         }
-        
+
         return view("rps.form", [
             "model" => $textBook,
             "metodePenilaianChecked" => $metodePenilaianChecked,
@@ -94,4 +94,11 @@ class RpsController extends Controller
     //     toast('Data telah diupdate', 'success');
     //     return redirect($this->__route);
     // }
+
+    public function viewPdf($type, $file)
+    {
+        $pathToFile = Storage::url(contents_path().$type.'/'.$file);
+        return Storage::response($pathToFile);
+        // return response()->file($pathToFile);
+    }
 }

@@ -88,7 +88,6 @@ class RpsService
             $data->metode_penilaian = json_encode($request['metode_penilaian'],true);
             $data->status = 0;
             $data->updated_at = $date;
-            $data->save();
 
             // upload file
 
@@ -99,6 +98,7 @@ class RpsService
                 $fileName = $id.'-peta_kompetensi' . "." . $peta_kompetensi->getClientOriginalExtension();
 
                 $peta_kompetensi->storeAs("public/contents/peta_kompetensi/", $fileName);
+                $data->peta_kompetensi = $fileName;
             }
 
             $rubrik_penilaian = $request->file("rubrik_penilaian");
@@ -108,7 +108,10 @@ class RpsService
                 $fileName = $id.'-rubrik_penilaian' . "." . $rubrik_penilaian->getClientOriginalExtension();
 
                 $rubrik_penilaian->storeAs("public/contents/rubrik_penilaian/", $fileName);
+                $data->rubrik_penilaian = $fileName;
             }
+
+            $data->save();
 
             // save topic
 
@@ -152,8 +155,6 @@ class RpsService
                 'updated_at' => $date
             ];
 
-            $save = Rps::insert($payload);
-
             // upload file
 
             $peta_kompetensi = $request->file("peta_kompetensi");
@@ -163,6 +164,7 @@ class RpsService
                 $fileName = $id.'-peta_kompetensi' . "." . $peta_kompetensi->getClientOriginalExtension();
 
                 $peta_kompetensi->storeAs("public/contents/peta_kompetensi/", $fileName);
+                $payload['peta_kompetensi'] =  $fileName;
             }
 
             $rubrik_penilaian = $request->file("rubrik_penilaian");
@@ -172,7 +174,10 @@ class RpsService
                 $fileName = $id.'-rubrik_penilaian' . "." . $rubrik_penilaian->getClientOriginalExtension();
 
                 $rubrik_penilaian->storeAs("public/contents/rubrik_penilaian/", $fileName);
+                $payload['rubrik_penilaian'] =  $fileName;
             }
+
+            $save = Rps::insert($payload);
 
             // save topic
 

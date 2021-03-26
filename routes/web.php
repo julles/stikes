@@ -21,6 +21,8 @@ Route::middleware('auth')->group(function () {
         '/semester' => 'SemesterController',
         '/mata-kuliah' => 'MataKuliahController',
     ]);
+
+    Route::get('/rps/view-pdf/{type}/{file}', 'RpsController@viewPdf');
 });
 
 Route::get("parse-str", function () {

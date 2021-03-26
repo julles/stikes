@@ -2,8 +2,8 @@
     <div class="col-md-12">
         <h3>Text Book</h3>
         <hr style = "color:grey">
-        <div class="col-md-4">
-            <img width = "200" height = "200" src="{{ Storage::url(contents_path().$model->gbr_cover) }}" alt="">
+        <div class="col-md-4 text-center">
+            <img width = "200" src="{{ Storage::url(contents_path().$model->gbr_cover) }}" alt="">
         </div>
         <div class="col-md-8">
             <table class= "table">

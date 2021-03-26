@@ -3,35 +3,71 @@
 <div class="row">
     <h3>Attribute</h3>
     <hr>
-    <div class="col-md-12">
+    <div class="col-md-8">
         <table class= "table">
             <tbody>
                 <tr>
-                    <td class = "active">Peta Kompetensi</td>
-                    <td id = "td_peta_kompetensi"></td>
-                    
-                    
-                    <td class = "active">Strategi Pembelajaran</td>
-                    <td id = "td_strategi_pembelajaran"></td>
+                    <td width="200px"><strong>Peta Kompetensi</strong></td>
+                    <td>
+                        <span id="td_peta_kompetensi"></span>
+                        @if(@$rps->peta_kompetensi)
+                            <a href="{{ Storage::url(contents_path().'peta_kompetensi/'.$rps->peta_kompetensi) }}" target="_blank" class="btn btn-outline-danger mt-2 btn-sm">
+                                View PDF
+                            </a>
+                        @endif
+                    </td>
                 </tr>
                 <tr>
-                    <td class = "active">Rubik Penilaian</td>
-                    <td id = "td_rubrik_penilaian"></td>
-                    
-                    
-                    <td class = "active">Deskripsi Mata Kuliahh</td>
+                    <td><strong>Strategi Pembelajaran</strong></td>
+                    <td>
+                        <span id="td_strategi_pembelajaran"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Rubik Penilaian</strong></td>
+                    <td>
+                        <span id="td_rubrik_penilaian"></span>
+                        @if(@$rps->peta_kompetensi)
+                            <a href="{{ Storage::url(contents_path().'rubrik_penilaian/'.$rps->rubrik_penilaian) }}" target="_blank" class="btn btn-outline-danger mt-2 btn-sm">
+                                View PDF
+                            </a>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Deskripsi Mata Kuliahh</strong></td>
                     <td id = "td_deskripsi_mata_kuliah"></td>
                 </tr>
                 <tr>
-                    <td class = "active">Metode Penilaian</td>
-                    <td id = "td_metode_penilaian"></td>
-                    
-                    
-                    <td class = "active">Media Pembelajaran</td>
+                    <td><strong>Media Pembelajaran</strong></td>
                     <td id = "td_media_pembelajaran"></td>
                 </tr>
             </tbody>
         </table>   
+    </div>
+    <div class="col-md-4">
+        <strong>Metode Pembelajaran</strong>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Component</th>
+                    <th>Weight</th>
+                </tr>
+            </thead>
+            <tbody id = "tbody_summary_metode">
+                
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td class="text-right">
+                        <strong>Weight Total :</strong>
+                    </td>
+                    <td>
+                        <strong><span class="weight-total">0</span>%</strong>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
     </div>
 </div>
 
@@ -49,7 +85,7 @@
     <h3>Topik</h3>
     <hr>
     <div class="col-md-12">
-        <table class = "table" id = "table_summary_topic">
+        <table class = "table table-bordered" id = "table_summary_topic">
             <thead>
                 <tr>
                     <th>Sesi</th>
@@ -89,33 +125,81 @@
             value = $(this).attr('name','not');
         });
 
+        // Metode
+        var metodePenilaian = @json($metodePenilaian);
+        $.ajax({
+            url: "/parse-str",
+            data: $("#metode_tbody :input").serialize(),
+            success: function(res){
+
+                // console.log(res);
+                var metod = "";
+                $.each( metodePenilaian, function( key, value ) {
+                    // console.log(value);
+                    // if ((jQuery.inArray( value.id, res )) >= 0 ) {
+                    //     console.log(value);
+                    // }
+                    // console.log(value.id.toString(),res.metode_penilaian,jQuery.inArray( value.id.toString(), res.metode_penilaian ));
+                    // console.log();
+                    if (jQuery.inArray( value.id.toString(), res.metode_penilaian ) >= 0) {
+                        console.log(value);
+                        metod += '<tr>';
+                            metod += '<td>';
+                                metod += value.component;
+                            metod += '</td>';
+                            metod += '<td>';
+                                metod += value.weight+'%';
+                            metod += '</td>';
+                        metod += '</tr>';
+                    }
+                });
+                $("#tbody_summary_metode").html(metod);
+
+
+            },
+        });
+
+        // Topic
         
         $.ajax({
             url: "/parse-str",
             data: $("#topik_tbody :input").serialize(),
             success: function(res){
 
+                // console.log(res);
                 var topics = "";
 
-                for(a=0;a<res.sesi.length;a++){
-                    paramSubTopik = "sub_topik_" + a;
-                    topics += "<tr>";
-                        topics+= "<td>"+ res.sesi[a] +"</td>";
-                        topics+= "<td>"+ res.topik[a] +"</td>";
-                        topics+= "<td>"+ res.cp_select[a] +"</td>";
-                        console.log(res);
-                        topics+= "<td>";
-                            // $.each( res.sub_topik[a], function( key, value ) {
-                            //   topics+= value+"<br>";
-                            // });
-                        topics+= "</td>";
-                        // topics+= "<td>"+ res.sub_topik_a+"</td>";
+                $.each( res.topic, function( key, value ) {
+                    var rowspanVal = (value.sub_topik.length + 1);
+                    topics += '<tr>';
+                        topics += '<td rowspan="'+rowspanVal+'">';
+                            if (value.sesi) {
+                                topics += value.sesi;   
+                            }
+                        topics += '</td>';
 
+                        topics += '<td rowspan="'+rowspanVal+'">';
+                            if (value.topic) {
+                                topics += value.topic;   
+                            }
+                        topics += '</td>';
 
+                        topics += '<td rowspan="'+rowspanVal+'">';
+                            if (value.capaian_pembelajaran) {
+                                topics += value.capaian_pembelajaran;   
+                            }
+                        topics += '</td>';
 
-                    topics += "</tr>";
+                    topics += '</tr>';
 
-                }
+                    $.each( value.sub_topik, function( k, v ) {
+                        topics += '<tr>';
+                            topics += '<td>';
+                                topics += v;
+                            topics += '</td>';
+                        topics += '</tr>';
+                    });
+                });
 
                 $("#tbody_summary_topic").html(topics);
             },

@@ -53,7 +53,7 @@
                                             <tr>
                                         @endif
                                             <td>
-                                                <input class="form-control mb-3" type="text" name="topic[{{$keySub}}][sub_topik][]" value="{{ $v['sub_topic'] }}" />
+                                                <input class="form-control mb-3" type="text" name="topic[{{$i}}][sub_topik][]" value="{{ $v['sub_topic'] }}" />
                                             </td>
                                             <td>
                                                 @if($keySub != 0)
