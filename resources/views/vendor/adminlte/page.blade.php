@@ -59,7 +59,7 @@
                     <ul class="nav navbar-nav">
                         <li>
                             <a href="javasript:void(0)">
-                                <i class="fa fa-fw fa-user"></i>NIP : {{ Auth::user()->nip }}    
+                                <i class="fa fa-fw fa-user"></i> {{ Session::get('user.dosen.0.nama')}} | {{ Auth::user()->nip }}    
                             </a>
                         </li>
                         <li>

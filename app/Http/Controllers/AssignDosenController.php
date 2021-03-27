@@ -38,6 +38,7 @@ class AssignDosenController extends Controller
 
     public function getIndex()
     {
+        // dd(session()->get('user.dosen')[0]->is_dosen);
         return view("assign-dosen.index");
     }
 

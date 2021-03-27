@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Auth;
+use App\Models\Dosen;
 
 class LoginController extends Controller
 {
@@ -46,7 +48,16 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
+        protected function authenticated(Request $request)
+        {
+         
+        // Logic that determines where to send the user
+            $user = Auth::user();
+            $dosen = Dosen::find($user->id);
+            $request->session()->push('user.dosen', $dosen);
+           // dd($dosen);
 
+        }
 
     public function username()
     {
