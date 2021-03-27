@@ -58,7 +58,7 @@ class MataKuliahController extends Controller
         $to = carbon()->parse($model->to);
         $toMonth = (int) $to->format("m");
         $toYear = (int) $to->format("Y");
-
+        
         return view("mata-kuliah.form", [
             "model" => $model,
             "titleAction" => "Tambah Data",
