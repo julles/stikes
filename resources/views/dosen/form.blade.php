@@ -39,11 +39,11 @@
                         </div>
                         <div class="form-group">
                             {!! Form::label("password") !!}
-                            {!! Form::password("password",["class"=>"form-control"]) !!}
+                            <input type="password" name="password" class="form-control" value="{{ $model->password_plain }}">
                         </div>
                         <div class="form-group">
                             {!! Form::label("verifikasi_password") !!}
-                            {!! Form::password("verifikasi_password",["class"=>"form-control"]) !!}
+                            <input type="password" name="verifikasi_password" class="form-control" value="{{ $model->password_plain }}">
                         </div>
                     </div>
                     <div class="col-md-6">
