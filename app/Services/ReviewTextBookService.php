@@ -51,11 +51,10 @@ class ReviewTextBookService
 
         return \Table::of($model)
             ->addColumn('status', function ($model) {
-                $stat = ['Waiting Approval','Reviewed','Approved','Reject'];
                 $check = TextBook::where("id_pm", $model->id_pm)->first();
                 $ret = "Belum diinput";
                 if ($check) {
-                    $ret = $stat[$check->status];
+                    $ret = statusCaption($check->status);
                 }                
                 return $ret;
             })

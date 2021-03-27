@@ -54,11 +54,10 @@ class RpsService
 
         return \Table::of($model)
             ->addColumn('status', function ($model) {
-                $stat = ['Waiting Approval','Reviewed','Approved','Reject'];
                 $check = Rps::where("id", $model->id_pm)->first();
                 $ret = "RPS Belum diinput";
                 if ($check) {
-                    $ret = $stat[$check->status];
+                    $ret = statusCaption($check->status);
                 }                
                 return $ret;
             })

@@ -55,7 +55,7 @@ function statusCaption($val, $badge = false)
 {
     if ($badge) {
         $arr = [
-                '<span class="label label-dark">Waiting Approval</span>',
+                '<span class="label label-primary">Waiting Review / Approval</span>',
                 '<span class="label label-info">Reviewed</span>',
                 '<span class="label label-success">Approved</span>',
                 '<span class="label label-danger">Reject</span>'
@@ -63,6 +63,6 @@ function statusCaption($val, $badge = false)
     }else{
         $arr = ['Waiting Approval','Reviewed','Approved','Reject'];
     }
-    
+
     return $arr[$val];
 }
