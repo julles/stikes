@@ -6,5 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class MetodePenilaian extends Model
 {
-    protected $table = 'metode_penilaian';
+    protected $primaryKey = "id";
+
+    protected $table = "metode_penilaian";
+
+    public $timestamps = false;
+
+    public $guarded = [];
 }

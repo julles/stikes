@@ -151,6 +151,11 @@ return [
                     'url'  => '/dosen',
                     'icon' => false,
                 ],
+                [
+                    'text' => 'Metode Penilaian',
+                    'url'  => '/metode-penilaian',
+                    'icon' => false,
+                ],
             ],
         ],
         [
