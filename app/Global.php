@@ -50,3 +50,19 @@ function nameOfMonth($monthNum)
     $dateObj   = \DateTime::createFromFormat('!m', $monthNum);
     return $monthName = $dateObj->format('F'); // March
 }
+
+function statusCaption($val, $badge = false)
+{
+    if ($badge) {
+        $arr = [
+                '<span class="label label-dark">Waiting Approval</span>',
+                '<span class="label label-info">Reviewed</span>',
+                '<span class="label label-success">Approved</span>',
+                '<span class="label label-danger">Reject</span>'
+               ];
+    }else{
+        $arr = ['Waiting Approval','Reviewed','Approved','Reject'];
+    }
+    
+    return $arr[$val];
+}

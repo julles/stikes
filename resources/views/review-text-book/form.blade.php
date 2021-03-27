@@ -19,44 +19,44 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label("Semester") !!}
-                            {!! Form::text("semester",$pengembangMateri->semester->nama_semester,["class"=>"form-control","readonly"=>true,"disabled"]) !!}
+                            <p>{{ $pengembangMateri->semester->nama_semester }}</p>
                         </div>
                         <div class="form-group">
                             {!! Form::label("Judul Buku") !!}
-                            {!! Form::text("title",null,["class"=>"form-control","readonly"=>true,"disabled"]) !!}
+                            <p>{{ $model->title }}</p>
                         </div>
                         <div class="form-group">
                             {!! Form::label("Pengarang") !!}
-                            {!! Form::text("author",null,["class"=>"form-control","readonly"=>true,"disabled"]) !!}
+                            <p>{{ $model->author }}</p>
                         </div>
                         <div class="form-group">
                             {!! Form::label("Tahun Terbit") !!}
-                            {!! Form::number("tahun",null,["class"=>"form-control","maxlength" => 4,"readonly"=>true,"disabled"]) !!}
+                            <p>{{ $model->tahun }}</p>
                         </div>
                         <div class="form-group">
                             {!! Form::label("ISBN") !!}
-                            {!! Form::text("isbn",null,["class"=>"form-control","readonly"=>true,"disabled"]) !!}
+                            <p>{{ $model->isbn }}</p>
                         </div>
                         <hr>
 
                         @if($userStatus == 'reviewer')
                             @if($model->approv_commen)
                                 <div class="row mb-3">
-                                    <div class="col">
+                                    <div class="col-md-12">
                                         {!! Form::label("Kajur Notes") !!}
-                                        {!! Form::textarea("approv_commen",null,["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
+                                        <p>{{ $model->approv_commen }}</p>
                                     </div>
                                 </div>
                             @endif
                             @if($model->status == 0)
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-md-12">
                                         {!! Form::label("Reviewer Notes") !!}
                                         {!! Form::textarea("reviewer_commen",null,["class"=>"form-control","row"=>"5"]) !!}
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col text-right">
+                                    <div class="col-md-12 text-right">
                                         <button type="submit" name="status" value="1" class="btn btn-success mr-2">
                                             Approve
                                         </button>
@@ -67,9 +67,9 @@
                                 </div>
                             @else
                                 <div class="row mb-3">
-                                    <div class="col">
+                                    <div class="col-md-12">
                                         {!! Form::label("Reviewer Notes") !!}
-                                        {!! Form::textarea("reviewer_commen",null,["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
+                                        <p>{{ $model->reviewer_commen }}</p>
                                     </div>
                                 </div>
                             @endif
@@ -77,21 +77,21 @@
                         @elseif($userStatus == 'approv')
                             @if($model->reviewer_commen)
                                 <div class="row mb-3">
-                                    <div class="col">
+                                    <div class="col-md-12">
                                         {!! Form::label("Reviewer Notes") !!}
-                                        {!! Form::textarea("reviewer_commen",null,["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
+                                        <p>{{ $model->reviewer_commen }}</p>
                                     </div>
                                 </div>
                             @endif
                             @if($model->status == 1)
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-md-12">
                                         {!! Form::label("Kajur Note") !!}
                                         {!! Form::textarea("approv_commen",null,["class"=>"form-control","row"=>"5"]) !!}
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col text-right">
+                                    <div class="col-md-12 text-right">
                                         <button type="submit" name="status" value="1" class="btn btn-success mr-2">
                                             Approve
                                         </button>
@@ -102,9 +102,9 @@
                                 </div>
                             @else
                                 <div class="row mb-3">
-                                    <div class="col">
+                                    <div class="col-md-12">
                                         {!! Form::label("Kajur Notes") !!}
-                                        {!! Form::textarea("approv_commen",null,["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
+                                        <p>{{ $model->approv_commen ?? '-' }}</p>
                                     </div>
                                 </div>
                             @endif
@@ -112,29 +112,33 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
+                            {!! Form::label("Status") !!}
+                            <p>{!! statusCaption($model->status, true) !!}</p>
+                        </div>
+                        <div class="form-group">
                             {!! Form::label("Mata Kuliah") !!}
-                            {!! Form::text("mata_kuliah",$pengembangMateri->matakuliah->mk_nama,["class"=>"form-control","readonly"=>true,"disabled"]) !!}
+                            <p>{{ $pengembangMateri->matakuliah->mk_nama }}</p>
                         </div>
                         <div class="form-group">
                             {!! Form::label("Edisi") !!}
-                            {!! Form::text("edition",null,["class"=>"form-control","readonly"=>true,"disabled"]) !!}
+                            <p>{{ $model->edition }}</p>
                         </div>
                         <div class="form-group">
                             {!! Form::label("Penerbit") !!}
-                            {!! Form::text("publisher",null,["class"=>"form-control","readonly"=>true,"disabled"]) !!}
+                            <p>{{ $model->publisher }}</p>
                         </div>
                         <div class="form-group">
                             {!! Form::label("Kategori") !!}
-                            {!! Form::text("kategori",null,["class"=>"form-control","readonly"=>true,"disabled"]) !!}
+                            <p>{{ $model->kategori }}</p>
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <div class="col text-center">
+                                <div class="col-md-12 text-center">
                                     {!! Form::label("Cover") !!}
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col text-center">
+                                <div class="col-md-12 text-center">
                                     <img width="400px" src="{{ Storage::url(contents_path().$model->gbr_cover) }}">
                                 </div>
                             </div>
