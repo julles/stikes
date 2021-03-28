@@ -18,7 +18,9 @@
                         <thead>
                             <tr>
                                 <th width = "20%%">Kode Mata Kuliah</th>
-                                <th width = "70%">Nama Mata Kuliah</th>
+                                <th>Nama Mata Kuliah</th>
+                                <th width = "10%">SKS Praktikum</th>
+                                <th width = "10%">SKS Teori</th>
                                 <th width = "10%">Action</th>
                             </tr>
                         </thead>
@@ -49,6 +51,8 @@ $(function() {
         columns: [
             { data: 'mk_kode', name: 'mk_kode' },
             { data: 'mk_nama', name: 'mk_nama' },
+            { data: 'sks_praktikum', name: 'sks_praktikum' },
+            { data: 'sks_tatap_muka', name: 'sks_tatap_muka' },
             { data: 'action', name: 'action' ,searchable:false}
         ]
     });
