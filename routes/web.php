@@ -20,6 +20,8 @@ Route::middleware('auth')->group(function () {
         '/metode-penilaian' => 'MetodePenilaianController',
         '/rps' => 'RpsController',
         '/review-rps' => 'ReviewRpsController',
+        '/or' => 'OrController',
+        // '/review-or' => 'ReviewOrController',
         '/semester' => 'SemesterController',
         '/mata-kuliah' => 'MataKuliahController',
     ]);

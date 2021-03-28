@@ -98,7 +98,7 @@ function detailPmA($id)
             // Reviewer
             'app.nama as approv_nama',
             'app.nip as approv_nip',
-            'app.email as approv_email',
+            'app.email as approv_email'
             )
     ->leftJoin('dosen as sme','sme.id_dosen','=','pm_assign.sme_id')
     ->leftJoin('dosen as rev','rev.id_dosen','=','pm_assign.reviewer_id')

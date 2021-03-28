@@ -180,7 +180,7 @@ return [
         ],
         [
             'text' => 'Entry OR',
-            'url'  => '#',
+            'url'  => 'or',
             'icon' => false,
         ],
         [
@@ -190,7 +190,7 @@ return [
         ],
         [
             'text' => 'Review & Approval OR',
-            'url'  => '#',
+            'url'  => 'review-or',
             'icon' => false,
         ],
         [

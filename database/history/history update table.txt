@@ -35,3 +35,6 @@ metode_penilaian
 - weight
 
 // ----------------------------------------
+
+or
+duplicate dari tabel RPS dari status sampai akhir
