@@ -100,4 +100,12 @@ class RpsController extends Controller
         $pathToFile = Storage::url(contents_path().$type.'/'.$file);
         return Storage::response($pathToFile);
     }
+
+    public function testEmail(Request $request)
+    {
+
+        sendEmail(18,'text-book','input',40);
+
+        return 'email berhasil dikirim silahkan cek';
+    }
 }

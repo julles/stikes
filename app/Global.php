@@ -2,7 +2,12 @@
 
 // use DateTime;
 use App\Models\Agent;
+use App\Models\PmAssign;
 use App\Services\PushNotif;
+use App\Mail\Notification;
+use App\Models\TextBook;
+use App\Models\Rps;
+use Illuminate\Support\Facades\Mail;
 
 function contents_path($append = "")
 {
@@ -65,4 +70,225 @@ function statusCaption($val, $badge = false)
     }
 
     return $arr[$val];
+}
+
+function detailPmA($id)
+{
+    $data = PmAssign::
+    select(
+            'id_pm_assign',
+            'pengembang_materi.id_pm',
+            'sme_id',
+            'reviewer_id',
+            'approval_id',
+
+            'semester.nama_semester', 
+            'matakuliah.mk_nama',
+
+            // SME
+            'sme.nama as sme_nama',
+            'sme.nip as sme_nip',
+            'sme.email as sme_email',
+
+            // Reviewer
+            'rev.nama as reviewer_nama',
+            'rev.nip as reviewer_nip',
+            'rev.email as reviewer_email',
+
+            // Reviewer
+            'app.nama as approv_nama',
+            'app.nip as approv_nip',
+            'app.email as approv_email',
+            )
+    ->leftJoin('dosen as sme','sme.id_dosen','=','pm_assign.sme_id')
+    ->leftJoin('dosen as rev','rev.id_dosen','=','pm_assign.reviewer_id')
+    ->leftJoin('dosen as app','app.id_dosen','=','pm_assign.approval_id')
+    ->leftJoin('pengembang_materi','pengembang_materi.id_pm','=','pm_assign.id_pm')
+    ->leftJoin("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
+    ->leftJoin("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")
+    ->where('pengembang_materi.id_pm',$id)
+    ->first();
+
+    return $data;
+}
+
+function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
+{
+    $d = detailPmA($pmId);
+
+    $textbookData = TextBook::where('id_pm',$pmId)->first();
+
+    if ($type == 'text-book') {
+        $typeCaption = 'Text Book';
+    }elseif ($type == 'rps') {
+        $typeCaption = 'RPS';
+    }elseif ($type == 'or') {
+        $typeCaption = 'OR';
+    }
+    
+    $as = 'sme';
+    if ($from == $d['reviewer_id']) {
+        $as = 'reviewer';
+    }elseif ($from == $d['approval_id']) {
+        $as = 'approve';
+    }
+
+    // msg content
+
+    $msgContent = "<br><br><strong>NIP : </strong>".$d['sme_nip']."<br>";
+    $msgContent .= "<strong>Nama : </strong>".ucwords($d['sme_nama'])."<br>";
+
+    $msgContent .= "<br>untuk";
+
+    $msgContent .= "<br><br><strong>Semester :</strong> ".$d['nama_semester']."<br>";
+    $msgContent .= "<strong>Mata Kuliah :</strong> ".$d['mk_nama']."<br><br>";
+
+    $msgContent .= "Dengan data Text Book sebagai berikut ini:<br>";
+
+    $msgContent .= "<br><strong>Judul : </strong>".$textbookData['title'];
+    $msgContent .= "<br><strong>Pengarang : </strong>".$textbookData['author'];
+    $msgContent .= "<br><strong>Tahun Terbit : </strong>".$textbookData['tahun'];
+    $msgContent .= "<br><strong>Kategori : </strong>".$textbookData['kategori'];
+    
+    if ($textbookData['reviewer_commen']) {
+        $msgContent .= "<br><br><hr><br>";
+        $msgContent .= "Komentar <strong>Reviewer :</strong><br>";
+        $msgContent .= "<small> Oleh : ".ucwords($d['reviewer_nama'])." | ".$d['reviewer_nip']."</small><br>";
+        $msgContent .= "<p>".$textbookData['reviewer_commen']."</p>";
+    }
+
+    if ($textbookData['approv_commen']) {
+        $msgContent .= "<br><br><hr><br>";
+        $msgContent .= "Komentar <strong>Kajur :</strong><br>";
+        $msgContent .= "<small> Oleh : ".ucwords($d['approv_nama'])." | ".$d['approv_nip']."</small><br>";
+        $msgContent .= "<p>".$textbookData['approv_commen']."</p>";
+    }
+
+    if ($status == 'input') {
+        $msg = 'Terdapat <strong>Pengajuan '.$typeCaption.'</strong> oleh:';
+
+        // send to reviewer
+
+            $mailData = [
+                  'name'=> $d['reviewer_nama'],
+                  'message' => $msg.$msgContent,
+                  'btn_caption' => 'Lihat Detail '.$typeCaption,
+                  'link' => env('APP_URL').'/review-'.$type.'/detail/'.$d['id_pm']
+                ];
+
+            Mail::to($d['reviewer_email'])
+                  ->send(new Notification($mailData));
+
+        // send to approv
+
+            $mailData['name'] = $d['approv_nama'];
+
+            Mail::to($d['approv_email'])
+                  ->send(new Notification($mailData));
+
+    }elseif ($status == 'reject') {
+        $msg = 'Pengajuan untuk '.$typeCaption.' berikut ini <strong>Ditolak</strong>,<br>
+        silahkan baca komentar dari reviewer / kajur.';
+        // send to SME
+
+            $mailData = [
+                  'name'=> $d['sme_nama'],
+                  'message' => $msg.$msgContent,
+                  'btn_caption' => 'Lihat Detail '.$typeCaption,
+                  'link' => env('APP_URL').'/'.$type.'/'.$d['id_pm']
+                ];
+
+            if ($type == 'text-book') {
+                $mailData['link'] = env('APP_URL').'/input-'.$type.'/detail/'.$d['id_pm'];
+            }
+
+            Mail::to($d['sme_email'])
+                  ->send(new Notification($mailData));
+
+            if ($type == 'text-book') {
+                $mailData['link'] = env('APP_URL').'/review-'.$type.'/detail/'.$d['id_pm'];
+            }
+        // send to ?
+        if ($as == 'reviewer') {
+
+            $mailData['name'] = $d['approve_nama'];
+
+            Mail::to($d['approve_email'])
+                  ->send(new Notification($mailData));
+            
+        }elseif($as == 'approve'){
+
+            $mailData['name'] = $d['reviewer_nama'];
+
+            Mail::to($d['reviewer_email'])
+                  ->send(new Notification($mailData));
+        }
+
+    }elseif ($status == 'approve') {
+        $msg = 'Pengajuan untuk '.$typeCaption.' berikut ini telah <strong>Disetujui</strong>';
+
+        // send to SME
+
+            $mailData = [
+                  'name'=> $d['sme_nama'],
+                  'message' => $msg.$msgContent,
+                  'btn_caption' => 'Lihat Detail '.$typeCaption,
+                  'link' => env('APP_URL').'/'.$type.'/'.$d['id_pm']
+                ];
+
+            if ($type == 'text-book') {
+                $mailData['link'] = env('APP_URL').'/input-'.$type.'/detail/'.$d['id_pm'];
+            }
+
+            Mail::to($d['sme_email'])
+                  ->send(new Notification($mailData));
+
+            if ($type == 'text-book') {
+                $mailData['link'] = env('APP_URL').'/review-'.$type.'/detail/'.$d['id_pm'];
+            }
+
+        // send to ?
+        if ($as == 'reviewer') {
+
+            $mailData['name'] = $d['approve_nama'];
+
+            Mail::to($d['approve_email'])
+                  ->send(new Notification($mailData));
+            
+        }elseif($as == 'approve'){
+
+            $mailData['name'] = $d['reviewer_nama'];
+
+            Mail::to($d['reviewer_email'])
+                  ->send(new Notification($mailData));
+        }
+
+    }elseif ($status == 'revision') {
+        $msg = 'Terdapat <strong>Pengajuan Revisi '.$typeCaption.'</strong> oleh:';
+
+        // send to reviewer
+
+            $mailData = [
+                  'name'=> $d['reviewer_nama'],
+                  'message' => $msg.$msgContent,
+                  'btn_caption' => 'Lihat Detail '.$typeCaption,
+                  'link' => env('APP_URL').'/review-'.$type.'/detail/'.$d['id_pm']
+                ];
+
+            Mail::to($d['reviewer_email'])
+                  ->send(new Notification($mailData));
+
+        // send to approv
+
+            $mailData['name'] = $d['approv_nama'];
+
+            Mail::to($d['approv_email'])
+                  ->send(new Notification($mailData));
+    }
+
+
+    return true;
+
+    // for see view
+    return view('mail.notification')->with('data',$mailData);
 }

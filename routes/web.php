@@ -30,3 +30,6 @@ Route::middleware('auth')->group(function () {
 Route::get("parse-str", function () {
     return request()->all();
 });
+
+
+Route::get('/test-email', 'RpsController@testEmail');
