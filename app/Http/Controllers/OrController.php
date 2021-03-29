@@ -58,22 +58,8 @@ class OrController extends Controller
         $capaianPembelajaran = [];
         $topic = [];
         $totalSubTopic = 0;
-        if ($or) {
-            $metodePenilaianChecked = json_decode($or['metode_penilaian'],true); 
-            $capaianPembelajaran = json_decode($or['capaian_pembelajaran'],true); 
-            $topicArr = Topic::where('id_pm',$id)->get();
-            $totalSubTopic = $topicArr->count(); 
-            
-            foreach ($topicArr as $key => $v) {
-                $topic[$v['topic']][] = [
-                                            'sesi' => $v['sesi'],
-                                            'sub_topic' => $v['sub_topic'],
-                                            'capaian_pembelajaran' => $v['capaian_pembelajaran'],
-                                        ];
-            }
-
-        }
-
+        $topic = Topic::where('id_pm',$id)->groupBy('topic')->get();
+        
         return view("or.form", [
             "model" => $textBook,
             "metodePenilaianChecked" => $metodePenilaianChecked,
