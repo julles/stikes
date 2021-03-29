@@ -24,14 +24,12 @@
 @push("js")
 <script>
     $(document).ready(function(){
-        var rowIdx = 1;
+        var rowIdx = 0;
         var topicArr = @json($topic);
 
         $("#vid").on("click",function(){
-
-
             var selects = `<select 
-            class = 'form-control select2vid-${rowIdx}' name = 'video[${rowIdx}][topic]'>`;
+            class = 'form-control select2vid-${rowIdx}' name = 'video[${rowIdx}][topic_id]'>`;
             
             $.each( topicArr, function( key, value ) {
                 selects += "<option value = '"+value.id_topic+"'>"+value.topic+"</option>";
@@ -39,7 +37,7 @@
 
             selects += "</select>";
 
-           $('#vid_tbody').append(`<tr id="Rvid-${++rowIdx}"> 
+           $('#vid_tbody').append(`<tr id="Rvid-${rowIdx}"> 
                     <td class="row-index text-center" > 
                         ${selects}
                     </td> 
@@ -53,6 +51,7 @@
             ); 
 
             $(`.select2vid-${rowIdx}`).select2();
+            rowIdx++;
         });
 
         $('#vid_tbody').on('click', '.vid', function () { 

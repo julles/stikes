@@ -24,14 +24,14 @@
 @push("js")
 <script>
     $(document).ready(function(){
-        var rowIdx = 1;
+        var rowIdx = 0;
         var topicArr = @json($topic);
 
         $("#button_ppt").on("click",function(){
 
 
             var selects = `<select 
-            class = 'form-control select2ppt-${rowIdx}' name = 'ppt[${rowIdx}][topic]'>`;
+            class = 'form-control select2ppt-${rowIdx}' name = 'ppt[${rowIdx}][topic_id]'>`;
             
             $.each( topicArr, function( key, value ) {
                 selects += "<option value = '"+value.id_topic+"'>"+value.topic+"</option>";
@@ -39,7 +39,7 @@
 
             selects += "</select>";
 
-           $('#ppt_tbody').append(`<tr id="Rppt-${++rowIdx}"> 
+           $('#ppt_tbody').append(`<tr id="Rppt-${rowIdx}"> 
                     <td class="row-index text-center" > 
                         ${selects}
                     </td> 
@@ -53,6 +53,7 @@
             ); 
 
             $(`.select2ppt-${rowIdx}`).select2();
+            rowIdx++;
         });
 
         $('#ppt_tbody').on('click', '.remove_ppt', function () { 

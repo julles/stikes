@@ -3,7 +3,7 @@
 @extends('adminlte::page')
 
 @section('content_header')
-<h1>Entry Rencana Pembelajaran Semester (RPS)</h1>
+<h1>OR</h1>
 @stop
 
 @section('css')
@@ -29,8 +29,6 @@
                         <li><a href="#materi-pendukung">Materi Pendukung</a></li>
                         <li><a href="#exercise">Exercise / Kuis</a></li>
                         <li><a href="#maping-topic">Mapping Topik</a></li>
-
-                        <li><a href="#topik" onclick = "return getCp();">Topic</a></li>
 
                         <li><a id="summary_btn" onclick = "return summary();" href="#summary">Summary</a></li>
                     </ul>

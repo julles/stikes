@@ -59,7 +59,7 @@ class OrController extends Controller
         $topic = [];
         $totalSubTopic = 0;
         $topic = Topic::where('id_pm',$id)->groupBy('topic')->get();
-        
+
         return view("or.form", [
             "model" => $textBook,
             "metodePenilaianChecked" => $metodePenilaianChecked,

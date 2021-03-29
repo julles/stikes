@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col text-center">
                 <button type = "button" class = "btn btn-success btn-sm" id = "button_ln">
-                + Add ln
+                + Add Ln
                 </button>  
             </div>
         </div>
@@ -24,14 +24,14 @@
 @push("js")
 <script>
     $(document).ready(function(){
-        var rowIdx = 1;
+        var rowIdx = 0;
         var topicArr = @json($topic);
 
         $("#button_ln").on("click",function(){
 
 
             var selects = `<select 
-            class = 'form-control select2ln-${rowIdx}' name = 'ln[${rowIdx}][topic]'>`;
+            class = 'form-control select2ln-${rowIdx}' name = 'ln[${rowIdx}][topic_id]'>`;
             
             $.each( topicArr, function( key, value ) {
                 selects += "<option value = '"+value.id_topic+"'>"+value.topic+"</option>";
@@ -39,7 +39,7 @@
 
             selects += "</select>";
 
-           $('#ln_tbody').append(`<tr id="Rln-${++rowIdx}"> 
+           $('#ln_tbody').append(`<tr id="Rln-${rowIdx}"> 
                     <td class="row-index text-center" > 
                         ${selects}
                     </td> 
@@ -53,6 +53,7 @@
             ); 
 
             $(`.select2ln-${rowIdx}`).select2();
+            rowIdx++;
         });
 
         $('#ln_tbody').on('click', '.remove_ln', function () { 

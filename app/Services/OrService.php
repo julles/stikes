@@ -8,6 +8,7 @@ use App\Singleton\Component;
 use Illuminate\Http\Request;
 use App\Models\PengembangMateri;
 use App\Models\OrModel;
+use App\Models\OrFileModel;
 use App\Models\Topic;
 use App\Models\TextBook;
 use Exception;
@@ -89,62 +90,6 @@ class OrService
         if ($check) {
             // if update    
 
-            $data = OrModel::find($id);
-            $data->strategi_pembelajaran = $request['strategi_pembelajaran'];
-            $data->deskripsi_mata_kuliah = $request['deskripsi_mata_kuliah'];
-            $data->media_pembelajaran = $request['media_pembelajaran'];
-            $data->capaian_pembelajaran = json_encode($request['capaian_pembelajaran'],true);
-            $data->metode_penilaian = json_encode($request['metode_penilaian'],true);
-            $data->status = 0;
-            $data->updated_at = $date;
-
-            // upload file
-
-            $peta_kompetensi = $request->file("peta_kompetensi");
-            
-            if (!empty($peta_kompetensi)) {
-
-                $fileName = $id.'-peta_kompetensi' . "." . $peta_kompetensi->getClientOriginalExtension();
-
-                $peta_kompetensi->storeAs("public/contents/peta_kompetensi/", $fileName);
-                $data->peta_kompetensi = $fileName;
-            }
-
-            $rubrik_penilaian = $request->file("rubrik_penilaian");
-            
-            if (!empty($rubrik_penilaian)) {
-
-                $fileName = $id.'-rubrik_penilaian' . "." . $rubrik_penilaian->getClientOriginalExtension();
-
-                $rubrik_penilaian->storeAs("public/contents/rubrik_penilaian/", $fileName);
-                $data->rubrik_penilaian = $fileName;
-            }
-
-            $data->save();
-
-            // save topic
-
-                // delete topic pm
-                Topic::where('id_pm',$id)->delete();
-
-                // insert topic
-                $payload = [];
-                $i = 0;
-                foreach ($request['topic'] as $key => $v) {
-
-                    $subTopic = $v['sub_topik'];
-                    unset($v['sub_topik']);
-                    foreach ($subTopic as $subTopickey => $subTopicVal) {
-                        $payload[$i] = $v;
-                        $payload[$i]['sub_topic'] = $subTopicVal;
-                        $payload[$i]['id_pm'] = $id;
-                        $payload[$i]['status'] = 0;                       
-                       $i++; 
-                    }
-
-                }
-
-                Topic::insert($payload);
 
                 return true;
         }else{
@@ -154,58 +99,80 @@ class OrService
 
             $payload = [
                 'id' => $id,
-                'strategi_pembelajaran' => $request['strategi_pembelajaran'],
-                'deskripsi_mata_kuliah' => $request['deskripsi_mata_kuliah'],
-                'media_pembelajaran' => $request['media_pembelajaran'],
-                'capaian_pembelajaran' => json_encode($request['capaian_pembelajaran'],true),
-                'metode_penilaian' => json_encode($request['metode_penilaian'],true),
                 'status' => 0,
                 'created_at' => $date,
                 'updated_at' => $date
             ];
-
+            // dd($request->all());
             // upload file
 
-            $peta_kompetensi = $request->file("peta_kompetensi");
-            
-            if (!empty($peta_kompetensi)) {
+            // PPT
+                if (isset($request->ppt)) {
+                    $fileData = [];
+                    foreach ($request->ppt as $key => $v) {
+                        
+                        $file = $v['file'];
 
-                $fileName = $id.'-peta_kompetensi' . "." . $peta_kompetensi->getClientOriginalExtension();
+                        $fileName = $id.'-'. generateRandomString(5) . "." . $file->getClientOriginalExtension();
 
-                $peta_kompetensi->storeAs("public/contents/peta_kompetensi/", $fileName);
-                $payload['peta_kompetensi'] =  $fileName;
-            }
+                        $file->storeAs('public/contents/or_ppt/', $fileName);
+                        
+                        $fileData[$key] = [
+                                            'topic_id' => $v['topic_id'],
+                                            'id_pm' => $id,
+                                            'type' => 'or_ppt',
+                                            'file' => $fileName,
+                                          ];
+                    }
 
-            $rubrik_penilaian = $request->file("rubrik_penilaian");
-            
-            if (!empty($rubrik_penilaian)) {
+                    OrFileModel::insert($fileData);
+                }
+            // LN
+                if (isset($request->ln)) {
+                    $fileData = [];
+                    foreach ($request->ln as $key => $v) {
+                        
+                        $file = $v['file'];
 
-                $fileName = $id.'-rubrik_penilaian' . "." . $rubrik_penilaian->getClientOriginalExtension();
+                        $fileName = $id.'-'. generateRandomString(5) . "." . $file->getClientOriginalExtension();
 
-                $rubrik_penilaian->storeAs("public/contents/rubrik_penilaian/", $fileName);
-                $payload['rubrik_penilaian'] =  $fileName;
-            }
+                        $file->storeAs('public/contents/or_ln/', $fileName);
+                        
+                        $fileData[$key] = [
+                                            'topic_id' => $v['topic_id'],
+                                            'id_pm' => $id,
+                                            'type' => 'or_ln',
+                                            'file' => $fileName,
+                                          ];
+                    }
 
-            $save = OrModel::insert($payload);
-
-            // insert topic
-            $payload = [];
-            $i = 0;
-            foreach ($request['topic'] as $key => $v) {
-
-                $subTopic = $v['sub_topik'];
-                unset($v['sub_topik']);
-                foreach ($subTopic as $subTopickey => $subTopicVal) {
-                    $payload[$i] = $v;
-                    $payload[$i]['sub_topic'] = $subTopicVal;
-                    $payload[$i]['id_pm'] = $id;
-                    $payload[$i]['status'] = 0;                       
-                   $i++; 
+                    OrFileModel::insert($fileData);
                 }
 
-            }
+            // VIDEO
 
-            Topic::insert($payload);
+                if (isset($request->video)) {
+                    $fileData = [];
+                    foreach ($request->video as $key => $v) {
+                        
+                        $file = $v['file'];
+
+                        $fileName = $id.'-'. generateRandomString(5) . "." . $file->getClientOriginalExtension();
+
+                        $file->storeAs('public/contents/or_video/', $fileName);
+                        
+                        $fileData[$key] = [
+                                            'topic_id' => $v['topic_id'],
+                                            'id_pm' => $id,
+                                            'type' => 'or_video',
+                                            'file' => $fileName,
+                                          ];
+                    }
+
+                    OrFileModel::insert($fileData);
+                }
+
+            $save = OrModel::insert($payload);
 
             return true;
         }
