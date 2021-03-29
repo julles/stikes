@@ -4,6 +4,7 @@
             <thead>
                 <tr>
                     <th>Set</th>
+                    <th>No.</th>
                     <th>Soal</th>
                     <th>Action</th>
                 </tr>

@@ -146,8 +146,10 @@ class OrController extends Controller
                         $html_tabel .= '</td>';
                     $html_tabel .= '</tr>';
 
+                    $no = 1;
                     foreach ($v as $key => $q) {
                         $html_tabel .= '<tr>';
+                            $html_tabel .= '<td class="text-center">'.$no++.'</td>';
                             $html_tabel .= '<td>'.$q['isi_soal'].'</td>';
                             $html_tabel .= '<td width="10%" class="text-center">';
                             $html_tabel .= '<span onclick="editQ('.$q['id_kuis'].')" class="btn btn-success mr-2 mb-2"><i class="fa fa-edit"></i></span>';

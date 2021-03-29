@@ -32,7 +32,7 @@
         $("#button_or_materi_pendukung").on("click",function(){
 
             var selects = `<select style="width:100%"
-            class = 'form-control select2ln-${rowIdx}' name = 'ln[${rowIdx}][topic_id]'>`;
+            class = 'form-control select2ln-${rowIdx}' name = 'materi_pendukung[${rowIdx}][topic_id]'>`;
             
             $.each( topicArr, function( key, value ) {
                 selects += "<option value = '"+value.id_topic+"'>"+value.topic+"</option>";
