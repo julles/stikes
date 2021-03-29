@@ -38,4 +38,9 @@ class PengembangMateri extends Model
     {
         return $this->hasOne(Rps::class, "id");
     }
+
+    public function or()
+    {
+        return $this->hasOne(OrModel::class, "id");
+    }
 }

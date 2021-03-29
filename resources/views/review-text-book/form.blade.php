@@ -39,6 +39,27 @@
                         </div>
                         <hr>
 
+                        <div class="box box-info">
+                            <div class="box-body">
+                                @if($model->reviewer_commen)
+                                    <div class="row mb-3">
+                                        <div class="col-md-12">
+                                            {!! Form::label("Reviewer Notes") !!}
+                                            <p>{{ $model->reviewer_commen }}</p>
+                                        </div>
+                                    </div>
+                                @endif
+                                @if($model->approv_commen)
+                                    <div class="row mb-3">
+                                        <div class="col-md-12">
+                                            {!! Form::label("Kajur Notes") !!}
+                                            <p>{{ $model->approv_commen }}</p>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+
                         @if($userStatus == 'reviewer')
                             @if($model->approv_commen)
                                 <div class="row mb-3">

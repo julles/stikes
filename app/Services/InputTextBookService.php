@@ -63,7 +63,9 @@ class InputTextBookService
                 $name = !empty(@$textBook->id_text_book) ? "Edit" : "Input";
 
                 if (@$textBook->status == 2) {
-                    $class .= ' disabled';
+                    // $class .= ' disabled';
+                    $name = "View";
+                    return \Html::link("review-text-book/detail/" . $model->id_pm, $name, ["class" => $class]);
                 }
 
                 return \Html::link($this->route . "/detail/" . $model->id_pm, $name, ["class" => $class]);

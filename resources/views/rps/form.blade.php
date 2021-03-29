@@ -70,6 +70,28 @@
                         </div>
                         <div class="col-md-6">
                             
+                            @if($rps->status == 2)
+                                <div class="box box-info">
+                                    <div class="box-body">
+                                        @if($rps->reviewer_commen)
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    {!! Form::label("Reviewer Notes") !!}
+                                                    <p>{{ $rps->reviewer_commen }}</p>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if($rps->approv_commen)
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    {!! Form::label("Kajur Notes") !!}
+                                                    <p>{{ $rps->approv_commen }}</p>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
                             @if($userStatus == 'reviewer')
                                 @if($rps->approv_commen)
                                     <div class="row mb-3">

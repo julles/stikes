@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\OrRequest;
 use Auth;
 
-class OrService
+class ReviewOrService
 {
     private $route;
 
@@ -25,7 +25,7 @@ class OrService
         $this->route = "";
     }
 
-    public function setRoute($route = ""): OrService
+    public function setRoute($route = ""): ReviewOrService
     {
         $this->route = $route;
 
@@ -35,7 +35,9 @@ class OrService
     public function getData(Request $request)
     {
         $user = Auth::user();
-        $pm = pmAssign::where('sme_id',$user->id)->pluck('id_pm');
+        $pm = pmAssign::where('reviewer_id',$user->id)
+                        ->orWhere('approval_id',$user->id)
+                        ->pluck('id_pm');
         
         $model = PengembangMateri::
             select('pengembang_materi.id_pm', 
@@ -67,22 +69,31 @@ class OrService
             ->addColumn('action', function ($model) {
 
                 $check = OrModel::where("id", $model->id_pm)->first();
-                $class = "btn btn-primary btn-sm ";
-                $name = !empty(@$check->id) ? "Edit" : "Input";
-
-                if (@$check->status == 2 || @$check->status == 1) {
-                    // $class .= ' disabled';
-                    $name = "View";
-                    return \Html::link("review-or/detail/" . $model->id_pm, $name, ["class" => $class]);
-                }
-
-                return \Html::link($this->route . "/detail/" . $model->id_pm, $name, ["class" => $class]);
+                $name = !empty(@$check) ? "View" : "Input";
+                
+                return \Html::link($this->route . "/detail/" . $model->id_pm, $name, ["class" => "btn btn-primary"]);
 
             })
             ->make();
     }
 
-    public function updateOrcreate(OrRequest $request, $id)
+
+    public function userStatus($id)
+    {
+        $user = Auth::user();
+        $pengembangMateri = PengembangMateri::findOrFail($id);
+
+        $status = false;
+        if ($pengembangMateri->pm_assign->reviewer_id == $user->id) {
+            $status = 'reviewer';
+        }elseif($pengembangMateri->pm_assign->approval_id == $user->id){
+            $status = 'approv';
+        }
+
+        return $status;
+    }
+
+    public function reviewOrApprove(OrRequest $request, $id)
     {
 
         $check = OrModel::find($id);
@@ -90,14 +101,50 @@ class OrService
         $date = DATE('Y-m-d H:i:s');
 
         if ($check) {
-            
-            // if review / approve
 
-            // if update    
+            // if review / approv
 
+            if (isset($request->reviewer_commen) || isset($request->approv_commen)) {
 
+                $user = Auth::user();
+                $pengembangMateri = PengembangMateri::with('pm_assign')->findOrFail($id);
+                $model = $pengembangMateri->or()->first();
 
+                // check status dosen
+                if ($pengembangMateri->pm_assign->reviewer_id == $user->id) {
+
+                    $inputs = [
+                                'reviewer_commen' => $request->reviewer_commen,
+                                'reviewer_date' => date("Y-m-d H:i:s"),
+                                'reviewer_user' => $user->id
+                    ];
+
+                    if ($request->status == 1) {
+                        $inputs['status'] = 1;
+                    }else{
+                        $inputs['status'] = 3;
+                    }
+
+                }elseif($pengembangMateri->pm_assign->approval_id == $user->id){
+
+                    $inputs = [
+                                'approv_commen' => $request->approv_commen,
+                                'approv_date' => date("Y-m-d H:i:s"),
+                                'approv_user' => $user->id
+                    ];
+
+                    if ($request->status == 1) {
+                        $inputs['status'] = 2;
+                    }else{
+                        $inputs['status'] = 3;
+                    }
+                }
+
+                $model->update($inputs);
+                
                 return true;
+            }
+
         }else{
             // if create
 

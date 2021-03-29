@@ -68,7 +68,9 @@ class RpsService
                 $name = !empty(@$check->id) ? "Edit" : "Input";
 
                 if (@$check->status == 2 || @$check->status == 1) {
-                    $class .= ' disabled';
+                    // $class .= ' disabled';
+                    $name = "View";
+                    return \Html::link("review-rps/detail/" . $model->id_pm, $name, ["class" => $class]);
                 }
 
                 return \Html::link($this->route . "/detail/" . $model->id_pm, $name, ["class" => $class]);

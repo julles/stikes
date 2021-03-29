@@ -21,15 +21,26 @@
             <div class="box-body">
                 <div id="tabs">
                     <ul>
-                        <li><a href="#text_book">Text Book</a></li>
-                        
-                        <li><a href="#ppt">PPT</a></li>
-                        <li><a href="#ln">LN</a></li>
-                        <li><a href="#video">Video</a></li>
-                        <li><a href="#materi-pendukung">Materi Pendukung</a></li>
-                        <li><a href="#exercise">Exercise / Kuis</a></li>
-                        <!-- <li><a href="#maping-topic">Mapping Topik</a></li> -->
 
+                        @if($review_stat)
+                            <li style="display: none;"><a href="#text_book">Text Book</a></li>
+                            <li style="display: none;"><a href="#text_book">Text Book</a></li>
+                            
+                            <li style="display: none;"><a href="#ppt">PPT</a></li>
+                            <li style="display: none;"><a href="#ln">LN</a></li>
+                            <li style="display: none;"><a href="#video">Video</a></li>
+                            <li style="display: none;"><a href="#materi-pendukung">Materi Pendukung</a></li>
+                        @else
+                            <li><a href="#text_book">Text Book</a></li>
+                            
+                            <li><a href="#ppt">PPT</a></li>
+                            <li><a href="#ln">LN</a></li>
+                            <li><a href="#video">Video</a></li>
+                            <li><a href="#materi-pendukung">Materi Pendukung</a></li>
+                            <!-- <li><a href="#maping-topic">Mapping Topik</a></li> -->
+                        @endif
+
+                        <li><a href="#exercise">Exercise / Kuis</a></li>
                         <li><a id="summary_btn" onclick = "return summary();" href="#summary">Summary</a></li>
                     </ul>
 
@@ -73,20 +84,44 @@
                         </div>
                         <div class="col-md-6">
                             
+                            @if($or->status == 2)
+
+                                <div class="box box-info">
+                                    <div class="box-body">
+                                        @if($or->reviewer_commen)
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    {!! Form::label("Reviewer Notes") !!}
+                                                    <p>{{ $or->reviewer_commen }}</p>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if($or->approv_commen)
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    {!! Form::label("Kajur Notes") !!}
+                                                    <p>{{ $or->approv_commen }}</p>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
+
                             @if($userStatus == 'reviewer')
-                                @if($rps->approv_commen)
+                                @if($or->approv_commen)
                                     <div class="row mb-3">
                                         <div class="col">
                                             {!! Form::label("Kajur Notes") !!}
-                                            {!! Form::textarea("approv_commen",$rps->approv_commen ?? '',["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
+                                            {!! Form::textarea("approv_commen",$or->approv_commen ?? '',["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
                                         </div>
                                     </div>
                                 @endif
-                                @if($rps->status == 0)
+                                @if($or->status == 0)
                                     <div class="row">
                                         <div class="col">
                                             {!! Form::label("Reviewer Notes") !!}
-                                            {!! Form::textarea("reviewer_commen",$rps->reviewer_commen ?? '',["class"=>"form-control","row"=>"5"]) !!}
+                                            {!! Form::textarea("reviewer_commen",$or->reviewer_commen ?? '',["class"=>"form-control","row"=>"5"]) !!}
                                         </div>
                                     </div>
                                     <div class="row mt-3 mb-5">
@@ -103,25 +138,25 @@
                                     <div class="row mb-3">
                                         <div class="col">
                                             {!! Form::label("Reviewer Notes") !!}
-                                            {!! Form::textarea("reviewer_commen",$rps->reviewer_commen ?? '',["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
+                                            {!! Form::textarea("reviewer_commen",$or->reviewer_commen ?? '',["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
                                         </div>
                                     </div>
                                 @endif
 
                             @elseif($userStatus == 'approv')
-                                @if($rps->reviewer_commen)
+                                @if($or->reviewer_commen)
                                     <div class="row mb-3">
                                         <div class="col">
                                             {!! Form::label("Reviewer Notes") !!}
-                                            {!! Form::textarea("reviewer_commen",$rps->reviewer_commen ?? '',["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
+                                            {!! Form::textarea("reviewer_commen",$or->reviewer_commen ?? '',["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
                                         </div>
                                     </div>
                                 @endif
-                                @if($rps->status == 1)
+                                @if($or->status == 1)
                                     <div class="row">
                                         <div class="col">
                                             {!! Form::label("Kajur Note") !!}
-                                            {!! Form::textarea("approv_commen",$rps->approv_commen ?? '',["class"=>"form-control","row"=>"5"]) !!}
+                                            {!! Form::textarea("approv_commen",$or->approv_commen ?? '',["class"=>"form-control","row"=>"5"]) !!}
                                         </div>
                                     </div>
                                     <div class="row mt-3 mb-5">
@@ -138,7 +173,7 @@
                                     <div class="row mb-3">
                                         <div class="col">
                                             {!! Form::label("Kajur Notes") !!}
-                                            {!! Form::textarea("approv_commen",$rps->approv_commen ?? '',["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
+                                            {!! Form::textarea("approv_commen",$or->approv_commen ?? '',["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
                                         </div>
                                     </div>
                                 @endif

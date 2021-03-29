@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
         '/rps' => 'RpsController',
         '/review-rps' => 'ReviewRpsController',
         '/or' => 'OrController',
-        // '/review-or' => 'ReviewOrController',
+        '/review-or' => 'ReviewOrController',
         '/semester' => 'SemesterController',
         '/mata-kuliah' => 'MataKuliahController',
     ]);
