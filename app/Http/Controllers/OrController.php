@@ -12,6 +12,7 @@ use App\Models\MetodePenilaian;
 use App\Services\OrService;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrRequest;
+use Storage;
 
 class OrController extends Controller
 {
@@ -194,5 +195,189 @@ class OrController extends Controller
         $request['id_pm'] = $id;
         $save = Kuis::insert($request->all());
         return response()->json($save);
+    }
+
+    public function summary($id)
+    {
+        $html = '';
+
+        $orFile = [];
+        $orFileData = OrFileModel::leftJoin('topic','topic.id_topic','=','or_file.topic_id')
+                                    ->selectRaw('or_file.*,CONCAT(topic," - ",sub_topic) as topic')
+                                    ->where('or_file.id_pm',$id)->get();
+        if ($orFileData->count() > 0) {
+
+            foreach ($orFileData as $key => $v) {
+                $orFile[$v->type] = $orFileData->where('type',$v->type);
+            }
+        }
+
+        if (isset($orFile['or_ppt'])) {
+            
+            $html .= '<div class="row">';
+                $html .= '<h3>PPT</h3>';
+                $html .= '<hr>';
+                $html .= '<div class="col-md-8">';
+                    $html .= '<table class="table">';
+                        $html .= '<tr>';
+                            $html .= '<th>No</th>';
+                            $html .= '<th>Topic</th>';
+                            $html .= '<th>File</th>';
+                        $html .= '</tr>';
+
+                        $no = 1;
+                        foreach ($orFile['or_ppt'] as $key => $v) {
+                            $html .= '<tr>';
+                                $html .= '<td>'.$no++.'</td>';
+                                $html .= '<td>'.$v['topic'].'</td>';
+                                $html .= '<td>';
+                                    $html .= '<a href="'.Storage::url(contents_path().'or_ppt/'.$v->file).'">';
+                                        $html .= '<i class="fa fa-file"></i> View';
+                                    $html .= '</a>';
+                                $html .= '</td>';
+                            $html .= '</tr>';
+                        }
+
+                    $html .= '</table>';
+                $html .= '</div>';
+            $html .= '</div>';
+        }
+
+        if (isset($orFile['or_ln'])) {
+            
+            $html .= '<div class="row">';
+                $html .= '<h3>LN</h3>';
+                $html .= '<hr>';
+                $html .= '<div class="col-md-8">';
+                    $html .= '<table class="table">';
+                        $html .= '<tr>';
+                            $html .= '<th>No</th>';
+                            $html .= '<th>Topic</th>';
+                            $html .= '<th>File</th>';
+                        $html .= '</tr>';
+                        $no = 1;
+                        foreach ($orFile['or_ln'] as $key => $v) {
+                            $html .= '<tr>';
+                                $html .= '<td>'.($no++).'</td>';
+                                $html .= '<td>'.$v['topic'].'</td>';
+                                $html .= '<td>';
+                                    $html .= '<a href="'.Storage::url(contents_path().'or_ln/'.$v->file).'">';
+                                        $html .= '<i class="fa fa-file"></i> View';
+                                    $html .= '</a>';
+                                $html .= '</td>';
+                            $html .= '</tr>';
+                        }
+
+                    $html .= '</table>';
+                $html .= '</div>';
+            $html .= '</div>';
+        }
+
+        if (isset($orFile['or_video'])) {
+            
+            $html .= '<div class="row">';
+                $html .= '<h3>Video</h3>';
+                $html .= '<hr>';
+                $html .= '<div class="col-md-8">';
+                    $html .= '<table class="table">';
+                        $html .= '<tr>';
+                            $html .= '<th>No</th>';
+                            $html .= '<th>Topic</th>';
+                            $html .= '<th>File</th>';
+                        $html .= '</tr>';
+                        $no = 1;
+                        foreach ($orFile['or_video'] as $key => $v) {
+                            $html .= '<tr>';
+                                $html .= '<td>'.($no++).'</td>';
+                                $html .= '<td>'.$v['topic'].'</td>';
+                                $html .= '<td>';
+                                    $html .= '<a href="'.Storage::url(contents_path().'or_video/'.$v->file).'">';
+                                        $html .= '<i class="fa fa-file"></i> View';
+                                    $html .= '</a>';
+                                $html .= '</td>';
+                            $html .= '</tr>';
+                        }
+
+                    $html .= '</table>';
+                $html .= '</div>';
+            $html .= '</div>';
+        }
+
+        if (isset($orFile['or_materi_pendukung'])) {
+            
+            $html .= '<div class="row">';
+                $html .= '<h3>Materi Pendukung</h3>';
+                $html .= '<hr>';
+                $html .= '<div class="col-md-8">';
+                    $html .= '<table class="table">';
+                        $html .= '<tr>';
+                            $html .= '<th>No</th>';
+                            $html .= '<th>Topic</th>';
+                            $html .= '<th>Judul</th>';
+                            $html .= '<th>Link</th>';
+                            $html .= '<th>File</th>';
+                        $html .= '</tr>';
+                        $no = 1;
+                        foreach ($orFile['or_materi_pendukung'] as $key => $v) {
+                            $html .= '<tr>';
+                                $html .= '<td>'.($no++).'</td>';
+                                $html .= '<td>'.$v['topic'].'</td>';
+                                $html .= '<td>'.$v['title'].'</td>';
+                                $html .= '<td><a target="_blank" href="'.$v['link'].'">'.$v['link'].'</a></td>';
+                                $html .= '<td>';
+                                    $html .= '<a href="'.Storage::url(contents_path().'or_materi_pendukung/'.$v->file).'">';
+                                        $html .= '<i class="fa fa-file"></i> View';
+                                    $html .= '</a>';
+                                $html .= '</td>';
+                            $html .= '</tr>';
+                        }
+
+                    $html .= '</table>';
+                $html .= '</div>';
+            $html .= '</div>';
+        }
+
+        $kuis = Kuis::where('id_pm',$id)
+                      ->select(
+                                'id_kuis',
+                                'durasi',
+                                'isi_soal',
+                                'jawaban',
+                                'pilihan_a',
+                                'pilihan_b',
+                                'pilihan_c',
+                                'pilihan_d',
+                                'varian_latihan'
+                               )
+                      ->orderBy('varian_latihan','ASC')
+                      ->orderBy('id_kuis','ASC')
+                      ->get();
+
+        if ($kuis->count() > 0) {
+            
+            $html .= '<div class="row">';
+                $html .= '<h3>Total Exercise / Kuis</h3>';
+                $html .= '<hr>';
+                $html .= '<div class="col-md-8">';
+                    $html .= '<table class="table">';
+                        $html .= '<tr>';
+                            $html .= '<th>Total Set</th>';
+                            $html .= '<th>Total Soal</th>';
+                        $html .= '</tr>';
+                        $html .= '<tr>';
+                            $html .= '<th>'.$kuis->max('varian_latihan').'</th>';
+                            $html .= '<th>'.$kuis->count().'</th>';
+                        $html .= '</tr>';
+
+                    $html .= '</table>';
+                $html .= '</div>';
+            $html .= '</div>';
+        }
+
+        $ret = [
+                'tabel_or_detail' => $html
+        ];
+
+        return response()->json($ret);
     }
 }

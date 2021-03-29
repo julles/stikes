@@ -26,10 +26,10 @@
                                 </select>
                             </td>
                             <td class="row-index" > 
-                                <input type="text" class="form-control" name="materi_pendukung[{{$key}}][title]">
+                                <input type="text" class="form-control" name="materi_pendukung[{{$key}}][title]" value="{{ $v['title'] }}">
                             </td> 
                             <td class="row-index" > 
-                                <input type="text" class="form-control" name="materi_pendukung[{{$key}}][link]">
+                                <input type="text" class="form-control" name="materi_pendukung[{{$key}}][link]" value="{{ $v['link'] }}">
                             </td> 
                             <td class="text-center" width="15%"> 
                                 <input type="file" class="form-control" name="materi_pendukung[{{$key}}][file]" required>

@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/or/detail/{id}/question', 'OrController@questionStore');
     Route::delete('/or/detail/{id}/question', 'OrController@deleteQuestion');
     
+    Route::get('/or/detail/{id}/summary', 'OrController@summary');
+
     Route::get('/rps/view-pdf/{type}/{file}', 'RpsController@viewPdf');
 });
 
