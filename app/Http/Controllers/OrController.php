@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PengembangMateri;
 use App\Models\OrModel;
+use App\Models\OrFileModel;
 use App\Models\TextBook;
 use App\Models\Topic;
 use App\Models\Kuis;
@@ -59,16 +60,20 @@ class OrController extends Controller
         $capaianPembelajaran = [];
         $topic = [];
         $totalSubTopic = 0;
-        // $topic = Topic::where('id_pm',$id)
-        //                 ->groupBy('topic')
-        //                 ->orderBy('sesi')
-        //                 ->orderBy('topic')
-        //                 ->get();
         $topic = Topic::where('id_pm',$id)
                             ->selectRaw('id_topic, sesi, CONCAT(topic," - ",sub_topic) as topic')
                             ->orderBy('sesi')
+                            // ->groupBy('topic')
                             ->orderBy('topic')
                             ->get();
+        $orFile = [];
+        $orFileData = OrFileModel::where('id_pm',$id)->get();
+        if ($orFileData->count() > 0) {
+
+            foreach ($orFileData as $key => $v) {
+                $orFile[$v->type] = $orFileData->where('type',$v->type);
+            }
+        }
 
         return view("or.form", [
             "model" => $textBook,
@@ -77,6 +82,7 @@ class OrController extends Controller
             "metodePenilaian" => $metodePenilaian,
             "totalSubTopic" => $totalSubTopic,
             "topic" => $topic,
+            "orFile" => $orFile,
             "titleAction" => $titleAction,
             "or" => $or,
             "review_stat" => false,

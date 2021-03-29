@@ -11,6 +11,35 @@
                 </tr>
             </thead>
             <tbody id = "or_materi_pendukung_tbody">
+                @if(isset($orFile['or_materi_pendukung']))
+                    @foreach($orFile['or_materi_pendukung'] as $key => $v)
+                        <tr>
+                            <td>
+                                <select class = 'form-control select2' style="width:100%" name ='materi_pendukung[{{$key}}][topic_id]'>
+                                    @foreach($topic as $keyT => $t)
+                                        <option value="{{ $t['id_topic'] }}"
+                                        @if($v->topic_id == $t['id_topic'])
+                                        selected
+                                        @endif
+                                        >{{ $t['topic'] }}</option>
+                                    @endforeach()
+                                </select>
+                            </td>
+                            <td class="row-index" > 
+                                <input type="text" class="form-control" name="materi_pendukung[{{$key}}][title]">
+                            </td> 
+                            <td class="row-index" > 
+                                <input type="text" class="form-control" name="materi_pendukung[{{$key}}][link]">
+                            </td> 
+                            <td class="text-center" width="15%"> 
+                                <input type="file" class="form-control" name="materi_pendukung[{{$key}}][file]" required>
+                            </td> 
+                            <td class="text-center" width="10%"> 
+                                <button type = "button" class = "btn btn-danger btn-sm remove_ppt">X</button>
+                            </td> 
+                        </tr>
+                    @endforeach()
+                @endif()
             </tbody>
         </table>
         <div class="row">
@@ -26,13 +55,13 @@
 @push("js")
 <script>
     $(document).ready(function(){
-        var rowIdx = 0;
+        var rowIdx = "{{count($orFile['or_materi_pendukung']) ?? 0}}";
         var topicArr = @json($topic);
 
         $("#button_or_materi_pendukung").on("click",function(){
 
             var selects = `<select style="width:100%"
-            class = 'form-control select2ln-${rowIdx}' name = 'materi_pendukung[${rowIdx}][topic_id]'>`;
+            class = 'form-control select2materi_pendukung-${rowIdx}' name = 'materi_pendukung[${rowIdx}][topic_id]'>`;
             
             $.each( topicArr, function( key, value ) {
                 selects += "<option value = '"+value.id_topic+"'>"+value.topic+"</option>";
@@ -59,7 +88,7 @@
                 </tr>`
             ); 
 
-            $(`.select2or_materi_pendukung-${rowIdx}`).select2();
+            $(`.select2materi_pendukung-${rowIdx}`).select2();
             rowIdx++;
         });
 

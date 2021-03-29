@@ -9,6 +9,29 @@
                 </tr>
             </thead>
             <tbody id = "ppt_tbody">
+                @if(isset($orFile['or_ppt']))
+                    @foreach($orFile['or_ppt'] as $key => $v)
+                        <tr>
+                            <td>
+                                <select class = 'form-control select2' name ='ppt[{{$key}}][topic_id]'>
+                                    @foreach($topic as $keyT => $t)
+                                        <option value="{{ $t['id_topic'] }}"
+                                        @if($v->topic_id == $t['id_topic'])
+                                        selected
+                                        @endif
+                                        >{{ $t['topic'] }}</option>
+                                    @endforeach()
+                                </select>
+                            </td>
+                            <td class="text-center" width="30%"> 
+                                <input type="file" class="form-control" name="ppt[{{$key}}][file]" required>
+                            </td> 
+                            <td class="text-center" width="10%"> 
+                                <button type = "button" class = "btn btn-danger btn-sm remove_ppt">X</button>
+                            </td> 
+                        </tr>
+                    @endforeach()
+                @endif()
             </tbody>
         </table>
         <div class="row">
@@ -24,7 +47,7 @@
 @push("js")
 <script>
     $(document).ready(function(){
-        var rowIdx = 0;
+        var rowIdx = "{{count($orFile['or_ppt']) ?? 0}}";
         var topicArr = @json($topic);
 
         $("#button_ppt").on("click",function(){
