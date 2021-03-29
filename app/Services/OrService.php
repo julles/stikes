@@ -172,6 +172,32 @@ class OrService
                     OrFileModel::insert($fileData);
                 }
 
+            // Materi Pendukung
+                if (isset($request->materi_pendukung)) {
+                    $fileData = [];
+                    foreach ($request->materi_pendukung as $key => $v) {
+                        
+                        $fileName = '';
+
+                        if (isset($v['file'])) {
+                            $file = $v['file'];
+                            $fileName = $id.'-'. generateRandomString(5) . "." . $file->getClientOriginalExtension();
+
+                            $file->storeAs('public/contents/or_materi_pendukung/', $fileName);
+                        }
+                        
+                        $fileData[$key] = [
+                                            'id_pm' => $id,
+                                            'title' => $v['title'],
+                                            'link' => $v['link'],
+                                            'type' => 'or_materi_pendukung',
+                                            'file' => $fileName,
+                                          ];
+                    }
+
+                    OrFileModel::insert($fileData);
+                }
+
             $save = OrModel::insert($payload);
 
             return true;

@@ -40,7 +40,7 @@
             selects += "</select>";
 
            $('#ppt_tbody').append(`<tr id="Rppt-${rowIdx}"> 
-                    <td class="row-index text-center" > 
+                    <td class="row-index" > 
                         ${selects}
                     </td> 
                     <td class="text-center" width="30%"> 

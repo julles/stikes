@@ -3,18 +3,19 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Topic</th>
+                    <th>Judul</th>
+                    <th>Link</th>
                     <th>File</th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody id = "ln_tbody">
+            <tbody id = "or_materi_pendukung_tbody">
             </tbody>
         </table>
         <div class="row">
             <div class="col text-center">
-                <button type = "button" class = "btn btn-success btn-sm" id = "button_ln">
-                + Add Ln
+                <button type = "button" class = "btn btn-success btn-sm" id = "button_or_materi_pendukung">
+                + Add Materi Pendukung
                 </button>  
             </div>
         </div>
@@ -27,36 +28,29 @@
         var rowIdx = 0;
         var topicArr = @json($topic);
 
-        $("#button_ln").on("click",function(){
+        $("#button_or_materi_pendukung").on("click",function(){
 
-
-            var selects = `<select 
-            class = 'form-control select2ln-${rowIdx}' name = 'ln[${rowIdx}][topic_id]'>`;
-            
-            $.each( topicArr, function( key, value ) {
-                selects += "<option value = '"+value.id_topic+"'>"+value.topic+"</option>";
-            });
-
-            selects += "</select>";
-
-           $('#ln_tbody').append(`<tr id="Rln-${rowIdx}"> 
-                    <td class="row-index " > 
-                        ${selects}
+           $('#or_materi_pendukung_tbody').append(`<tr id="Ror_materi_pendukung-${rowIdx}"> 
+                    <td class="row-index" > 
+                        <input type="text" class="form-control" name="materi_pendukung[${rowIdx}][title]">
+                    </td> 
+                    <td class="row-index" > 
+                        <input type="text" class="form-control" name="materi_pendukung[${rowIdx}][link]">
                     </td> 
                     <td class="text-center" width="30%"> 
-                        <input type="file" class="form-control" name="ln[${rowIdx}][file]" required>
+                        <input type="file" class="form-control" name="materi_pendukung[${rowIdx}][file]" required>
                     </td> 
                     <td class="text-center" width="10%"> 
-                        <button type = "button" class = "btn btn-danger btn-sm remove_ln">X</button>
+                        <button type = "button" class = "btn btn-danger btn-sm remove_or_materi_pendukung">X</button>
                     </td> 
                 </tr>`
             ); 
 
-            $(`.select2ln-${rowIdx}`).select2();
+            $(`.select2or_materi_pendukung-${rowIdx}`).select2();
             rowIdx++;
         });
 
-        $('#ln_tbody').on('click', '.remove_ln', function () { 
+        $('#or_materi_pendukung_tbody').on('click', '.remove_or_materi_pendukung', function () { 
 
             // Getting all the rows next to the 
             // row containing the clicked button 

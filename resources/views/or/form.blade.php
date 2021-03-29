@@ -45,6 +45,9 @@
                     <div id="video">
                         @include("or.partials.video")
                     </div>
+                    <div id="materi-pendukung">
+                        @include("or.partials.materi_pendukung")
+                    </div>
                     
                     <div id="summary">
                         @include("or.partials.summary")

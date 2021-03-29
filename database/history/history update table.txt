@@ -42,8 +42,11 @@ duplicate dari tabel RPS dari status sampai akhir
 // ----------------------------------------
 
 or_file
+
 - id
 - id_pm
 - topic_id
 - type (or_ppt, or_ln , or_video)
+- title
+- link
 - file
