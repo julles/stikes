@@ -102,7 +102,8 @@
 
     $(document).ready(function(){
 
-        var rowIdx = '{{ count($topic) }}';
+        var rowIdx = "{{ isset($topic) ? count($topic) : 0}}";
+        
         $("#button_topik").on("click",function(){
             
             var selects = `<select id="cpArr-${rowIdx}" 

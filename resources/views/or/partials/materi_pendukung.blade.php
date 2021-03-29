@@ -55,7 +55,7 @@
 @push("js")
 <script>
     $(document).ready(function(){
-        var rowIdx = "{{count($orFile['or_materi_pendukung']) ?? 0}}";
+        var rowIdx = "{{ isset($orFile['or_materi_pendukung']) ? count($orFile['or_materi_pendukung']) : 0}}";
         var topicArr = @json($topic);
 
         $("#button_or_materi_pendukung").on("click",function(){

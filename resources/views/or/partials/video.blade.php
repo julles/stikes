@@ -47,7 +47,7 @@
 @push("js")
 <script>
     $(document).ready(function(){
-        var rowIdx = "{{count($orFile['or_video']) ?? 0}}";
+        var rowIdx = "{{ isset($orFile['or_video']) ? count($orFile['or_video']) : 0}}";
         var topicArr = @json($topic);
 
         $("#vid").on("click",function(){
