@@ -41,7 +41,7 @@
                     <td class="row-index " > 
                         ${selects}
                     </td> 
-                    <td class="text-center" width="30%"> 
+                    <td class="text-center" width="15%"> 
                         <input type="file" class="form-control" name="video[${rowIdx}][file]" required>
                     </td> 
                     <td class="text-center" width="10%"> 

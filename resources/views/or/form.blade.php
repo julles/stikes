@@ -7,7 +7,7 @@
 @stop
 
 @section('css')
-  <link rel="stylesheet" href="{{ asset('vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.css')}}">
+  <link rel="stylesheet" href="{{ asset('vendor/summernote/dist/summernote.css')}}">
 @endsection
 
 @section('content')
@@ -28,7 +28,7 @@
                         <li><a href="#video">Video</a></li>
                         <li><a href="#materi-pendukung">Materi Pendukung</a></li>
                         <li><a href="#exercise">Exercise / Kuis</a></li>
-                        <li><a href="#maping-topic">Mapping Topik</a></li>
+                        <!-- <li><a href="#maping-topic">Mapping Topik</a></li> -->
 
                         <li><a id="summary_btn" onclick = "return summary();" href="#summary">Summary</a></li>
                     </ul>
@@ -47,6 +47,9 @@
                     </div>
                     <div id="materi-pendukung">
                         @include("or.partials.materi_pendukung")
+                    </div>
+                    <div id="exercise">
+                        @include("or.partials.exercise")
                     </div>
                     
                     <div id="summary">
@@ -154,10 +157,14 @@
 @push("js")
 {!! JsValidator::formRequest('App\Http\Requests\InputTextBookRequest', '#form'); !!}
 
-<script src="{{ asset('vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')}}"></script>
+<script src="{{ asset('vendor/summernote/dist/summernote.min.js')}}"></script>
 <script>
     $(function() {
         $( "#tabs" ).tabs();
+    });
+
+    $(".summernote").summernote({
+        height: 150,
     });
 
     var review_stat = '{{$review_stat}}';

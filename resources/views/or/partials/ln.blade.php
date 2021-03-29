@@ -30,7 +30,7 @@
         $("#button_ln").on("click",function(){
 
 
-            var selects = `<select 
+            var selects = `<select style="width:100%" 
             class = 'form-control select2ln-${rowIdx}' name = 'ln[${rowIdx}][topic_id]'>`;
             
             $.each( topicArr, function( key, value ) {
@@ -43,7 +43,7 @@
                     <td class="row-index " > 
                         ${selects}
                     </td> 
-                    <td class="text-center" width="30%"> 
+                    <td class="text-center" width="15%"> 
                         <input type="file" class="form-control" name="ln[${rowIdx}][file]" required>
                     </td> 
                     <td class="text-center" width="10%"> 

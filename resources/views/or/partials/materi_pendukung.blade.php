@@ -3,6 +3,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>Topic</th>
                     <th>Judul</th>
                     <th>Link</th>
                     <th>File</th>
@@ -30,14 +31,26 @@
 
         $("#button_or_materi_pendukung").on("click",function(){
 
+            var selects = `<select style="width:100%"
+            class = 'form-control select2ln-${rowIdx}' name = 'ln[${rowIdx}][topic_id]'>`;
+            
+            $.each( topicArr, function( key, value ) {
+                selects += "<option value = '"+value.id_topic+"'>"+value.topic+"</option>";
+            });
+
+            selects += "</select>";
+
            $('#or_materi_pendukung_tbody').append(`<tr id="Ror_materi_pendukung-${rowIdx}"> 
+                    <td class="row-index " > 
+                        ${selects}
+                    </td> 
                     <td class="row-index" > 
                         <input type="text" class="form-control" name="materi_pendukung[${rowIdx}][title]">
                     </td> 
                     <td class="row-index" > 
                         <input type="text" class="form-control" name="materi_pendukung[${rowIdx}][link]">
                     </td> 
-                    <td class="text-center" width="30%"> 
+                    <td class="text-center" width="15%"> 
                         <input type="file" class="form-control" name="materi_pendukung[${rowIdx}][file]" required>
                     </td> 
                     <td class="text-center" width="10%"> 

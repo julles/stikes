@@ -26,6 +26,11 @@ Route::middleware('auth')->group(function () {
         '/mata-kuliah' => 'MataKuliahController',
     ]);
 
+    // OR Question
+    Route::get('/or/detail/{id}/question', 'OrController@question');
+    Route::post('/or/detail/{id}/question', 'OrController@questionStore');
+    Route::delete('/or/detail/{id}/question', 'OrController@deleteQuestion');
+    
     Route::get('/rps/view-pdf/{type}/{file}', 'RpsController@viewPdf');
 });
 

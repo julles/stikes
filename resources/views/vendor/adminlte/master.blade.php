@@ -15,6 +15,7 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('vendor/Ionicons/css/ionicons.min.css') }}">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     @include('adminlte::plugins', ['type' => 'css'])
 
     <!-- Theme style -->

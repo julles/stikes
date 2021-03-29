@@ -50,3 +50,9 @@ or_file
 - title
 - link
 - file
+
+// ----------------------------------------
+
+alter Kuis,
+isi_soal dan pilihan dibuat longtext,
+varian_latihan dibuat integer

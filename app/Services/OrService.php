@@ -188,6 +188,7 @@ class OrService
                         
                         $fileData[$key] = [
                                             'id_pm' => $id,
+                                            'topic_id' => $v['topic_id'],
                                             'title' => $v['title'],
                                             'link' => $v['link'],
                                             'type' => 'or_materi_pendukung',
