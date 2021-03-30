@@ -207,7 +207,7 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
                   'name'=> $d['sme_nama'],
                   'message' => $msg.$msgContent,
                   'btn_caption' => 'Lihat Detail '.$typeCaption,
-                  'link' => env('APP_URL').'/'.$type.'/'.$d['id_pm']
+                  'link' => env('APP_URL').'/'.$type.'/detail/'.$d['id_pm']
                 ];
 
             if ($type == 'text-book') {
@@ -237,10 +237,10 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
         }
 
     }elseif ($status == 'approve') {
-        $msg = 'Pengajuan untuk '.$typeCaption.' berikut ini telah <strong>Disetujui oleh Kajur</strong>';
+        $msg = 'Pengajuan untuk '.$typeCaption.' berikut ini telah <strong>Disetujui oleh Kajur.</strong>';
 
         if ($as == 'reviewer') {
-            $msg = 'Pengajuan untuk '.$typeCaption.' berikut ini telah <strong>Direview dan Disetujui Oleh Reviewer</strong>';
+            $msg = 'Pengajuan untuk '.$typeCaption.' berikut ini telah <strong>Direview dan Disetujui Oleh Reviewer.</strong>';
         }
         // send to SME
 
@@ -248,7 +248,7 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
                   'name'=> $d['sme_nama'],
                   'message' => $msg.$msgContent,
                   'btn_caption' => 'Lihat Detail '.$typeCaption,
-                  'link' => env('APP_URL').'/'.$type.'/'.$d['id_pm']
+                  'link' => env('APP_URL').'/'.$type.'/detail/'.$d['id_pm']
                 ];
 
             if ($type == 'text-book') {
