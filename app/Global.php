@@ -136,6 +136,7 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
     }
     // msg content
 
+    $msgContent = "<hr>";
     $msgContent = "<br><br><strong>NIP : </strong>".$d['sme_nip']."<br>";
     $msgContent .= "<strong>Nama : </strong>".ucwords($d['sme_nama'])."<br>";
 
