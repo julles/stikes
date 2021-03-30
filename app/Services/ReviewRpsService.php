@@ -93,6 +93,12 @@ class ReviewRpsService
         $pengembangMateri = PengembangMateri::with('pm_assign')->findOrFail($id);
         $model = $pengembangMateri->rps()->first();
 
+        $statusApp = 'approve';
+
+        if ($request->status == 3) {
+            $statusApp = 'reject';
+        }
+
         // check status dosen
         if ($pengembangMateri->pm_assign->reviewer_id == $user->id) {
 
@@ -103,8 +109,10 @@ class ReviewRpsService
             ];
 
             if ($request->status == 1) {
+                // approve
                 $inputs['status'] = 1;
             }else{
+                // reject
                 $inputs['status'] = 3;
             }
 
@@ -124,138 +132,6 @@ class ReviewRpsService
         }
 
         $model->update($inputs);
-    }
-
-    public function updateOrcreate(RpsRequest $request, $id)
-    {
-
-        $check = Rps::find($id);
-
-        $date = DATE('Y-m-d H:i:s');
-
-        if ($check) {
-            // if update    
-
-            $data = Rps::find($id);
-            $data->strategi_pembelajaran = $request['strategi_pembelajaran'];
-            $data->deskripsi_mata_kuliah = $request['deskripsi_mata_kuliah'];
-            $data->media_pembelajaran = $request['media_pembelajaran'];
-            $data->capaian_pembelajaran = json_encode($request['capaian_pembelajaran'],true);
-            $data->metode_penilaian = json_encode($request['metode_penilaian'],true);
-            $data->status = 0;
-            $data->updated_at = $date;
-
-            // upload file
-
-            $peta_kompetensi = $request->file("peta_kompetensi");
-            
-            if (!empty($peta_kompetensi)) {
-
-                $fileName = $id.'-peta_kompetensi' . "." . $peta_kompetensi->getClientOriginalExtension();
-
-                $peta_kompetensi->storeAs("public/contents/peta_kompetensi/", $fileName);
-                $data->peta_kompetensi = $fileName;
-            }
-
-            $rubrik_penilaian = $request->file("rubrik_penilaian");
-            
-            if (!empty($rubrik_penilaian)) {
-
-                $fileName = $id.'-rubrik_penilaian' . "." . $rubrik_penilaian->getClientOriginalExtension();
-
-                $rubrik_penilaian->storeAs("public/contents/rubrik_penilaian/", $fileName);
-                $data->rubrik_penilaian = $fileName;
-            }
-
-            $data->save();
-
-            // save topic
-
-                // delete topic pm
-                Topic::where('id_pm',$id)->delete();
-
-                // insert topic
-                $payload = [];
-                $i = 0;
-                foreach ($request['topic'] as $key => $v) {
-
-                    $subTopic = $v['sub_topik'];
-                    unset($v['sub_topik']);
-                    foreach ($subTopic as $subTopickey => $subTopicVal) {
-                        $payload[$i] = $v;
-                        $payload[$i]['sub_topic'] = $subTopicVal;
-                        $payload[$i]['id_pm'] = $id;
-                        $payload[$i]['status'] = 0;                       
-                       $i++; 
-                    }
-
-                }
-
-                Topic::insert($payload);
-
-                return true;
-        }else{
-            // if create
-
-            // save RPS
-
-            $payload = [
-                'id' => $id,
-                'strategi_pembelajaran' => $request['strategi_pembelajaran'],
-                'deskripsi_mata_kuliah' => $request['deskripsi_mata_kuliah'],
-                'media_pembelajaran' => $request['media_pembelajaran'],
-                'capaian_pembelajaran' => json_encode($request['capaian_pembelajaran'],true),
-                'metode_penilaian' => json_encode($request['metode_penilaian'],true),
-                'status' => 0,
-                'created_at' => $date,
-                'updated_at' => $date
-            ];
-
-            // upload file
-
-            $peta_kompetensi = $request->file("peta_kompetensi");
-            
-            if (!empty($peta_kompetensi)) {
-
-                $fileName = $id.'-peta_kompetensi' . "." . $peta_kompetensi->getClientOriginalExtension();
-
-                $peta_kompetensi->storeAs("public/contents/peta_kompetensi/", $fileName);
-                $payload['peta_kompetensi'] =  $fileName;
-            }
-
-            $rubrik_penilaian = $request->file("rubrik_penilaian");
-            
-            if (!empty($rubrik_penilaian)) {
-
-                $fileName = $id.'-rubrik_penilaian' . "." . $rubrik_penilaian->getClientOriginalExtension();
-
-                $rubrik_penilaian->storeAs("public/contents/rubrik_penilaian/", $fileName);
-                $payload['rubrik_penilaian'] =  $fileName;
-            }
-
-            $save = Rps::insert($payload);
-
-            // insert topic
-            $payload = [];
-            $i = 0;
-            foreach ($request['topic'] as $key => $v) {
-
-                $subTopic = $v['sub_topik'];
-                unset($v['sub_topik']);
-                foreach ($subTopic as $subTopickey => $subTopicVal) {
-                    $payload[$i] = $v;
-                    $payload[$i]['sub_topic'] = $subTopicVal;
-                    $payload[$i]['id_pm'] = $id;
-                    $payload[$i]['status'] = 0;                       
-                   $i++; 
-                }
-
-            }
-
-            Topic::insert($payload);
-
-            return true;
-        }
-
+        sendEmail($id,'rps',$statusApp,$user->id);
     }
 }

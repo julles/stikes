@@ -84,8 +84,7 @@
                         </div>
                         <div class="col-md-6">
                             
-                            @if($or->status == 2)
-
+                            @if($or->reviewer_commen || $or->approv_commen)
                                 <div class="box box-info">
                                     <div class="box-body">
                                         @if($or->reviewer_commen)
@@ -109,15 +108,7 @@
                             @endif
 
                             @if($userStatus == 'reviewer')
-                                @if($or->approv_commen)
-                                    <div class="row mb-3">
-                                        <div class="col">
-                                            {!! Form::label("Kajur Notes") !!}
-                                            {!! Form::textarea("approv_commen",$or->approv_commen ?? '',["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
-                                        </div>
-                                    </div>
-                                @endif
-                                @if($or->status == 0)
+                                @if($or->status >= 0)
                                     <div class="row">
                                         <div class="col">
                                             {!! Form::label("Reviewer Notes") !!}
@@ -134,25 +125,10 @@
                                             </button>
                                         </div>
                                     </div>
-                                @else
-                                    <div class="row mb-3">
-                                        <div class="col">
-                                            {!! Form::label("Reviewer Notes") !!}
-                                            {!! Form::textarea("reviewer_commen",$or->reviewer_commen ?? '',["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
-                                        </div>
-                                    </div>
                                 @endif
 
                             @elseif($userStatus == 'approv')
-                                @if($or->reviewer_commen)
-                                    <div class="row mb-3">
-                                        <div class="col">
-                                            {!! Form::label("Reviewer Notes") !!}
-                                            {!! Form::textarea("reviewer_commen",$or->reviewer_commen ?? '',["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
-                                        </div>
-                                    </div>
-                                @endif
-                                @if($or->status == 1)
+                                @if($or->status >= 0)
                                     <div class="row">
                                         <div class="col">
                                             {!! Form::label("Kajur Note") !!}
@@ -167,13 +143,6 @@
                                             <button type="submit" name="status" value="0" class="btn btn-danger">
                                                 Reject
                                             </button>
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="row mb-3">
-                                        <div class="col">
-                                            {!! Form::label("Kajur Notes") !!}
-                                            {!! Form::textarea("approv_commen",$or->approv_commen ?? '',["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
                                         </div>
                                     </div>
                                 @endif

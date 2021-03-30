@@ -207,6 +207,10 @@ class RpsService
 
             Topic::insert($payload);
 
+            // send email
+            $user = Auth::user();
+            sendEmail($id,'rps','input',$user->id);
+
             return true;
         }
 

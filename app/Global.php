@@ -7,6 +7,8 @@ use App\Services\PushNotif;
 use App\Mail\Notification;
 use App\Models\TextBook;
 use App\Models\Rps;
+use App\Models\OrModel;
+
 use Illuminate\Support\Facades\Mail;
 
 function contents_path($append = "")
@@ -61,12 +63,12 @@ function statusCaption($val, $badge = false)
     if ($badge) {
         $arr = [
                 '<span class="label label-primary">Waiting Review / Approval</span>',
-                '<span class="label label-info">Reviewed</span>',
+                '<span class="label label-info">Reviewed / Waiting Approval</span>',
                 '<span class="label label-success">Approved</span>',
                 '<span class="label label-danger">Reject</span>'
                ];
     }else{
-        $arr = ['Waiting Approval','Reviewed','Approved','Reject'];
+        $arr = ['Waiting Review / Approval','Reviewed / Waiting Approval','Approved','Reject'];
     }
 
     return $arr[$val];
@@ -132,7 +134,6 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
     }elseif ($from == $d['approval_id']) {
         $as = 'approve';
     }
-
     // msg content
 
     $msgContent = "<br><br><strong>NIP : </strong>".$d['sme_nip']."<br>";
@@ -150,19 +151,29 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
     $msgContent .= "<br><strong>Tahun Terbit : </strong>".$textbookData['tahun'];
     $msgContent .= "<br><strong>Kategori : </strong>".$textbookData['kategori'];
     
-    if ($textbookData['reviewer_commen']) {
+
+    if ($type == 'text-book') {
+        $det = $textbookData;
+    }elseif ($type == 'rps') {
+        $det = Rps::where('id',$pmId)->first();
+    }elseif ($type == 'or') {
+        $det = OrModel::where('id',$pmId)->first();
+    }
+
+    if ($det['reviewer_commen']) {
         $msgContent .= "<br><br><hr><br>";
         $msgContent .= "Komentar <strong>Reviewer :</strong><br>";
         $msgContent .= "<small> Oleh : ".ucwords($d['reviewer_nama'])." | ".$d['reviewer_nip']."</small><br>";
-        $msgContent .= "<p>".$textbookData['reviewer_commen']."</p>";
+        $msgContent .= "<p>".$det['reviewer_commen']."</p>";
     }
 
-    if ($textbookData['approv_commen']) {
+    if ($det['approv_commen']) {
         $msgContent .= "<br><br><hr><br>";
         $msgContent .= "Komentar <strong>Kajur :</strong><br>";
         $msgContent .= "<small> Oleh : ".ucwords($d['approv_nama'])." | ".$d['approv_nip']."</small><br>";
-        $msgContent .= "<p>".$textbookData['approv_commen']."</p>";
+        $msgContent .= "<p>".$det['approv_commen']."</p>";
     }
+
 
     if ($status == 'input') {
         $msg = 'Terdapat <strong>Pengajuan '.$typeCaption.'</strong> oleh:';
@@ -211,9 +222,9 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
         // send to ?
         if ($as == 'reviewer') {
 
-            $mailData['name'] = $d['approve_nama'];
+            $mailData['name'] = $d['approv_nama'];
 
-            Mail::to($d['approve_email'])
+            Mail::to($d['approv_email'])
                   ->send(new Notification($mailData));
             
         }elseif($as == 'approve'){
@@ -225,8 +236,11 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
         }
 
     }elseif ($status == 'approve') {
-        $msg = 'Pengajuan untuk '.$typeCaption.' berikut ini telah <strong>Disetujui</strong>';
+        $msg = 'Pengajuan untuk '.$typeCaption.' berikut ini telah <strong>Disetujui oleh Kajur</strong>';
 
+        if ($as == 'reviewer') {
+            $msg = 'Pengajuan untuk '.$typeCaption.' berikut ini telah <strong>Direview dan Disetujui Oleh Reviewer</strong>';
+        }
         // send to SME
 
             $mailData = [
@@ -250,9 +264,8 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
         // send to ?
         if ($as == 'reviewer') {
 
-            $mailData['name'] = $d['approve_nama'];
-
-            Mail::to($d['approve_email'])
+            $mailData['name'] = $d['approv_nama'];
+            Mail::to($d['approv_email'])
                   ->send(new Notification($mailData));
             
         }elseif($as == 'approve'){

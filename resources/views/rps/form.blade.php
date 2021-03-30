@@ -70,7 +70,7 @@
                         </div>
                         <div class="col-md-6">
                             
-                            @if($rps->status == 2)
+                            @if($rps->reviewer_commen || $rps->approv_commen)
                                 <div class="box box-info">
                                     <div class="box-body">
                                         @if($rps->reviewer_commen)
@@ -93,15 +93,7 @@
                                 </div>
                             @endif
                             @if($userStatus == 'reviewer')
-                                @if($rps->approv_commen)
-                                    <div class="row mb-3">
-                                        <div class="col">
-                                            {!! Form::label("Kajur Notes") !!}
-                                            {!! Form::textarea("approv_commen",$rps->approv_commen ?? '',["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
-                                        </div>
-                                    </div>
-                                @endif
-                                @if($rps->status == 0)
+                                @if($rps->status >= 0)
                                     <div class="row">
                                         <div class="col">
                                             {!! Form::label("Reviewer Notes") !!}
@@ -118,25 +110,10 @@
                                             </button>
                                         </div>
                                     </div>
-                                @else
-                                    <div class="row mb-3">
-                                        <div class="col">
-                                            {!! Form::label("Reviewer Notes") !!}
-                                            {!! Form::textarea("reviewer_commen",$rps->reviewer_commen ?? '',["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
-                                        </div>
-                                    </div>
                                 @endif
 
                             @elseif($userStatus == 'approv')
-                                @if($rps->reviewer_commen)
-                                    <div class="row mb-3">
-                                        <div class="col">
-                                            {!! Form::label("Reviewer Notes") !!}
-                                            {!! Form::textarea("reviewer_commen",$rps->reviewer_commen ?? '',["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
-                                        </div>
-                                    </div>
-                                @endif
-                                @if($rps->status == 1)
+                                @if($rps->status >= 0)
                                     <div class="row">
                                         <div class="col">
                                             {!! Form::label("Kajur Note") !!}
@@ -151,13 +128,6 @@
                                             <button type="submit" name="status" value="0" class="btn btn-danger">
                                                 Reject
                                             </button>
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="row mb-3">
-                                        <div class="col">
-                                            {!! Form::label("Kajur Notes") !!}
-                                            {!! Form::textarea("approv_commen",$rps->approv_commen ?? '',["class"=>"form-control","row"=>"5",'readonly'=>true]) !!}
                                         </div>
                                     </div>
                                 @endif

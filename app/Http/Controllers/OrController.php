@@ -131,7 +131,7 @@ class OrController extends Controller
                       ->orderBy('id_kuis','ASC')
                       ->get();
 
-        $html_tabel = '<tr><td colspan="3" class="text-center"><strong>Belum ada soal</strong></td></td>';
+        $html_tabel = '<tr><td colspan="4" class="text-center"><strong>Belum ada soal</strong></td></td>';
         
         $html_variant = '<select class="form-control" id="varian_latihan">';
 

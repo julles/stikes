@@ -109,7 +109,7 @@ class OrService
                 'created_at' => $date,
                 'updated_at' => $date
             ];
-            // dd($request->all());
+            
             // upload file
 
             // PPT
@@ -206,6 +206,10 @@ class OrService
                 }
 
             $save = OrModel::insert($payload);
+
+            // send email
+            $user = Auth::user();
+            sendEmail($id,'or','input',$user->id);
 
             return true;
         }

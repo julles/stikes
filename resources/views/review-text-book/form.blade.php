@@ -39,36 +39,30 @@
                         </div>
                         <hr>
 
-                        <div class="box box-info">
-                            <div class="box-body">
-                                @if($model->reviewer_commen)
-                                    <div class="row mb-3">
-                                        <div class="col-md-12">
-                                            {!! Form::label("Reviewer Notes") !!}
-                                            <p>{{ $model->reviewer_commen }}</p>
+                        @if($model->reviewer_commen || $model->approv_commen)
+                            <div class="box box-info">
+                                <div class="box-body">
+                                    @if($model->reviewer_commen)
+                                        <div class="row mb-3">
+                                            <div class="col-md-12">
+                                                {!! Form::label("Reviewer Notes") !!}
+                                                <p>{{ $model->reviewer_commen }}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                @endif
-                                @if($model->approv_commen)
-                                    <div class="row mb-3">
-                                        <div class="col-md-12">
-                                            {!! Form::label("Kajur Notes") !!}
-                                            <p>{{ $model->approv_commen }}</p>
+                                    @endif
+                                    @if($model->approv_commen)
+                                        <div class="row mb-3">
+                                            <div class="col-md-12">
+                                                {!! Form::label("Kajur Notes") !!}
+                                                <p>{{ $model->approv_commen }}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
-                        </div>
+                        @endif
 
                         @if($userStatus == 'reviewer')
-                            @if($model->approv_commen)
-                                <div class="row mb-3">
-                                    <div class="col-md-12">
-                                        {!! Form::label("Kajur Notes") !!}
-                                        <p>{{ $model->approv_commen }}</p>
-                                    </div>
-                                </div>
-                            @endif
                             @if($model->status == 0)
                                 <div class="row">
                                     <div class="col-md-12">
@@ -86,24 +80,9 @@
                                         </button>
                                     </div>
                                 </div>
-                            @else
-                                <div class="row mb-3">
-                                    <div class="col-md-12">
-                                        {!! Form::label("Reviewer Notes") !!}
-                                        <p>{{ $model->reviewer_commen }}</p>
-                                    </div>
-                                </div>
                             @endif
 
                         @elseif($userStatus == 'approv')
-                            @if($model->reviewer_commen)
-                                <div class="row mb-3">
-                                    <div class="col-md-12">
-                                        {!! Form::label("Reviewer Notes") !!}
-                                        <p>{{ $model->reviewer_commen }}</p>
-                                    </div>
-                                </div>
-                            @endif
                             @if($model->status == 1)
                                 <div class="row">
                                     <div class="col-md-12">
@@ -119,13 +98,6 @@
                                         <button type="submit" name="status" value="0" class="btn btn-danger">
                                             Reject
                                         </button>
-                                    </div>
-                                </div>
-                            @else
-                                <div class="row mb-3">
-                                    <div class="col-md-12">
-                                        {!! Form::label("Kajur Notes") !!}
-                                        <p>{{ $model->approv_commen ?? '-' }}</p>
                                     </div>
                                 </div>
                             @endif

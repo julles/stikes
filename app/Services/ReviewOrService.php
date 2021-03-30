@@ -99,7 +99,13 @@ class ReviewOrService
         $check = OrModel::find($id);
 
         $date = DATE('Y-m-d H:i:s');
+        
+        $statusApp = 'approve';
 
+        if ($request->status == 3) {
+            $statusApp = 'reject';
+        }
+        
         if ($check) {
 
             // if review / approv
@@ -141,6 +147,8 @@ class ReviewOrService
                 }
 
                 $model->update($inputs);
+                
+                sendEmail($id,'or',$statusApp,$user->id);
                 
                 return true;
             }

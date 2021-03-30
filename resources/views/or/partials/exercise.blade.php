@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-md-2">     
                         <div class="form-group">
-                            {!! Form::label("Duration") !!}
+                            {!! Form::label("Duration (menit)") !!}
                             {!! Form::number(null,null,["class"=>"form-control",'id'=>'durasi']) !!}
                         </div>
                     </div>

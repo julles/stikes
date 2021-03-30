@@ -71,6 +71,12 @@ class ReviewTextBookService
 
         $model = $pengembangMateri->text_book()->first();
 
+        $statusApp = 'approve';
+
+        if ($request->status == 3) {
+            $statusApp = 'reject';
+        }
+
         // check status dosen
         if ($pengembangMateri->pm_assign->reviewer_id == $user->id) {
 
@@ -82,8 +88,13 @@ class ReviewTextBookService
 
             if ($request->status == 1) {
                 $inputs['status'] = 1;
+
+                // send email
+
             }else{
                 $inputs['status'] = 3;
+
+                // send email
             }
 
         }elseif($pengembangMateri->pm_assign->approval_id == $user->id){
@@ -96,12 +107,17 @@ class ReviewTextBookService
 
             if ($request->status == 1) {
                 $inputs['status'] = 2;
+                
+                // send email
             }else{
                 $inputs['status'] = 3;
+
+                // send email
             }
         }
 
         $model->update($inputs);
+        sendEmail($id,'text-book',$statusApp,$user->id);
     }
 
     public function userStatus($id)
@@ -119,38 +135,4 @@ class ReviewTextBookService
         return $status;
     }
 
-    public function updateOrCreate(ReviewTextBookRequest $request, $id)
-    {
-        $pengembangMateri = PengembangMateri::findOrFail($id);
-
-        $model = $pengembangMateri->text_book()->count() > 0 ? $pengembangMateri->text_book : new TextBook();
-
-        $gbr_cover = $request->file("gbr_cover");
-        $fotoName  = $model->gbr_cover;
-
-        if ($request->delete_foto != $model->gbr_cover) {
-            $fotoName = "";
-            \Storage::delete(contents_path($model->gbr_cover));
-        }
-
-        if (!empty($gbr_cover)) {
-
-            $fotoName = \Str::random(5) . "." . $gbr_cover->getClientOriginalExtension();
-
-            $gbr_cover->storeAs("public/contents", $fotoName);
-        }
-
-        $inputs = $request->all();
-        $inputs["gbr_cover"] = $fotoName;
-        $inputs["id_pm"] = $id;
-        unset($inputs["delete_gbr_cover"]);
-        unset($inputs["semester"]);
-        unset($inputs["mata_kuliah"]);
-
-        if ($pengembangMateri->text_book()->count() > 0) {
-            $model->update($inputs);
-        } else {
-            $model->create($inputs);
-        }
-    }
 }

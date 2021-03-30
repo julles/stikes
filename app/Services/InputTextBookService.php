@@ -106,6 +106,10 @@ class InputTextBookService
             $model->update($inputs);
         } else {
             $model->create($inputs);
+
+            // send email
+            $user = Auth::user();
+            sendEmail($id,'text-book','input',$user->id);
         }
     }
 }
