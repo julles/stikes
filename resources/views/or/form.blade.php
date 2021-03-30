@@ -108,7 +108,7 @@
                             @endif
 
                             @if($userStatus == 'reviewer')
-                                @if($or->status >= 0)
+                                @if($or->status < 2)
                                     <div class="row">
                                         <div class="col">
                                             {!! Form::label("Reviewer Notes") !!}
@@ -128,7 +128,7 @@
                                 @endif
 
                             @elseif($userStatus == 'approv')
-                                @if($or->status >= 0)
+                                @if($or->status < 2)
                                     <div class="row">
                                         <div class="col">
                                             {!! Form::label("Kajur Note") !!}
