@@ -38,13 +38,19 @@ class InputTextBookService
                     'text_book.title',
                     'text_book.kategori',
                     'text_book.tahun'
-                   )
+                   );
             // ->whereIn('text_book.status',[0,3])
-            ->whereIn('pengembang_materi.id_pm',$pm)
-            ->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
+
+            // Akes untuk assign dan role SME saja
+    
+            $thisRole = session()->get('user.dosen')->role_id;
+            if ($thisRole == 0 || ($thisRole != 1 && $thisRole != 63)) {
+                $model->whereIn('pengembang_materi.id_pm',$pm);
+            }
+            $model->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
             ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")
             ->leftJoin("text_book", "text_book.id_pm", "=", "pengembang_materi.id_pm")
-            ->orderBy("pengembang_materi.status", "desc")
+            ->orderBy("text_book.status", "asc")
             ->orderBy("id_pm", "desc");
 
         return \Table::of($model)

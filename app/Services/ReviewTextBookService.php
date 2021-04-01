@@ -41,9 +41,16 @@ class ReviewTextBookService
                     'text_book.kategori',
                     'text_book.tahun'
                    )
-            ->whereIn('text_book.status',[0,1,2])
-            ->whereIn('pengembang_materi.id_pm',$pm)
-            ->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
+            ->whereIn('text_book.status',[0,1,2]);
+
+            // Akes untuk assign dan role Reviewer & Approve saja
+    
+            $thisRole = session()->get('user.dosen')->role_id;
+            if ($thisRole == 0 || ($thisRole == 1 && $thisRole != 63)) {
+                $model->whereIn('pengembang_materi.id_pm',$pm);
+            }
+
+            $model->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
             ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")
             ->join("text_book", "text_book.id_pm", "=", "pengembang_materi.id_pm")
             ->orderBy("pengembang_materi.status", "asc")

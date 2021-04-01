@@ -54,9 +54,7 @@ class LoginController extends Controller
         // Logic that determines where to send the user
             $user = Auth::user();
             $dosen = Dosen::find($user->id);
-            $request->session()->push('user.dosen', $dosen);
-           // dd($dosen);
-
+            session()->put('user.dosen', $dosen);
         }
 
     public function username()

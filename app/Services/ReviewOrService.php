@@ -48,9 +48,16 @@ class ReviewOrService
                     'text_book.tahun'
                    )
             ->where('text_book.status',2)
-            ->where('rps.status',2)
-            ->whereIn('pengembang_materi.id_pm',$pm)
-            ->join("rps", "rps.id", "=", "pengembang_materi.id_pm")
+            ->where('rps.status',2);
+            
+            // Akes untuk assign dan role Reviewer & Approve saja
+    
+            $thisRole = session()->get('user.dosen')->role_id;
+            if ($thisRole == 0 || ($thisRole == 1 && $thisRole != 63)) {
+                $model->whereIn('pengembang_materi.id_pm',$pm);
+            }
+
+            $model->join("rps", "rps.id", "=", "pengembang_materi.id_pm")
             ->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
             ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")
             ->leftJoin("text_book", "text_book.id_pm", "=", "pengembang_materi.id_pm")
