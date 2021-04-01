@@ -83,12 +83,22 @@ class ReviewRpsService
     {
         $user = Auth::user();
         $pengembangMateri = PengembangMateri::findOrFail($id);
-
         $status = false;
-        if ($pengembangMateri->pm_assign->reviewer_id == $user->id) {
-            $status = 'reviewer';
-        }elseif($pengembangMateri->pm_assign->approval_id == $user->id){
-            $status = 'approv';
+        
+        $thisRole = session()->get('user.dosen')->role_id;
+        
+        if ($thisRole ) {
+            if ($thisRole == 3 || $thisRole == 63) {
+                $status = 'approv';
+            }elseif($thisRole == 2){
+                $status = 'reviewer';
+            }
+        }else{
+            if ($pengembangMateri->pm_assign->reviewer_id == $user->id) {
+                $status = 'reviewer';
+            }elseif($pengembangMateri->pm_assign->approval_id == $user->id){
+                $status = 'approv';
+            }
         }
 
         return $status;
@@ -106,8 +116,16 @@ class ReviewRpsService
             $statusApp = 'reject';
         }
 
+        $thisRole = session()->get('user.dosen')->role_id;
+        
+        if ($thisRole == 3 || $thisRole == 63) {
+            $status = 'approv';
+        }elseif($thisRole == 2){
+            $status = 'reviewer';
+        }
+
         // check status dosen
-        if ($pengembangMateri->pm_assign->reviewer_id == $user->id) {
+        if ($pengembangMateri->pm_assign->reviewer_id == $user->id || $status == 'reviewer') {
 
             $inputs = [
                         'reviewer_commen' => $request->reviewer_commen,
@@ -116,14 +134,17 @@ class ReviewRpsService
             ];
 
             if ($request->status == 1) {
-                // approve
                 $inputs['status'] = 1;
+
+                // send email
+
             }else{
-                // reject
                 $inputs['status'] = 3;
+
+                // send email
             }
 
-        }elseif($pengembangMateri->pm_assign->approval_id == $user->id){
+        }elseif($pengembangMateri->pm_assign->approval_id == $user->id || $status == 'approv'){
 
             $inputs = [
                         'approv_commen' => $request->approv_commen,
@@ -133,8 +154,12 @@ class ReviewRpsService
 
             if ($request->status == 1) {
                 $inputs['status'] = 2;
+                
+                // send email
             }else{
                 $inputs['status'] = 3;
+
+                // send email
             }
         }
 
