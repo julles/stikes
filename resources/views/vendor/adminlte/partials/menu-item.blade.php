@@ -16,7 +16,35 @@
         </div>
       </form>
 @else
-    <li class="{{ $item['class'] }}">
+
+    @php
+        $show = 'display: none';
+        $thisRole = session()->get('user.dosen.role_id');
+
+        // superadmin
+        if($thisRole == 63){
+            $show = '';
+
+        // sme
+
+        }else{
+
+            if($thisRole == 1 && $item['when_sme']){
+                $show = '';
+            }
+
+            if($thisRole != 1 && $item['when_reviewer_approv']){
+                $show = '';
+            }
+
+            if($thisRole == 0 && !$item['admin_only']){
+                $show = '';
+            }
+        }
+
+    @endphp
+
+    <li class="{{ $item['class'] }}" style="{{$show}}">
         <a href="{{ $item['href'] }}"
            @if (isset($item['target'])) target="{{ $item['target'] }}" @endif
         >
