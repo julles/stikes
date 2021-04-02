@@ -10,11 +10,16 @@
 @section('body')
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
+            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">
+                {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
+            </a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
-            <p class="login-box-msg">{{ __('adminlte::adminlte.login_message') }}</p>
+            <p class="login-box-msg">
+                <img src="{{ asset('logo.png') }}" width="250px" class="mb-2"><br>
+                {{ __('adminlte::adminlte.login_message') }}
+            </p>
             <form action="{{ url(config('adminlte.login_url', 'login')) }}" method="post">
                 {{ csrf_field() }}
 
@@ -55,11 +60,11 @@
                 </div>
             </form>
             <br>
-            <p>
+           <!--  <p>
                 <a href="{{ url(config('adminlte.password_reset_url', 'password/reset')) }}" class="text-center">
                     {{ __('adminlte::adminlte.i_forgot_my_password') }}
                 </a>
-            </p>
+            </p> -->
             <?php /*
             @if (config('adminlte.register_url', 'register'))
                 <p>
