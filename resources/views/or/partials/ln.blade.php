@@ -11,9 +11,10 @@
             <tbody id = "ln_tbody">
                 @if(isset($orFile['or_ln']))
                     @foreach($orFile['or_ln'] as $key => $v)
-                        <tr>
+                        <tr id="Rln-{{$key}}">
                             <td>
-                                <select class = 'form-control select2' name ='ln[{{$key}}][topic_id]'>
+                                <input type="hidden" name="old_ln[]" value="{{$v['id']}}">
+                                <select class = 'form-control' disabled>
                                     @foreach($topic as $keyT => $t)
                                         <option value="{{ $t['id_topic'] }}"
                                         @if($v->topic_id == $t['id_topic'])
@@ -24,10 +25,12 @@
                                 </select>
                             </td>
                             <td class="text-center" width="30%"> 
-                                <input type="file" class="form-control" name="ln[{{$key}}][file]" required>
+                                <a href="{{ Storage::url(contents_path().'or_ln/'.$v['file']) }}" target="_blank" class="btn btn-block btn-outline-warning mt-2 btn-sm">
+                                    View Older Ln
+                                </a>
                             </td> 
                             <td class="text-center" width="10%"> 
-                                <button type = "button" class = "btn btn-danger btn-sm remove_ppt">X</button>
+                                <button type = "button" class = "btn btn-danger btn-sm remove_ln"><i class="fa fa-trash"></i></button>
                             </td> 
                         </tr>
                     @endforeach()

@@ -72,7 +72,7 @@
             <div class="box-footer">
                 @if(!$review_stat)
                     <button type="submit" class="btn btn-primary btn-sm">
-                        Submit
+                        {{ isset($or->id) ? 'Save' : 'Submit'}}
                     </button>
 
                     <a href="{{ url($__route) }}" class="btn btn-default btn-sm">

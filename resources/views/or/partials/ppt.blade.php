@@ -11,9 +11,10 @@
             <tbody id = "ppt_tbody">
                 @if(isset($orFile['or_ppt']))
                     @foreach($orFile['or_ppt'] as $key => $v)
-                        <tr>
+                        <tr id="Rppt-{{$key}}">
                             <td>
-                                <select class = 'form-control select2' name ='ppt[{{$key}}][topic_id]'>
+                                <input type="hidden" name="old_ppt[]" value="{{$v['id']}}">
+                                <select class = 'form-control' disabled>
                                     @foreach($topic as $keyT => $t)
                                         <option value="{{ $t['id_topic'] }}"
                                         @if($v->topic_id == $t['id_topic'])
@@ -24,10 +25,12 @@
                                 </select>
                             </td>
                             <td class="text-center" width="30%"> 
-                                <input type="file" class="form-control" name="ppt[{{$key}}][file]" required>
+                                <a href="{{ Storage::url(contents_path().'or_ppt/'.$v['file']) }}" target="_blank" class="btn btn-block btn-outline-warning mt-2 btn-sm">
+                                    View Older PPT
+                                </a>
                             </td> 
                             <td class="text-center" width="10%"> 
-                                <button type = "button" class = "btn btn-danger btn-sm remove_ppt">X</button>
+                                <button type = "button" class = "btn btn-danger btn-sm remove_ppt"><i class="fa fa-trash"></i></button>
                             </td> 
                         </tr>
                     @endforeach()

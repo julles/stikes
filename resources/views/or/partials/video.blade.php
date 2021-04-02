@@ -11,9 +11,10 @@
             <tbody id = "vid_tbody">
                 @if(isset($orFile['or_video']))
                     @foreach($orFile['or_video'] as $key => $v)
-                        <tr>
+                        <tr id="Rvid-{{$key}}">
                             <td>
-                                <select class = 'form-control select2' name ='video[{{$key}}][topic_id]'>
+                                <input type="hidden" name="old_video[]" value="{{$v['id']}}">
+                                <select class = 'form-control' disabled>
                                     @foreach($topic as $keyT => $t)
                                         <option value="{{ $t['id_topic'] }}"
                                         @if($v->topic_id == $t['id_topic'])
@@ -24,10 +25,12 @@
                                 </select>
                             </td>
                             <td class="text-center" width="30%"> 
-                                <input type="file" class="form-control" name="video[{{$key}}][file]" required>
+                                <a href="{{ Storage::url(contents_path().'or_video/'.$v['file']) }}" target="_blank" class="btn btn-block btn-outline-warning mt-2 btn-sm">
+                                    View Older Video
+                                </a>
                             </td> 
                             <td class="text-center" width="10%"> 
-                                <button type = "button" class = "btn btn-danger btn-sm remove_ppt">X</button>
+                                <button type = "button" class = "btn btn-danger btn-sm remove_video"><i class="fa fa-trash"></i></button>
                             </td> 
                         </tr>
                     @endforeach()
@@ -68,7 +71,7 @@
                         <input type="file" class="form-control" name="video[${rowIdx}][file]" required>
                     </td> 
                     <td class="text-center" width="10%"> 
-                        <button type = "button" class = "btn btn-danger btn-sm vid">X</button>
+                        <button type = "button" class = "btn btn-danger btn-sm remove_video">X</button>
                     </td> 
                 </tr>`
             ); 
@@ -77,7 +80,7 @@
             rowIdx++;
         });
 
-        $('#vid_tbody').on('click', '.vid', function () { 
+        $('#vid_tbody').on('click', '.remove_video', function () { 
 
             // Getting all the rows next to the 
             // row containing the clicked button 

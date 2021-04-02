@@ -13,9 +13,10 @@
             <tbody id = "or_materi_pendukung_tbody">
                 @if(isset($orFile['or_materi_pendukung']))
                     @foreach($orFile['or_materi_pendukung'] as $key => $v)
-                        <tr>
+                        <tr id="Ror_materi_pendukung-{{$key}}">
                             <td>
-                                <select class = 'form-control select2' style="width:100%" name ='materi_pendukung[{{$key}}][topic_id]'>
+                                <input type="hidden" name="old_materi_pendukung[]" value="{{$v['id']}}">
+                                <select class = 'form-control' disabled style="width:100%">
                                     @foreach($topic as $keyT => $t)
                                         <option value="{{ $t['id_topic'] }}"
                                         @if($v->topic_id == $t['id_topic'])
@@ -26,16 +27,18 @@
                                 </select>
                             </td>
                             <td class="row-index" > 
-                                <input type="text" class="form-control" name="materi_pendukung[{{$key}}][title]" value="{{ $v['title'] }}">
+                                <input type="text" class="form-control" readonly value="{{ $v['title'] }}">
                             </td> 
                             <td class="row-index" > 
-                                <input type="text" class="form-control" name="materi_pendukung[{{$key}}][link]" value="{{ $v['link'] }}">
+                                <input type="text" class="form-control" readonly value="{{ $v['link'] }}">
                             </td> 
                             <td class="text-center" width="15%"> 
-                                <input type="file" class="form-control" name="materi_pendukung[{{$key}}][file]" required>
+                                <a href="{{ Storage::url(contents_path().'or_materi_pendukung/'.$v['file']) }}" target="_blank" class="btn btn-block btn-outline-warning mt-2 btn-sm">
+                                    View Older Materi Pendukung
+                                </a>
                             </td> 
                             <td class="text-center" width="10%"> 
-                                <button type = "button" class = "btn btn-danger btn-sm remove_ppt">X</button>
+                                <button type = "button" class = "btn btn-danger btn-sm remove_or_materi_pendukung"><i class="fa fa-trash"></i></button>
                             </td> 
                         </tr>
                     @endforeach()

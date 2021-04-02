@@ -100,23 +100,112 @@ class OrService
             
             // if review / approve
 
-            // if update    
+            // update File    
 
+            // PPT
+                if (isset($request->old_ppt)) {
 
+                    $delete = OrFileModel::where('id_pm',$id)
+                                 ->where('type','or_ppt')
+                                 ->whereNotIn('id',$request->old_ppt)
+                                 ->select('file');
 
-                return true;
-        }else{
-            // if create
+                    foreach ($delete->get() as $key => $v) {
+                        \Storage::delete(contents_path('or_ppt/'.$v->file));
+                    }
 
-            // save Or
+                    $delete->delete();
+                }else{
+                    // delete all
+                    $delete = OrFileModel::where('id_pm',$id)
+                                 ->where('type','or_ppt')
+                                 ->select('file');
 
-            $payload = [
-                'id' => $id,
-                'status' => 0,
-                'created_at' => $date,
-                'updated_at' => $date
-            ];
-            
+                    foreach ($delete->get() as $key => $v) {
+                        \Storage::delete(contents_path('or_ppt/'.$v->file));
+                    }
+
+                    $delete->delete();
+                }
+
+            // LN
+                if (isset($request->old_ln)) {
+
+                    $delete = OrFileModel::where('id_pm',$id)
+                                 ->where('type','or_ln')
+                                 ->whereNotIn('id',$request->old_ln)
+                                 ->select('file');
+
+                    foreach ($delete->get() as $key => $v) {
+                        \Storage::delete(contents_path('or_ln/'.$v->file));
+                    }
+
+                    $delete->delete();
+                }else{
+                    // delete all
+                    $delete = OrFileModel::where('id_pm',$id)
+                                 ->where('type','or_ln')
+                                 ->select('file');
+
+                    foreach ($delete->get() as $key => $v) {
+                        \Storage::delete(contents_path('or_ln/'.$v->file));
+                    }
+
+                    $delete->delete();
+                }
+
+            // Video
+                if (isset($request->old_video)) {
+
+                    $delete = OrFileModel::where('id_pm',$id)
+                                 ->where('type','or_video')
+                                 ->whereNotIn('id',$request->old_video)
+                                 ->select('file');
+
+                    foreach ($delete->get() as $key => $v) {
+                        \Storage::delete(contents_path('or_video/'.$v->file));
+                    }
+
+                    $delete->delete();
+                }else{
+                    // delete all
+                    $delete = OrFileModel::where('id_pm',$id)
+                                 ->where('type','or_video')
+                                 ->select('file');
+
+                    foreach ($delete->get() as $key => $v) {
+                        \Storage::delete(contents_path('or_video/'.$v->file));
+                    }
+
+                    $delete->delete();
+                }
+
+            // Materi Pendukung
+                if (isset($request->old_materi_pendukung)) {
+
+                    $delete = OrFileModel::where('id_pm',$id)
+                                 ->where('type','or_materi_pendukung')
+                                 ->whereNotIn('id',$request->old_materi_pendukung)
+                                 ->select('file');
+
+                    foreach ($delete->get() as $key => $v) {
+                        \Storage::delete(contents_path('or_materi_pendukung/'.$v->file));
+                    }
+
+                    $delete->delete();
+                }else{
+                    // delete all
+                    $delete = OrFileModel::where('id_pm',$id)
+                                 ->where('type','or_materi_pendukung')
+                                 ->select('file');
+
+                    foreach ($delete->get() as $key => $v) {
+                        \Storage::delete(contents_path('or_materi_pendukung/'.$v->file));
+                    }
+
+                    $delete->delete();
+                }
+
             // upload file
 
             // PPT
@@ -140,6 +229,7 @@ class OrService
 
                     OrFileModel::insert($fileData);
                 }
+
             // LN
                 if (isset($request->ln)) {
                     $fileData = [];
@@ -186,6 +276,117 @@ class OrService
                 }
 
             // Materi Pendukung
+
+                if (isset($request->materi_pendukung)) {
+                    $fileData = [];
+                    foreach ($request->materi_pendukung as $key => $v) {
+                        
+                        $fileName = '';
+
+                        if (isset($v['file'])) {
+                            $file = $v['file'];
+                            $fileName = $id.'-'. generateRandomString(5) . "." . $file->getClientOriginalExtension();
+
+                            $file->storeAs('public/contents/or_materi_pendukung/', $fileName);
+                        }
+                        
+                        $fileData[$key] = [
+                                            'id_pm' => $id,
+                                            'topic_id' => $v['topic_id'],
+                                            'title' => $v['title'],
+                                            'link' => $v['link'],
+                                            'type' => 'or_materi_pendukung',
+                                            'file' => $fileName,
+                                          ];
+                    }
+
+                    OrFileModel::insert($fileData);
+                }
+
+                return true;
+        }else{
+            // if create
+
+            // save Or
+
+            $payload = [
+                'id' => $id,
+                'status' => 0,
+                'created_at' => $date,
+                'updated_at' => $date
+            ];
+            
+            // upload file
+
+            // PPT
+                if (isset($request->ppt)) {
+                    $fileData = [];
+                    foreach ($request->ppt as $key => $v) {
+                        
+                        $file = $v['file'];
+
+                        $fileName = $id.'-'. generateRandomString(5) . "." . $file->getClientOriginalExtension();
+
+                        $file->storeAs('public/contents/or_ppt/', $fileName);
+                        
+                        $fileData[$key] = [
+                                            'topic_id' => $v['topic_id'],
+                                            'id_pm' => $id,
+                                            'type' => 'or_ppt',
+                                            'file' => $fileName,
+                                          ];
+                    }
+
+                    OrFileModel::insert($fileData);
+                }
+
+            // LN
+                if (isset($request->ln)) {
+                    $fileData = [];
+                    foreach ($request->ln as $key => $v) {
+                        
+                        $file = $v['file'];
+
+                        $fileName = $id.'-'. generateRandomString(5) . "." . $file->getClientOriginalExtension();
+
+                        $file->storeAs('public/contents/or_ln/', $fileName);
+                        
+                        $fileData[$key] = [
+                                            'topic_id' => $v['topic_id'],
+                                            'id_pm' => $id,
+                                            'type' => 'or_ln',
+                                            'file' => $fileName,
+                                          ];
+                    }
+
+                    OrFileModel::insert($fileData);
+                }
+
+            // VIDEO
+
+                if (isset($request->video)) {
+                    $fileData = [];
+                    foreach ($request->video as $key => $v) {
+                        
+                        $file = $v['file'];
+
+                        $fileName = $id.'-'. generateRandomString(5) . "." . $file->getClientOriginalExtension();
+
+                        $file->storeAs('public/contents/or_video/', $fileName);
+                        
+                        $fileData[$key] = [
+                                            'topic_id' => $v['topic_id'],
+                                            'id_pm' => $id,
+                                            'type' => 'or_video',
+                                            'file' => $fileName,
+                                          ];
+                    }
+
+                    OrFileModel::insert($fileData);
+                }
+
+            // Materi Pendukung
+
                 if (isset($request->materi_pendukung)) {
                     $fileData = [];
                     foreach ($request->materi_pendukung as $key => $v) {
