@@ -27,10 +27,10 @@
                             <li style="display: none;"><a href="#cp">CP</a></li>
                             <li style="display: none;"><a href="#topik" onclick = "return getCp();">Topic</a></li>
                         @else
-                            <li><a href="#text_book">Text Book</a></li>
-                            <li><a href="#attribute">Attribute</a></li>
-                            <li><a href="#cp">CP</a></li>
-                            <li><a href="#topik" onclick = "return getCp();">Topic</a></li>
+                            <li><a id="text_book_btn" href="#text_book">Text Book</a></li>
+                            <li><a id="attribute_btn" href="#attribute">Attribute</a></li>
+                            <li><a id="cp_btn" href="#cp">CP</a></li>
+                            <li><a id="topik_btn" href="#topik" onclick = "return getCp();">Topic</a></li>
                         @endif()
 
                         <li><a id="summary_btn" onclick = "return summary();" href="#summary">Summary</a></li>
@@ -57,13 +57,51 @@
 
             <div class="box-footer">
                 @if(!$review_stat)
-                    <button type="submit" class="btn btn-primary btn-sm">
-                        Submit
-                    </button>
 
-                    <a href="{{ url($__route) }}" class="btn btn-default btn-sm">
-                        Back
-                </a>
+                    <div class="actionBtn" id="act_text_book">
+                        <a href="{{ url($__route) }}" class="btn btn-default btn-sm">
+                            Back
+                        </a>
+                        <button type="button" onclick="openTab('attribute')" class="btn btn-primary btn-sm">
+                            Next
+                        </button>
+                    </div>
+
+                    <div class="actionBtn" id="act_attribute">
+                        <a href="javascript:void(0)" onclick="openTab('text_book')" class="btn btn-default btn-sm">
+                            Back
+                        </a>
+                        <button type="button" onclick="openTab('cp')" class="btn btn-primary btn-sm">
+                            Next
+                        </button>
+                    </div>
+
+                    <div class="actionBtn" id="act_cp">
+                        <a href="javascript:void(0)" onclick="openTab('attribute')" class="btn btn-default btn-sm">
+                            Back
+                        </a>
+                        <button type="button" onclick="openTab('topik')" class="btn btn-primary btn-sm">
+                            Next
+                        </button>
+                    </div>
+
+                    <div class="actionBtn" id="act_topik">
+                        <a href="javascript:void(0)" onclick="openTab('cp')" class="btn btn-default btn-sm">
+                            Back
+                        </a>
+                        <button type="button" onclick="openTab('summary')" class="btn btn-primary btn-sm">
+                            Next
+                        </button>
+                    </div>
+
+                    <div class="actionBtn" id="act_summary">
+                        <a href="javascript:void(0)" onclick="openTab('topik')" class="btn btn-default btn-sm">
+                            Back
+                        </a>
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            Submit
+                        </button>
+                    </div>
                 @else
                     <div class="">
                         <div class="col-md-3">
@@ -156,6 +194,17 @@
     if (review_stat == 1) {
         setTimeout(function() {
             $("#summary_btn").trigger('click');
+        }, 700);
+    }
+
+    $(".actionBtn").hide();
+    $("#act_text_book").show();
+
+    function openTab(tab) {
+        $(".actionBtn").hide();
+        $("#act_"+tab).show();
+        setTimeout(function() {
+            $("#"+tab+"_btn").trigger('click');
         }, 700);
     }
 
