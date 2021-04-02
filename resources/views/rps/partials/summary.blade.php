@@ -102,6 +102,7 @@
 @push("js")
 <script>
     function summary(){
+        openTab('summary', false);
         $("#td_strategi_pembelajaran").html($('[name="strategi_pembelajaran"]').val());
         $("#td_deskripsi_mata_kuliah").html($('[name="deskripsi_mata_kuliah"]').val());
         $("#td_metode_penilaian").html($('[name="metode_penilaian"]').val());

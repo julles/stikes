@@ -6,6 +6,7 @@
 @push("js")
 <script>
     function summary(){
+        openTab('summary', false);
         const url = "{!! URL::to('/or/detail/'.$model['id_pm'].'/summary') !!}";
         let data  = new Object();
 

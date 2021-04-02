@@ -31,16 +31,16 @@
                             <li style="display: none;"><a href="#video">Video</a></li>
                             <li style="display: none;"><a href="#materi-pendukung">Materi Pendukung</a></li>
                         @else
-                            <li><a href="#text_book">Text Book</a></li>
+                            <li><a onclick="openTab('text_book', false)" id="text_book_btn" href="#text_book">Text Book</a></li>
                             
-                            <li><a href="#ppt">PPT</a></li>
-                            <li><a href="#ln">LN</a></li>
-                            <li><a href="#video">Video</a></li>
-                            <li><a href="#materi-pendukung">Materi Pendukung</a></li>
+                            <li><a onclick="openTab('ppt', false)" id="ppt_btn" href="#ppt">PPT</a></li>
+                            <li><a onclick="openTab('ln', false)" id="ln_btn" href="#ln">LN</a></li>
+                            <li><a onclick="openTab('video', false)" id="video_btn" href="#video">Video</a></li>
+                            <li><a onclick="openTab('materi-pendukung', false)" id="materi-pendukung_btn" href="#materi-pendukung">Materi Pendukung</a></li>
                             <!-- <li><a href="#maping-topic">Mapping Topik</a></li> -->
                         @endif
 
-                        <li><a href="#exercise">Exercise / Kuis</a></li>
+                        <li><a onclick="openTab('exercise', false)" id="exercise_btn" href="#exercise">Exercise / Kuis</a></li>
                         <li><a id="summary_btn" onclick = "return summary();" href="#summary">Summary</a></li>
                     </ul>
 
@@ -71,13 +71,69 @@
 
             <div class="box-footer">
                 @if(!$review_stat)
-                    <button type="submit" class="btn btn-primary btn-sm">
-                        {{ isset($or->id) ? 'Save' : 'Submit'}}
-                    </button>
 
-                    <a href="{{ url($__route) }}" class="btn btn-default btn-sm">
-                        Back
-                </a>
+                    <div class="actionBtn" id="act_text_book">
+                        <a href="{{ url($__route) }}" class="btn btn-default btn-sm">
+                            Back
+                        </a>
+                        <button type="button" onclick="openTab('ppt')" class="btn btn-primary btn-sm">
+                            Next
+                        </button>
+                    </div>
+
+                    <div class="actionBtn" id="act_ppt">
+                        <a href="javascript:void(0)" onclick="openTab('text_book')" class="btn btn-default btn-sm">
+                            Back
+                        </a>
+                        <button type="button" onclick="openTab('ln')" class="btn btn-primary btn-sm">
+                            Next
+                        </button>
+                    </div>
+
+                    <div class="actionBtn" id="act_ln">
+                        <a href="javascript:void(0)" onclick="openTab('ppt')" class="btn btn-default btn-sm">
+                            Back
+                        </a>
+                        <button type="button" onclick="openTab('video')" class="btn btn-primary btn-sm">
+                            Next
+                        </button>
+                    </div>
+
+                    <div class="actionBtn" id="act_video">
+                        <a href="javascript:void(0)" onclick="openTab('ln')" class="btn btn-default btn-sm">
+                            Back
+                        </a>
+                        <button type="button" onclick="openTab('materi-pendukung')" class="btn btn-primary btn-sm">
+                            Next
+                        </button>
+                    </div>
+
+                    <div class="actionBtn" id="act_materi-pendukung">
+                        <a href="javascript:void(0)" onclick="openTab('video')" class="btn btn-default btn-sm">
+                            Back
+                        </a>
+                        <button type="button" onclick="openTab('exercise')" class="btn btn-primary btn-sm">
+                            Next
+                        </button>
+                    </div>
+
+                    <div class="actionBtn" id="act_exercise">
+                        <a href="javascript:void(0)" onclick="openTab('materi-pendukung')" class="btn btn-default btn-sm">
+                            Back
+                        </a>
+                        <button type="button" onclick="openTab('summary')" class="btn btn-primary btn-sm">
+                            Next
+                        </button>
+                    </div>
+
+                    <div class="actionBtn" id="act_summary">
+                        <a href="javascript:void(0)" onclick="openTab('exercise')" class="btn btn-default btn-sm">
+                            Back
+                        </a>
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            {{ isset($or->id) ? 'Save' : 'Submit'}}
+                        </button>
+                    </div>
                 @else
                     <div class="">
                         <div class="col-md-3">
@@ -175,7 +231,22 @@
     if (review_stat == 1) {
         setTimeout(function() {
             $("#summary_btn").trigger('click');
+            openTab('summary', false);
         }, 700);
+    }
+
+    $(".actionBtn").hide();
+    $("#act_text_book").show();
+
+    function openTab(tab, btn = true) {
+        $(".actionBtn").hide();
+        $("#act_"+tab).show();
+
+        if (btn) {
+            setTimeout(function() {
+                $("#"+tab+"_btn").trigger('click');
+            }, 100);
+        }
     }
 
 </script>

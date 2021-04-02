@@ -27,10 +27,10 @@
                             <li style="display: none;"><a href="#cp">CP</a></li>
                             <li style="display: none;"><a href="#topik" onclick = "return getCp();">Topic</a></li>
                         @else
-                            <li><a id="text_book_btn" href="#text_book">Text Book</a></li>
-                            <li><a id="attribute_btn" href="#attribute">Attribute</a></li>
-                            <li><a id="cp_btn" href="#cp">CP</a></li>
-                            <li><a id="topik_btn" href="#topik" onclick = "return getCp();">Topic</a></li>
+                            <li><a onclick="openTab('text_book', false)" id="text_book_btn" href="#text_book">Text Book</a></li>
+                            <li><a onclick="openTab('attribute', false)" id="attribute_btn" href="#attribute">Attribute</a></li>
+                            <li><a onclick="openTab('cp', false)" id="cp_btn" href="#cp">CP</a></li>
+                            <li><a onclick="openTab('topik', false)" id="topik_btn" href="#topik" onclick = "return getCp();">Topic</a></li>
                         @endif()
 
                         <li><a id="summary_btn" onclick = "return summary();" href="#summary">Summary</a></li>
@@ -200,12 +200,15 @@
     $(".actionBtn").hide();
     $("#act_text_book").show();
 
-    function openTab(tab) {
+    function openTab(tab, btn = true) {
         $(".actionBtn").hide();
         $("#act_"+tab).show();
-        setTimeout(function() {
-            $("#"+tab+"_btn").trigger('click');
-        }, 700);
+
+        if (btn) {
+            setTimeout(function() {
+                $("#"+tab+"_btn").trigger('click');
+            }, 100);
+        }
     }
 
 </script>
