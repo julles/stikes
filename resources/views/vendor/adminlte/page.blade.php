@@ -43,7 +43,9 @@
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini">{!! config('adminlte.logo_mini', '<b>A</b>LT') !!}</span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</span>
+                <span class="logo-lg">
+                    <img src="{{ asset('logo.png') }}" width="250px" class="mb-2">
+                </span>
             </a>
 
             <!-- Header Navbar -->

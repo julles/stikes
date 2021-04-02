@@ -126,7 +126,7 @@ return [
     */
 
     'menu' => [
-        ['header' => 'main_navigation'],
+        ['header' => 'STIKES | RS Husada Jakarta'],
         // [
         //     'text' => 'blog',
         //     'url'  => 'admin/blog',
