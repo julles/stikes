@@ -27,14 +27,14 @@
                     <h4 class="text-center">SKS</h4>
                     <div class="col-md-6">
                         <div class="form-group">
-                            {!! Form::label("Praktikum") !!}
-                            {!! Form::number("sks_praktikum",null,["class"=>"form-control"]) !!}
+                            {!! Form::label("Teori") !!}
+                            {!! Form::number("sks_tatap_muka",null,["class"=>"form-control"]) !!}
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            {!! Form::label("Teori") !!}
-                            {!! Form::number("sks_tatap_muka",null,["class"=>"form-control"]) !!}
+                            {!! Form::label("Praktikum") !!}
+                            {!! Form::number("sks_praktikum",null,["class"=>"form-control"]) !!}
                         </div>
                     </div>
                 </div>
