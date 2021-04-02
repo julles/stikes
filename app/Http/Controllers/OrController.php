@@ -104,31 +104,32 @@ class OrController extends Controller
         return Storage::response($pathToFile);
     }
 
-    public function testEmail(Request $request)
+    public function updateQuestion(Request $request, $id)
     {
-
-        sendEmail(18,'text-book','input',40);
-
-        return 'email berhasil dikirim silahkan cek';
+        dd($request->all());
     }
 
     public function question($id)
     {
 
-        $kuis = Kuis::where('id_pm',$id)
+        $kuis = Kuis::where('kuis.id_pm',$id)
                       ->select(
-                                'id_kuis',
-                                'durasi',
-                                'isi_soal',
-                                'jawaban',
-                                'pilihan_a',
-                                'pilihan_b',
-                                'pilihan_c',
-                                'pilihan_d',
-                                'varian_latihan'
+                                'kuis.id_kuis',
+                                'kuis.durasi',
+                                'kuis.isi_soal',
+                                'kuis.jawaban',
+                                'kuis.pilihan_a',
+                                'kuis.pilihan_b',
+                                'kuis.pilihan_c',
+                                'kuis.pilihan_d',
+                                'kuis.varian_latihan',
+                                'kuis.id_topic',
+                                'topic.topic',
+                                'topic.sub_topic'
                                )
+                      ->leftJoin('topic','topic.id_topic','=','kuis.id_topic')
                       ->orderBy('varian_latihan','ASC')
-                      ->orderBy('id_kuis','ASC')
+                      ->orderBy('kuis.id_kuis','ASC')
                       ->get();
 
         $html_tabel = '<tr><td colspan="4" class="text-center"><strong>Belum ada soal</strong></td></td>';
@@ -154,10 +155,55 @@ class OrController extends Controller
                     $html_tabel .= '</tr>';
 
                     $no = 1;
+                    $alphabet = ['a','b','c','d'];
                     foreach ($v as $key => $q) {
                         $html_tabel .= '<tr>';
                             $html_tabel .= '<td class="text-center">'.$no++.'</td>';
-                            $html_tabel .= '<td>'.$q['isi_soal'].'</td>';
+                            $html_tabel .= '<td>';
+                                $html_tabel .= '<div class="row">';
+                                    $html_tabel .= '<div class="col-md-12">';
+                                        $html_tabel .= '<h4><b>Soal :</b></h4>';
+                                        $html_tabel .= $q['isi_soal'];
+                                    $html_tabel .= '</div>';
+
+                                    $html_tabel .= '<div class="col-md-12">';
+                                        $html_tabel .= '<h4><b>Pilihan :</b></h4>';
+                                        
+                                        foreach ($alphabet as $a) {
+                                            if (!$q['pilihan_'.$a]) {
+                                                continue;
+                                            }
+                                            $html_tabel .= '<div class="row">';
+                                                $html_tabel .= '<div class="col-md-1 text-center">';
+                                                    $html_tabel .= '<strong>'.ucfirst($a.'.').'</strong>';
+                                                $html_tabel .= '</div>';
+                                                $html_tabel .= '<div class="col-md-11 pl-0">';
+                                                    $html_tabel .= $q['pilihan_'.$a];
+                                                $html_tabel .= '</div>';
+                                            $html_tabel .= '</div>';
+                                        }
+
+                                        $html_tabel .= '<div class="row">';
+                                            $html_tabel .= '<div class="col-md-12">';
+                                                $html_tabel .= '<h4><b>Jawaban : '.$q['jawaban'].'</b></h4>';
+                                            $html_tabel .= '</div>';
+                                        $html_tabel .= '</div>';
+
+                                        $html_tabel .= '<div class="row">';
+                                            $html_tabel .= '<div class="col-md-12">';
+                                                $html_tabel .= '<h5><b>Topic : </b>'.$q['topic'].' | '.$q['sub_topic'].'</h5>';
+                                            $html_tabel .= '</div>';
+                                        $html_tabel .= '</div>';
+                                        $html_tabel .= '<div class="row">';
+                                            $html_tabel .= '<div class="col-md-12">';
+                                                $html_tabel .= '<h5><b>Durasi : </b>'.$q['durasi'].' menit</h5>';
+                                            $html_tabel .= '</div>';
+                                        $html_tabel .= '</div>';
+
+                                    $html_tabel .= '</div>';
+                                    
+                                $html_tabel .= '</div>';
+                            $html_tabel .= '</td>';
                             $html_tabel .= '<td width="10%" class="text-center">';
                             $html_tabel .= '<span onclick="editQ('.$q['id_kuis'].')" class="btn btn-success mr-2 mb-2"><i class="fa fa-edit"></i></span>';
                             $html_tabel .= '<span class="btn btn-danger mb-2" 
@@ -195,6 +241,13 @@ class OrController extends Controller
         $request['id_pm'] = $id;
         $save = Kuis::insert($request->all());
         return response()->json($save);
+    }
+
+    public function deleteQuestion(Request $request, $id)
+    {
+        $delete = Kuis::where('id_kuis',$request->id)->delete();
+
+        return response()->json($delete);
     }
 
     public function summary($id)

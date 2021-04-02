@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/or/detail/{id}/question', 'OrController@question');
     Route::post('/or/detail/{id}/question', 'OrController@questionStore');
     Route::delete('/or/detail/{id}/question', 'OrController@deleteQuestion');
+    Route::patch('/or/detail/{id}/question', 'OrController@updateQuestion');
     
     Route::get('/or/detail/{id}/summary', 'OrController@summary');
 
