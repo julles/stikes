@@ -3,9 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Dosen extends Model
+class Dosen extends Authenticatable
 {
+    use Notifiable;
+
     protected $guarded = ['verifikasi_password'];
 
     protected $primaryKey = "id_dosen";
@@ -28,5 +33,10 @@ class Dosen extends Model
             $model->password_plain = $model->password;
             $model->password = \Hash::make($model->password);
         });
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->password;
     }
 }

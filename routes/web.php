@@ -6,9 +6,7 @@ Route::view('/', 'auth.login');
 
 Auth::routes();
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home')->middleware('auth');
+Route::get('/home', 'HomeController@home')->name('home')->middleware('auth');
 
 Route::middleware('auth')->group(function () {
     AdvancedRoute::controllers([
