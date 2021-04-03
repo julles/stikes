@@ -34,7 +34,7 @@ class RpsService
     public function getData(Request $request)
     {
         $user = Auth::user();
-        $pm = pmAssign::where('sme_id',$user->id)->pluck('id_pm');
+        $pm = pmAssign::where('sme_id',$user->id_dosen)->pluck('id_pm');
 
 
         $model = PengembangMateri::
@@ -217,7 +217,7 @@ class RpsService
 
             // send email
             $user = Auth::user();
-            sendEmail($id,'rps','input',$user->id);
+            sendEmail($id,'rps','input',$user->id_dosen);
 
             return true;
         }

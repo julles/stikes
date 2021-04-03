@@ -34,8 +34,8 @@ class ReviewRpsService
     public function getData(Request $request)
     {
         $user = Auth::user();
-        $pm = pmAssign::where('reviewer_id',$user->id)
-                        ->orWhere('approval_id',$user->id)
+        $pm = pmAssign::where('reviewer_id',$user->id_dosen)
+                        ->orWhere('approval_id',$user->id_dosen)
                         ->pluck('id_pm');
         
         $model = PengembangMateri::
@@ -94,9 +94,9 @@ class ReviewRpsService
                 $status = 'reviewer';
             }
         }else{
-            if ($pengembangMateri->pm_assign->reviewer_id == $user->id) {
+            if ($pengembangMateri->pm_assign->reviewer_id == $user->id_dosen) {
                 $status = 'reviewer';
-            }elseif($pengembangMateri->pm_assign->approval_id == $user->id){
+            }elseif($pengembangMateri->pm_assign->approval_id == $user->id_dosen){
                 $status = 'approv';
             }
         }
@@ -127,12 +127,12 @@ class ReviewRpsService
         }
 
         // check status dosen
-        if ($pengembangMateri->pm_assign->reviewer_id == $user->id || $status == 'reviewer') {
+        if ($pengembangMateri->pm_assign->reviewer_id == $user->id_dosen || $status == 'reviewer') {
 
             $inputs = [
                         'reviewer_commen' => $request->reviewer_commen,
                         'reviewer_date' => date("Y-m-d H:i:s"),
-                        'reviewer_user' => $user->id
+                        'reviewer_user' => $user->id_dosen
             ];
 
             if ($request->status == 1) {
@@ -146,12 +146,12 @@ class ReviewRpsService
                 // send email
             }
 
-        }elseif($pengembangMateri->pm_assign->approval_id == $user->id || $status == 'approv'){
+        }elseif($pengembangMateri->pm_assign->approval_id == $user->id_dosen || $status == 'approv'){
 
             $inputs = [
                         'approv_commen' => $request->approv_commen,
                         'approv_date' => date("Y-m-d H:i:s"),
-                        'approv_user' => $user->id
+                        'approv_user' => $user->id_dosen
             ];
 
             if ($request->status == 1) {
@@ -166,6 +166,6 @@ class ReviewRpsService
         }
 
         $model->update($inputs);
-        sendEmail($id,'rps',$statusApp,$user->id);
+        sendEmail($id,'rps',$statusApp,$user->id_dosen);
     }
 }

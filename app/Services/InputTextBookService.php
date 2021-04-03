@@ -29,7 +29,7 @@ class InputTextBookService
     public function getData(Request $request)
     {
         $user = Auth::user();
-        $pm = pmAssign::where('sme_id',$user->id)->pluck('id_pm');
+        $pm = pmAssign::where('sme_id',$user->id_dosen)->pluck('id_pm');
         
         $model = PengembangMateri::
             select('pengembang_materi.id_pm', 
@@ -115,7 +115,7 @@ class InputTextBookService
 
             // send email
             $user = Auth::user();
-            sendEmail($id,'text-book','input',$user->id);
+            sendEmail($id,'text-book','input',$user->id_dosen);
         }
     }
 }
