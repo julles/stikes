@@ -19,6 +19,24 @@
             <p class="login-box-msg">
                 <img src="{{ asset('logo.png') }}" width="250px" class="mb-2"><br>
                 {{ __('adminlte::adminlte.login_message') }}
+
+                @if(Session::has('message'))
+                    <div class="alert alert-{{ Session::get('type') }}">
+                        <div class="alert-body">
+                            <button class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                            </button>
+                            @if(Session::get('type') == 'success')
+                                <div class="alert-title">Success !</div>
+                            @elseif(Session::get('type') == 'warning')
+                                <div class="alert-title">Warning !</div>
+                            @else
+                                <div class="alert-title">Failed !</div>
+                            @endif
+                            {{ Session::get('message') }}
+                        </div>
+                    </div>
+                @endif
             </p>
             <form action="{{ url(config('adminlte.login_url', 'login')) }}" method="post">
                 {{ csrf_field() }}

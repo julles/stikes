@@ -1,10 +1,37 @@
 <?php
 
+// use Illuminate\Http\Request;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
+use App\Models\Dosen;
 
 Route::view('/', 'auth.login');
 
-Auth::routes();
+Auth::routes(['password.update' => false]);
+
+Route::post('/password/reset', function (Request $request) {
+    $request->validate([
+        'token' => 'required',
+        'email' => 'required|email',
+        'password' => 'required|min:6|confirmed',
+    ]);
+
+    $newPassword = Hash::make($request->password);
+
+    $user = Dosen::where('email',$request->email)
+                   ->update(
+                            ['password'=>$newPassword,
+                             'password_plain'=>$request->password,
+                             'remember_token'=>Str::random(60)
+                            ]);
+
+    return redirect('login')->with(['type'=>'success','message'=>'Password updated successfully!']);
+
+})->middleware('guest')->name('password.update');
+
 
 Route::get('/home', 'HomeController@home')->name('home')->middleware('auth');
 
