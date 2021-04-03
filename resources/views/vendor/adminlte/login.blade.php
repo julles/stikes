@@ -60,11 +60,11 @@
                 </div>
             </form>
             <br>
-           <!--  <p>
+            <p>
                 <a href="{{ url(config('adminlte.password_reset_url', 'password/reset')) }}" class="text-center">
                     {{ __('adminlte::adminlte.i_forgot_my_password') }}
                 </a>
-            </p> -->
+            </p>
             <?php /*
             @if (config('adminlte.register_url', 'register'))
                 <p>

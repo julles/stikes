@@ -124,6 +124,7 @@ class ReviewOrService
         
         $thisRole = session()->get('user.dosen')->role_id;
         
+        $status = 'dosen';
         if ($thisRole == 3 || $thisRole == 63) {
             $status = 'approv';
         }elseif($thisRole == 2){

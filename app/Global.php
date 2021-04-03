@@ -188,15 +188,19 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
                   'link' => env('APP_URL').'/review-'.$type.'/detail/'.$d['id_pm']
                 ];
 
-            Mail::to($d['reviewer_email'])
-                  ->send(new Notification($mailData));
+            if($d['reviewer_email'] != null){
+                Mail::to($d['reviewer_email'])
+                      ->send(new Notification($mailData));
+            }
 
         // send to approv
 
             $mailData['name'] = $d['approv_nama'];
-
-            Mail::to($d['approv_email'])
-                  ->send(new Notification($mailData));
+            
+            if($d['approv_email'] != null){
+                Mail::to($d['approv_email'])
+                      ->send(new Notification($mailData));
+            }
 
     }elseif ($status == 'reject') {
         $msg = 'Pengajuan untuk '.$typeCaption.' berikut ini <strong>Ditolak</strong>,<br>
@@ -214,8 +218,10 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
                 $mailData['link'] = env('APP_URL').'/input-'.$type.'/detail/'.$d['id_pm'];
             }
 
-            Mail::to($d['sme_email'])
-                  ->send(new Notification($mailData));
+            if($d['sme_email'] != null){
+                Mail::to($d['sme_email'])
+                      ->send(new Notification($mailData));
+            }
 
             if ($type == 'text-book') {
                 $mailData['link'] = env('APP_URL').'/review-'.$type.'/detail/'.$d['id_pm'];
@@ -225,15 +231,19 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
 
             $mailData['name'] = $d['approv_nama'];
 
-            Mail::to($d['approv_email'])
-                  ->send(new Notification($mailData));
+            if($d['approv_email'] != null){
+                Mail::to($d['approv_email'])
+                      ->send(new Notification($mailData));
+            }
             
         }elseif($as == 'approve'){
 
             $mailData['name'] = $d['reviewer_nama'];
 
-            Mail::to($d['reviewer_email'])
-                  ->send(new Notification($mailData));
+            if($d['reviewer_email'] != null){
+                Mail::to($d['reviewer_email'])
+                      ->send(new Notification($mailData));
+            }
         }
 
     }elseif ($status == 'approve') {
@@ -255,8 +265,10 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
                 $mailData['link'] = env('APP_URL').'/input-'.$type.'/detail/'.$d['id_pm'];
             }
 
-            Mail::to($d['sme_email'])
-                  ->send(new Notification($mailData));
+            if($d['sme_email'] != null){
+                Mail::to($d['sme_email'])
+                      ->send(new Notification($mailData));
+            }
 
             if ($type == 'text-book') {
                 $mailData['link'] = env('APP_URL').'/review-'.$type.'/detail/'.$d['id_pm'];
@@ -266,15 +278,19 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
         if ($as == 'reviewer') {
 
             $mailData['name'] = $d['approv_nama'];
-            Mail::to($d['approv_email'])
-                  ->send(new Notification($mailData));
+            if($d['approv_email'] != null){
+                Mail::to($d['approv_email'])
+                      ->send(new Notification($mailData));
+            }
             
         }elseif($as == 'approve'){
 
             $mailData['name'] = $d['reviewer_nama'];
 
-            Mail::to($d['reviewer_email'])
-                  ->send(new Notification($mailData));
+            if($d['reviewer_email'] != null){
+                Mail::to($d['reviewer_email'])
+                      ->send(new Notification($mailData));
+            }
         }
 
     }elseif ($status == 'revision') {
@@ -289,15 +305,19 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
                   'link' => env('APP_URL').'/review-'.$type.'/detail/'.$d['id_pm']
                 ];
 
-            Mail::to($d['reviewer_email'])
-                  ->send(new Notification($mailData));
+            if($d['reviewer_email'] != null){
+                Mail::to($d['reviewer_email'])
+                      ->send(new Notification($mailData));
+            }
 
         // send to approv
 
             $mailData['name'] = $d['approv_nama'];
 
-            Mail::to($d['approv_email'])
-                  ->send(new Notification($mailData));
+            if($d['approv_email'] != null){
+                Mail::to($d['approv_email'])
+                      ->send(new Notification($mailData));
+            }
     }
 
 
