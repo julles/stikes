@@ -10,15 +10,19 @@
                     <th>Set</th>
                     <th>No.</th>
                     <th>Soal</th>
-                    <th>Action</th>
+                    @if(!isset($or->status) && ($or->status == 0 || $or->status == 3))
+                        <th>Action</th>
+                    @endif
                 </tr>
             </thead>
             <tbody id="html_tabel_kuis">
             </tbody>
         </table>
-        <div class="col-md-12 text-center">
-            <span onclick="addQ()" class="btn btn-success">+ Add Question</span>
-        </div>
+        @if(!isset($or->status) && ($or->status == 0 || $or->status == 3))
+            <div class="col-md-12 text-center">
+                <span onclick="addQ()" class="btn btn-success">+ Add Question</span>
+            </div>
+        @endif
 
         <div class="modal fade" id="questionSetModal" tabindex="-1" role="dialog" aria-labelledby="questionSetModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">

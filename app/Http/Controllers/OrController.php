@@ -112,6 +112,8 @@ class OrController extends Controller
     public function question($id)
     {
 
+        $pmStatus = PengembangMateri::select('status')->where('pengembang_materi.id_pm',$id)->first();
+        
         $kuis = Kuis::where('kuis.id_pm',$id)
                       ->select(
                                 'kuis.id_kuis',
@@ -204,11 +206,15 @@ class OrController extends Controller
                                     
                                 $html_tabel .= '</div>';
                             $html_tabel .= '</td>';
-                            $html_tabel .= '<td width="10%" class="text-center">';
-                            $html_tabel .= '<span onclick="editQ('.$q['id_kuis'].')" class="btn btn-success mr-2 mb-2"><i class="fa fa-edit"></i></span>';
-                            $html_tabel .= '<span class="btn btn-danger mb-2" 
-                                            onclick="delQ('.$q['id_kuis'].')"><i class="fa fa-trash"></i></span>';
-                            $html_tabel .= '</td>';
+
+                            if ($pmStatus['status'] == 0 || $pmStatus['status'] == 3) {
+                                $html_tabel .= '<td width="10%" class="text-center">';
+                                    $html_tabel .= '<span onclick="editQ('.$q['id_kuis'].')" class="btn btn-success mr-2 mb-2"><i class="fa fa-edit"></i></span>';
+                                    $html_tabel .= '<span class="btn btn-danger mb-2" 
+                                                    onclick="delQ('.$q['id_kuis'].')"><i class="fa fa-trash"></i></span>';
+                                $html_tabel .= '</td>';
+                            }
+                            
                         $html_tabel .= '</tr>';
                     }
                 }
