@@ -212,14 +212,17 @@ class OrController extends Controller
                         $html_tabel .= '</tr>';
                     }
                 }
+        }
+        
+        if ($kuis->count() > 0) {
 
-
-
-                for ($i=1; $i < $q['varian_latihan']; $i++) { 
-                    $html_variant .= '<option>'.$i.'</option>';
+                for ($i=1; $i <= ($kuis->max('varian_latihan') + 1); $i++) {
+                    if (($kuis->max('varian_latihan') + 1) == $i) {
+                        $html_variant .= '<option selected>'.$i.'</option>';
+                     } else{
+                        $html_variant .= '<option>'.$i.'</option>';
+                     }
                 }
-
-                $html_variant .= '<option selected>'.($i+1).'</option>';
 
         }else{
             $html_variant .= '<option selected>1</option>';
