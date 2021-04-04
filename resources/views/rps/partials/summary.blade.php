@@ -46,7 +46,7 @@
         </table>   
     </div>
     <div class="col-md-4">
-        <strong>Metode Pembelajaran</strong>
+        <strong>Metode Penilaian</strong>
         <table class="table table-bordered mt-3">
             <thead>
                 <tr>
