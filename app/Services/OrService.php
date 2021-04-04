@@ -295,6 +295,7 @@ class OrService
                                             'topic_id' => $v['topic_id'],
                                             'title' => $v['title'],
                                             'link' => $v['link'],
+                                            'source' => $v['source'],
                                             'type' => 'or_materi_pendukung',
                                             'file' => $fileName,
                                           ];
@@ -405,6 +406,7 @@ class OrService
                                             'topic_id' => $v['topic_id'],
                                             'title' => $v['title'],
                                             'link' => $v['link'],
+                                            'source' => $v['source'],
                                             'type' => 'or_materi_pendukung',
                                             'file' => $fileName,
                                           ];

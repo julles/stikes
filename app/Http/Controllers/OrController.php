@@ -214,7 +214,7 @@ class OrController extends Controller
                                                     onclick="delQ('.$q['id_kuis'].')"><i class="fa fa-trash"></i></span>';
                                 $html_tabel .= '</td>';
                             }
-                            
+
                         $html_tabel .= '</tr>';
                     }
                 }
@@ -282,7 +282,6 @@ class OrController extends Controller
                 $html .= '<div class="col-md-8">';
                     $html .= '<table class="table">';
                         $html .= '<tr>';
-                            $html .= '<th>No</th>';
                             $html .= '<th>Topic</th>';
                             $html .= '<th>File</th>';
                         $html .= '</tr>';
@@ -313,14 +312,12 @@ class OrController extends Controller
                 $html .= '<div class="col-md-8">';
                     $html .= '<table class="table">';
                         $html .= '<tr>';
-                            $html .= '<th>No</th>';
                             $html .= '<th>Topic</th>';
                             $html .= '<th>File</th>';
                         $html .= '</tr>';
                         $no = 1;
                         foreach ($orFile['or_ln'] as $key => $v) {
                             $html .= '<tr>';
-                                $html .= '<td>'.($no++).'</td>';
                                 $html .= '<td>'.$v['topic'].'</td>';
                                 $html .= '<td>';
                                     $html .= '<a href="'.Storage::url(contents_path().'or_ln/'.$v->file).'">';
@@ -343,14 +340,12 @@ class OrController extends Controller
                 $html .= '<div class="col-md-8">';
                     $html .= '<table class="table">';
                         $html .= '<tr>';
-                            $html .= '<th>No</th>';
                             $html .= '<th>Topic</th>';
                             $html .= '<th>File</th>';
                         $html .= '</tr>';
                         $no = 1;
                         foreach ($orFile['or_video'] as $key => $v) {
                             $html .= '<tr>';
-                                $html .= '<td>'.($no++).'</td>';
                                 $html .= '<td>'.$v['topic'].'</td>';
                                 $html .= '<td>';
                                     $html .= '<a href="'.Storage::url(contents_path().'or_video/'.$v->file).'">';
@@ -373,7 +368,6 @@ class OrController extends Controller
                 $html .= '<div class="col-md-8">';
                     $html .= '<table class="table">';
                         $html .= '<tr>';
-                            $html .= '<th>No</th>';
                             $html .= '<th>Topic</th>';
                             $html .= '<th>Judul</th>';
                             $html .= '<th>Link</th>';
@@ -382,7 +376,6 @@ class OrController extends Controller
                         $no = 1;
                         foreach ($orFile['or_materi_pendukung'] as $key => $v) {
                             $html .= '<tr>';
-                                $html .= '<td>'.($no++).'</td>';
                                 $html .= '<td>'.$v['topic'].'</td>';
                                 $html .= '<td>'.$v['title'].'</td>';
                                 $html .= '<td><a target="_blank" href="'.$v['link'].'">'.$v['link'].'</a></td>';

@@ -15,7 +15,7 @@ class MetodePenilaianController extends Controller
         $this->__route = "metode-penilaian";
         $this->service = (new MetodePenilaianService())->setRoute("metode-penilaian");
         view()->share("__route", $this->__route);
-        view()->share("__menu", "MetodePenilaian");
+        view()->share("__menu", "Metode Penilaian");
     }
 
     public function getData(Request $request)
@@ -32,6 +32,7 @@ class MetodePenilaianController extends Controller
     {
         return view("metode-penilaian.form", [
             "model" => $this->model,
+            "titleAction" => "Tambah Data",
         ]);
     }
 
@@ -56,7 +57,7 @@ class MetodePenilaianController extends Controller
         
         return view("metode-penilaian.form", [
             "model" => $model,
-            "titleAction" => "Tambah Data",
+            "titleAction" => "Edit Data",
             "fromMonth" => $fromMonth,
             "fromYear" => $fromYear,
             "toMonth" => $toMonth,

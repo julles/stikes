@@ -19,9 +19,20 @@
                     {!! Form::label("Component") !!}
                     {!! Form::text("component",null,["class"=>"form-control"]) !!}
                 </div>
-                <div class="form-group">
-                    {!! Form::label("Weight (%)") !!}
-                    {!! Form::number("weight",null,["class"=>"form-control"]) !!}
+                <div class="col-md-12">
+                    <h4 class="text-center">Weight (%)</h4>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::label("Teori") !!}
+                            {!! Form::number("weight",null,["class"=>"form-control"]) !!}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::label("Praktikum") !!}
+                            {!! Form::number("weight_praktikum",null,["class"=>"form-control"]) !!}
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="box-footer">

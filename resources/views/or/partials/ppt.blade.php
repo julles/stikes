@@ -4,7 +4,7 @@
             <thead>
                 <tr>
                     <th>Topic</th>
-                    <th>File</th>
+                    <th>File <small>*Each topic can consists of ppt & pdf</small></th>
                     <th></th>
                 </tr>
             </thead>

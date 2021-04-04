@@ -56,3 +56,16 @@ or_file
 alter Kuis,
 isi_soal dan pilihan dibuat longtext,
 varian_latihan dibuat integer
+
+// ----------------------------------------
+
+tabel reset_password
+sama remember_token di dosen
+
+// ----------------------------------------
+
+tambah field weight_praktikum di metode_penilaian
+
+// ----------------------------------------
+
+tambah field source di or_file

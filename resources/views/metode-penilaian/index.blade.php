@@ -18,7 +18,8 @@
                         <thead>
                             <tr>
                                 <th width = "20%%">Component</th>
-                                <th width = "70%">Weight</th>
+                                <th width = "30%">Weight Teori</th>
+                                <th width = "30%">Weight Praktikum</th>
                                 <th width = "10%">Action</th>
                             </tr>
                         </thead>
@@ -49,6 +50,7 @@ $(function() {
         columns: [
             { data: 'component', name: 'component' },
             { data: 'weight_percent', name: 'weight_percent' },
+            { data: 'weight_praktikum_percent', name: 'weight_praktikum_percent' },
             { data: 'action', name: 'action' ,searchable:false}
         ]
     });

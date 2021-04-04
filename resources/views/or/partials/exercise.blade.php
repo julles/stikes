@@ -10,7 +10,7 @@
                     <th>Set</th>
                     <th>No.</th>
                     <th>Soal</th>
-                    @if(!isset($or->status) && ($or->status == 0 || $or->status == 3))
+                    @if(!isset($or) || ((isset($or) && $or['status'] == 0) || (isset($or) && $or['status'] == 3)))
                         <th>Action</th>
                     @endif
                 </tr>
@@ -18,7 +18,7 @@
             <tbody id="html_tabel_kuis">
             </tbody>
         </table>
-        @if(!isset($or->status) && ($or->status == 0 || $or->status == 3))
+        @if(!isset($or) || ((isset($or) && $or['status'] == 0) || (isset($or) && $or['status'] == 3)))
             <div class="col-md-12 text-center">
                 <span onclick="addQ()" class="btn btn-success">+ Add Question</span>
             </div>

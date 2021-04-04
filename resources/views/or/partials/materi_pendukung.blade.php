@@ -6,6 +6,7 @@
                     <th>Topic</th>
                     <th>Judul</th>
                     <th>Link</th>
+                    <th>Sumber</th>
                     <th>File</th>
                     <th></th>
                 </tr>
@@ -31,6 +32,9 @@
                             </td> 
                             <td class="row-index" > 
                                 <input type="text" class="form-control" readonly value="{{ $v['link'] }}">
+                            </td> 
+                            <td class="row-index" > 
+                                <input type="text" class="form-control" readonly value="{{ $v['source'] }}">
                             </td> 
                             <td class="text-center" width="15%"> 
                                 <a href="{{ Storage::url(contents_path().'or_materi_pendukung/'.$v['file']) }}" target="_blank" class="btn btn-block btn-outline-warning mt-2 btn-sm">
@@ -81,6 +85,9 @@
                     </td> 
                     <td class="row-index" > 
                         <input type="text" class="form-control" name="materi_pendukung[${rowIdx}][link]">
+                    </td> 
+                    <td class="row-index" > 
+                        <input type="text" class="form-control" name="materi_pendukung[${rowIdx}][source]">
                     </td> 
                     <td class="text-center" width="15%"> 
                         <input type="file" class="form-control" name="materi_pendukung[${rowIdx}][file]" required>
