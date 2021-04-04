@@ -29,14 +29,25 @@ class Dosen extends Authenticatable
             $model->password = \Hash::make($model->password);
         });
 
-        self::updating(function ($model) {
-            $model->password_plain = $model->password;
-            $model->password = \Hash::make($model->password);
-        });
+        // self::updating(function ($model) {
+        //     $model->password_plain = $model->password;
+        //     $model->password = \Hash::make($model->password);
+        // });
     }
 
     public function getAuthPassword()
     {
         return $this->password;
+    }
+
+    protected $rememberTokenName = false;
+
+    public function setAttribute($key, $value)
+        {
+        $isRememberTokenAttribute = $key == $this->getRememberTokenName();
+        if (!$isRememberTokenAttribute)
+            {
+              parent::setAttribute($key, $value);
+            }
     }
 }

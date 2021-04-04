@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use App\Models\Dosen;
+use Illuminate\Support\Facades\DB;
 
 Route::view('/', 'auth.login');
 
@@ -27,6 +28,8 @@ Route::post('/password/reset', function (Request $request) {
                              'password_plain'=>$request->password,
                              'remember_token'=>Str::random(60)
                             ]);
+
+    $delete = DB::table('password_resets')->where('email',$request->email)->delete();
 
     return redirect('login')->with(['type'=>'success','message'=>'Password updated successfully!']);
 

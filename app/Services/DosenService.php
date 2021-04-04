@@ -85,6 +85,8 @@ class DosenService
 
         $inputs = $request->all();
         $inputs["foto"] = $fotoName;
+        $inputs["password_plain"] = $inputs['password'];
+        $inputs["password"] = \Hash::make($inputs['password']);
 
         $model->update($inputs);
     }
