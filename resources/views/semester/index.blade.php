@@ -73,8 +73,8 @@ $(function() {
         ordering:false,
         columns: [
             { data: 'nama_semester', name: 'nama_semester' },
-            { name: 'from', data: 'from', render: $.fn.dataTable.render.moment( 'DD-MM-YYYY' ) },
-            { name: 'to', data: 'to', render: $.fn.dataTable.render.moment( 'DD-MM-YYYY' ) },
+            { name: 'from', data: 'from', render: $.fn.dataTable.render.moment( 'DD-MMM-YYYY' ) },
+            { name: 'to', data: 'to', render: $.fn.dataTable.render.moment( 'DD-MMM-YYYY' ) },
             { data: 'action', name: 'action' ,searchable:false}
         ]
     });

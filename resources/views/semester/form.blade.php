@@ -21,12 +21,12 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label("dari") !!} <small>(Bulan dan Tahun)</small>
-                    {!! Form::selectRange("dari_bulan",1,12,$fromMonth,["class"=>"form-control"]) !!}
+                    {!! Form::select("dari_bulan",getMonthData(),$fromMonth,["class"=>"form-control"]) !!}
                     {!! Form::selectRange("dari_tahun",date("Y") - 10,date("Y") + 10,$fromYear,["class"=>"form-control","style" => "margin-top:10px;"]) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label("sampai") !!}<small>(Bulan dan Tahun)</small>
-                    {!! Form::selectRange("sampai_bulan",1,12,$toMonth,["class"=>"form-control"]) !!}
+                    {!! Form::select("sampai_bulan",getMonthData(),$toMonth,["class"=>"form-control"]) !!}
                     {!! Form::selectRange("sampai_tahun",date("Y") - 10,date("Y") + 10,$toYear,["class"=>"form-control","style" => "margin-top:10px;"]) !!}
                 </div>
             </div>

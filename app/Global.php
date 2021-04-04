@@ -336,3 +336,20 @@ function generateRandomString($length = 10) {
     }
     return $randomString;
 }
+
+function getMonthData($val = false)
+{
+
+    $arr = [];
+    for ($i=1; $i < 13; $i++) { 
+        $arr[$i] = carbon()
+            ->parse('0000-'.$i.'-01')
+            ->format("M");
+    }
+    
+    if ($val) {
+        return $arr[$val];
+    }
+
+    return $arr;
+}
