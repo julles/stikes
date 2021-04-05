@@ -68,6 +68,15 @@
                                 <strong><span class="weight-total">0</span>%</strong>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="text-right alert-weight" style="display: none;">
+                                    <span class="text-danger">
+                                        Total bobot tidak boleh lebih dari 100%
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
                     </tfoot>
                 </table>
             </div>
@@ -90,6 +99,15 @@
                             </td>
                             <td>
                                 <strong><span class="weight-praktikum-total">0</span>%</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="text-right alert-weight-praktikum" style="display: none;">
+                                    <span class="text-danger">
+                                        Total bobot tidak boleh lebih dari 100%
+                                    </span>
+                                </div>
                             </td>
                         </tr>
                     </tfoot>

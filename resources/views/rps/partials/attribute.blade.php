@@ -108,6 +108,15 @@
                                             <strong><span class="weight-total">0</span>%</strong>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <div class="text-right alert-weight" style="display: none;">
+                                                <span class="text-danger">
+                                                    Total bobot tidak boleh lebih dari 100%
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -159,6 +168,15 @@
                                             <strong><span class="weight-praktikum-total">0</span>%</strong>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <div class="text-right alert-weight-praktikum" style="display: none;">
+                                                <span class="text-danger">
+                                                    Total bobot tidak boleh lebih dari 100%
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -177,6 +195,14 @@
                 weightTotal = weightTotal + $(this).data('weight');
             });
 
+            if (weightTotal > 100) {
+                $(".alert-weight").show();
+                $(".btn-submit").prop('disabled', true);
+            }else{
+                $(".alert-weight").hide();
+                $(".btn-submit").prop('disabled', false);
+            }
+
             $(".weight-total").html(weightTotal);
         }
         getTotalMP();
@@ -192,6 +218,14 @@
             $(".metode-penilaian-praktikum:checked").map(function () {
                 weightTotal = weightTotal + $(this).data('weight');
             });
+
+            if (weightTotal > 100) {
+                $(".alert-weight-praktikum").show();
+                $(".btn-submit").prop('disabled', true);
+            }else{
+                $(".alert-weight-praktikum").hide();
+                $(".btn-submit").prop('disabled', false);
+            }
 
             $(".weight-praktikum-total").html(weightTotal);
         }

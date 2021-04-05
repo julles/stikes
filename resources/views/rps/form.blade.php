@@ -98,7 +98,7 @@
                         <a href="javascript:void(0)" onclick="openTab('topik')" class="btn btn-default btn-sm">
                             Back
                         </a>
-                        <button type="submit" class="btn btn-primary btn-sm">
+                        <button type="submit" class="btn btn-primary btn-sm btn-submit">
                             Submit
                         </button>
                     </div>
