@@ -106,13 +106,30 @@ class OrController extends Controller
 
     public function updateQuestion(Request $request, $id)
     {
-        dd($request->all());
+
+        $payload = [
+            'durasi' => $request['durasi'],
+            'isi_soal' => $request['isi_soal'],
+            'jawaban' => $request['jawaban'],
+            'pilihan_a' => $request['pilihan_a'],
+            'pilihan_b' => $request['pilihan_b'],
+            'pilihan_c' => $request['pilihan_c'],
+            'pilihan_d' => $request['pilihan_d'],
+            'penjelasan_jwb' => $request['penjelasan_jwb'],
+            'varian_latihan' => $request['varian_latihan']
+        ];
+
+        $kuis = Kuis::where('id_kuis',$request->question_id)->update($payload);
+
+        return response()->json($kuis);
     }
 
     public function question($id)
     {
 
         $pmStatus = PengembangMateri::select('status')->where('pengembang_materi.id_pm',$id)->first();
+
+        $or = OrModel::select('status')->where('id',$id)->first();
         
         $kuis = Kuis::where('kuis.id_pm',$id)
                       ->select(
@@ -124,6 +141,7 @@ class OrController extends Controller
                                 'kuis.pilihan_b',
                                 'kuis.pilihan_c',
                                 'kuis.pilihan_d',
+                                'kuis.penjelasan_jwb',
                                 'kuis.varian_latihan',
                                 'kuis.id_topic',
                                 'topic.topic',
@@ -191,6 +209,13 @@ class OrController extends Controller
                                             $html_tabel .= '</div>';
                                         $html_tabel .= '</div>';
 
+                                        $html_tabel .= '<div class="row mb-3">';
+                                            $html_tabel .= '<div class="col-md-12">';
+                                                $html_tabel .= '<h4><b>Explanation :</b></h4>';
+                                                $html_tabel .= $q['penjelasan_jwb'] ?? '-';
+                                            $html_tabel .= '</div>';
+                                        $html_tabel .= '</div>';
+
                                         $html_tabel .= '<div class="row">';
                                             $html_tabel .= '<div class="col-md-12">';
                                                 $html_tabel .= '<h5><b>Topic : </b>'.$q['topic'].' | '.$q['sub_topic'].'</h5>';
@@ -207,7 +232,7 @@ class OrController extends Controller
                                 $html_tabel .= '</div>';
                             $html_tabel .= '</td>';
 
-                            if ($pmStatus['status'] == 0 || $pmStatus['status'] == 3) {
+                            if (!$or || ($or['status'] == 0 || $or['status'] == 3)) {
                                 $html_tabel .= '<td width="10%" class="text-center">';
                                     $html_tabel .= '<span onclick="editQ('.$q['id_kuis'].')" class="btn btn-success mr-2 mb-2"><i class="fa fa-edit"></i></span>';
                                     $html_tabel .= '<span class="btn btn-danger mb-2" 
@@ -401,6 +426,7 @@ class OrController extends Controller
                                 'pilihan_b',
                                 'pilihan_c',
                                 'pilihan_d',
+                                'penjelasan_jwb',
                                 'varian_latihan'
                                )
                       ->orderBy('varian_latihan','ASC')

@@ -99,6 +99,12 @@
                         </select> 
                     </div>
                 </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">  
+                        {!! Form::label("Explanation") !!} 
+                        {!! Form::textarea(null,null,["class"=>"form-control","id"=>"penjelasan_jwb"]) !!}
+                    </div>
+                </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -173,6 +179,7 @@
             pilihan_b:$('#pilihan_b').val(),
             pilihan_c:$('#pilihan_c').val(),
             pilihan_d:$('#pilihan_d').val(),
+            penjelasan_jwb:$('#penjelasan_jwb').val(),
             jawaban:$('#jawaban').val(),
             id_topic:$('#id_topic_question').val(),
         };
@@ -242,6 +249,7 @@
         $('#pilihan_b').summernote("code",edata.pilihan_b);
         $('#pilihan_c').summernote("code",edata.pilihan_c);
         $('#pilihan_d').summernote("code",edata.pilihan_d);
+        $('#penjelasan_jwb').summernote("code",edata.penjelasan_jwb);
 
         $('#jawaban').val(edata.jawaban);
         $('#id_topic_question').val(edata.id_topic).trigger('change');
@@ -275,6 +283,7 @@
             pilihan_b:$('#pilihan_b').val(),
             pilihan_c:$('#pilihan_c').val(),
             pilihan_d:$('#pilihan_d').val(),
+            penjelasan_jwb:$('#penjelasan_jwb').val(),
             jawaban:$('#jawaban').val(),
             id_topic:$('#id_topic_question').val()
         };
@@ -311,6 +320,7 @@
         $('#pilihan_b').summernote("code","");
         $('#pilihan_c').summernote("code","");
         $('#pilihan_d').summernote("code","");
+        $('#penjelasan_jwb').summernote("code","");
     }
 
     $('#isi_soal').summernote({ height: 150 });
@@ -318,6 +328,7 @@
     $('#pilihan_b').summernote({ height: 150 });
     $('#pilihan_c').summernote({ height: 150 });
     $('#pilihan_d').summernote({ height: 150 });
+    $('#penjelasan_jwb').summernote({ height: 150 });
 
 </script>
 @endpush

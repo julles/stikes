@@ -8,7 +8,7 @@ class Kuis extends Model
 {
     protected $table = "kuis";
 
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $guarded = [];
 }
