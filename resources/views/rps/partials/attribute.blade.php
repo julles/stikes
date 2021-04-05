@@ -62,10 +62,10 @@
         </div>
         <div class="col-md-6">
             <div class="row">
-                <div class="col">
+                <div class="col-md-12">
                     <div class="box box-success">
                         <div class="box-header">
-                            <h4>Metode Penilaian</h4>
+                            <h4>Metode Penilaian Teori</h4>
                         </div>
                         <div class="box-body">
                             <table class="table table-sm table-bordered">
@@ -113,6 +113,57 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h4>Metode Penilaian Praktikum</h4>
+                        </div>
+                        <div class="box-body">
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Component</th>
+                                        <th>Weight</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="metode_praktikum_tbody">
+                                    @foreach($metodePenilaian as $key => $v)
+                                        <tr>
+                                            <td class="text-center">
+                                                <input type="checkbox" name="metode_penilaian_praktikum[]" id="mpc-praktikum-{{$key}}" class="form-check-input metode-penilaian-praktikum" value="{{ $v['id'] }}" data-weight="{{ $v['weight_praktikum'] }}"
+                                                @if(in_array($v['id'],$metodePenilaianPraktikumChecked))
+                                                    checked 
+                                                @endif
+                                                >
+                                            </td>
+                                            <td>
+                                                <label for="mpc-praktikum-{{$key}}">
+                                                    {{ $v['component'] }}
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label for="mpc-praktikum-{{$key}}">
+                                                    <span>{{ $v['weight_praktikum'] }}</span>%
+                                                </label>    
+                                            </td>
+                                        </tr>
+                                    @endforeach()
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="2" class="text-right">
+                                            <strong>Weight Total :</strong>
+                                        </td>
+                                        <td>
+                                            <strong><span class="weight-praktikum-total">0</span>%</strong>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -133,5 +184,21 @@
         $(".metode-penilaian").on('change click',function(e) {
             getTotalMP();            
         })
+
+        // praktikum
+
+        function getTotalMPpraktikum() {
+            var weightTotal = 0;
+            $(".metode-penilaian-praktikum:checked").map(function () {
+                weightTotal = weightTotal + $(this).data('weight');
+            });
+
+            $(".weight-praktikum-total").html(weightTotal);
+        }
+
+        $(".metode-penilaian-praktikum").on('change click',function(e) {
+            getTotalMPpraktikum();            
+        })
+        getTotalMPpraktikum();
     </script>
 @endpush

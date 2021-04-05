@@ -55,11 +55,13 @@ class RpsController extends Controller
         $metodePenilaian = MetodePenilaian::get();
 
         $metodePenilaianChecked = [];
+        $metodePenilaianPraktikumChecked = [];
         $capaianPembelajaran = [];
         $topic = [];
         $totalSubTopic = 0;
         if ($rps) {
-            $metodePenilaianChecked = json_decode($rps['metode_penilaian'],true); 
+            $metodePenilaianChecked = json_decode($rps['metode_penilaian'],true) ?? []; 
+            $metodePenilaianPraktikumChecked = json_decode($rps['metode_penilaian_praktikum'],true) ?? []; 
             $capaianPembelajaran = json_decode($rps['capaian_pembelajaran'],true); 
             $topicArr = Topic::where('id_pm',$id)->get();
             $totalSubTopic = $topicArr->count(); 
@@ -73,10 +75,11 @@ class RpsController extends Controller
             }
 
         }
-
+        
         return view("rps.form", [
             "model" => $textBook,
             "metodePenilaianChecked" => $metodePenilaianChecked,
+            "metodePenilaianPraktikumChecked" => $metodePenilaianPraktikumChecked,
             "capaianPembelajaran" => $capaianPembelajaran,
             "metodePenilaian" => $metodePenilaian,
             "totalSubTopic" => $totalSubTopic,

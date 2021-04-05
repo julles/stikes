@@ -103,6 +103,7 @@ class RpsService
             $data->media_pembelajaran = $request['media_pembelajaran'];
             $data->capaian_pembelajaran = json_encode($request['capaian_pembelajaran'],true);
             $data->metode_penilaian = json_encode($request['metode_penilaian'],true);
+            $data->metode_penilaian_praktikum = json_encode($request['metode_penilaian_praktikum'],true);
             $data->status = 0;
             $data->updated_at = $date;
 
@@ -167,6 +168,7 @@ class RpsService
                 'media_pembelajaran' => $request['media_pembelajaran'],
                 'capaian_pembelajaran' => json_encode($request['capaian_pembelajaran'],true),
                 'metode_penilaian' => json_encode($request['metode_penilaian'],true),
+                'metode_penilaian_praktikum' => json_encode($request['metode_penilaian_praktikum'],true),
                 'status' => 0,
                 'created_at' => $date,
                 'updated_at' => $date

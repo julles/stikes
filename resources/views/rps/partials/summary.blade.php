@@ -46,28 +46,56 @@
         </table>   
     </div>
     <div class="col-md-4">
-        <strong>Metode Penilaian</strong>
-        <table class="table table-bordered mt-3">
-            <thead>
-                <tr>
-                    <th>Component</th>
-                    <th>Weight</th>
-                </tr>
-            </thead>
-            <tbody id = "tbody_summary_metode">
-                
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td class="text-right">
-                        <strong>Weight Total :</strong>
-                    </td>
-                    <td>
-                        <strong><span class="weight-total">0</span>%</strong>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+        <div class="row">
+            <div class="col-md-12">
+                <strong>Metode Penilaian Teori</strong>
+                <table class="table table-bordered mt-3">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Weight</th>
+                        </tr>
+                    </thead>
+                    <tbody id = "tbody_summary_metode">
+                        
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="text-right">
+                                <strong>Weight Total :</strong>
+                            </td>
+                            <td>
+                                <strong><span class="weight-total">0</span>%</strong>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="col-md-12">
+                <strong>Metode Penilaian Praktikum</strong>
+                <table class="table table-bordered mt-3">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Weight</th>
+                        </tr>
+                    </thead>
+                    <tbody id = "tbody_summary_metode_praktikum">
+                        
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="text-right">
+                                <strong>Weight Total :</strong>
+                            </td>
+                            <td>
+                                <strong><span class="weight-praktikum-total">0</span>%</strong>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -106,6 +134,7 @@
         $("#td_strategi_pembelajaran").html($('[name="strategi_pembelajaran"]').val());
         $("#td_deskripsi_mata_kuliah").html($('[name="deskripsi_mata_kuliah"]').val());
         $("#td_metode_penilaian").html($('[name="metode_penilaian"]').val());
+        $("#td_metode_penilaian_praktikum").html($('[name="metode_penilaian_praktikum"]').val());
         $("#td_media_pembelajaran").html($('[name="media_pembelajaran"]').val());
         $("#td_peta_kompetensi").html($('[name="peta_kompetensi"]').val().replace(/C:\\fakepath\\/i, ''));
         $("#td_rubrik_penilaian").html($('[name="rubrik_penilaian"]').val().replace(/C:\\fakepath\\/i, ''));
@@ -143,7 +172,7 @@
                     // console.log(value.id.toString(),res.metode_penilaian,jQuery.inArray( value.id.toString(), res.metode_penilaian ));
                     // console.log();
                     if (jQuery.inArray( value.id.toString(), res.metode_penilaian ) >= 0) {
-                        console.log(value);
+                        // console.log(value);
                         metod += '<tr>';
                             metod += '<td>';
                                 metod += value.component;
@@ -155,6 +184,38 @@
                     }
                 });
                 $("#tbody_summary_metode").html(metod);
+
+
+            },
+        });
+
+        $.ajax({
+            url: "/parse-str",
+            data: $("#metode_praktikum_tbody :input").serialize(),
+            success: function(res){
+
+                // console.log(res);
+                var metod = "";
+                $.each( metodePenilaian, function( key, value ) {
+                    // console.log(value);
+                    // if ((jQuery.inArray( value.id, res )) >= 0 ) {
+                    //     console.log(value);
+                    // }
+                    // console.log(value.id.toString(),res.metode_penilaian,jQuery.inArray( value.id.toString(), res.metode_penilaian ));
+                    // console.log();
+                        console.log(123, value , value.id.toString());
+                    if (jQuery.inArray( value.id.toString(), res.metode_penilaian_praktikum ) >= 0) {
+                        metod += '<tr>';
+                            metod += '<td>';
+                                metod += value.component;
+                            metod += '</td>';
+                            metod += '<td>';
+                                metod += value.weight_praktikum+'%';
+                            metod += '</td>';
+                        metod += '</tr>';
+                    }
+                });
+                $("#tbody_summary_metode_praktikum").html(metod);
 
 
             },

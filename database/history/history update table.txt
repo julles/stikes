@@ -69,3 +69,7 @@ tambah field weight_praktikum di metode_penilaian
 // ----------------------------------------
 
 tambah field source di or_file
+
+// ----------------------------------------
+
+tabah field metode_penilaian_praktikum
