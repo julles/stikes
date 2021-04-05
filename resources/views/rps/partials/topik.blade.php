@@ -59,7 +59,6 @@
                                                 @if($keySub != 0)
                                                     <span class="btn btn-sm btn-outline-danger mb-3" onclick="removeSubTopic({{$sI}})"><i class="fa fa-trash"></i></span>
                                                 @else
-                                                    <span class="btn btn-sm btn-success mb-3" onclick="addSubTopic({{$i}})"><i class="fa fa-plus"></i></span>
                                                 @endif()
                                             </td>
                                         </tr>
@@ -68,6 +67,7 @@
                                         @endphp
                                     @endforeach
                                 </table>
+                                <span class="btn btn-sm btn-success mb-3" onclick="addSubTopic({{$i}})"><i class="fa fa-plus"></i>Add Sub Topik</span>
                             </td> 
                             <td class="text-center"> 
                                 <button type = "button" class = "btn btn-danger btn-sm remove_topik">X</button>
@@ -143,10 +143,10 @@
                                     <input class="form-control mb-3" type="text" name="topic[${rowIdx}][sub_topik][]" />
                                 </td>
                                 <td>
-                                    <span class="btn btn-sm btn-success mb-3" onclick="addSubTopic(${rowIdx})"><i class="fa fa-plus"></i></span>
                                 </td>
                             </tr>
                         </table>
+                        <span class="btn btn-sm btn-success mb-3" onclick="addSubTopic(${rowIdx})"><i class="fa fa-plus"></i>Add Sub Topik</span>
                     </td> 
                     <td class="text-center"> 
                         <button type = "button" class = "btn btn-danger btn-sm remove_topik">X</button>
