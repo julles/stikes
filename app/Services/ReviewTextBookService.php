@@ -93,9 +93,26 @@ class ReviewTextBookService
         }elseif($thisRole == 2){
             $status = 'reviewer';
         }
-
+        dd($pengembangMateri);
         // check status dosen
-        if ($pengembangMateri->pm_assign->reviewer_id == $user->id_dosen || $status == 'reviewer') {
+        if($pengembangMateri->pm_assign->approval_id == $user->id_dosen || $status == 'approv'){
+
+            $inputs = [
+                        'approv_commen' => $request->approv_commen,
+                        'approv_date' => date("Y-m-d H:i:s"),
+                        'approv_user' => $user->id_dosen
+            ];
+
+            if ($request->status == 1) {
+                $inputs['status'] = 2;
+                
+                // send email
+            }else{
+                $inputs['status'] = 3;
+
+                // send email
+            }
+        }elseif ($pengembangMateri->pm_assign->reviewer_id == $user->id_dosen || $status == 'reviewer') {
 
             $inputs = [
                         'reviewer_commen' => $request->reviewer_commen,
@@ -114,23 +131,6 @@ class ReviewTextBookService
                 // send email
             }
 
-        }elseif($pengembangMateri->pm_assign->approval_id == $user->id_dosen || $status == 'approv'){
-
-            $inputs = [
-                        'approv_commen' => $request->approv_commen,
-                        'approv_date' => date("Y-m-d H:i:s"),
-                        'approv_user' => $user->id_dosen
-            ];
-
-            if ($request->status == 1) {
-                $inputs['status'] = 2;
-                
-                // send email
-            }else{
-                $inputs['status'] = 3;
-
-                // send email
-            }
         }
 
         $model->update($inputs);
@@ -152,10 +152,10 @@ class ReviewTextBookService
                 $status = 'reviewer';
             }
         }else{
-            if ($pengembangMateri->pm_assign->reviewer_id == $user->id_dosen) {
-                $status = 'reviewer';
-            }elseif($pengembangMateri->pm_assign->approval_id == $user->id_dosen){
+            if ($pengembangMateri->pm_assign->approval_id == $user->id_dosen) {
                 $status = 'approv';
+            }elseif($pengembangMateri->pm_assign->reviewer_id == $user->id_dosen){
+                $status = 'reviewer';
             }
         }
 

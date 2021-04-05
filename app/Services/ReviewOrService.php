@@ -99,10 +99,10 @@ class ReviewOrService
                 $status = 'reviewer';
             }
         }else{
-            if ($pengembangMateri->pm_assign->reviewer_id == $user->id_dosen) {
-                $status = 'reviewer';
-            }elseif($pengembangMateri->pm_assign->approval_id == $user->id_dosen){
+            if ($pengembangMateri->pm_assign->approval_id == $user->id_dosen) {
                 $status = 'approv';
+            }elseif($pengembangMateri->pm_assign->reviewer_id == $user->id_dosen){
+                $status = 'reviewer';
             }
         }
 
@@ -142,7 +142,20 @@ class ReviewOrService
                 $model = $pengembangMateri->or()->first();
 
                 // check status dosen
-                if ($pengembangMateri->pm_assign->reviewer_id == $user->id_dosen || $status == 'reviewer') {
+                if($pengembangMateri->pm_assign->approval_id == $user->id_dosen || $status == 'approv'){
+
+                    $inputs = [
+                                'approv_commen' => $request->approv_commen,
+                                'approv_date' => date("Y-m-d H:i:s"),
+                                'approv_user' => $user->id_dosen
+                    ];
+
+                    if ($request->status == 1) {
+                        $inputs['status'] = 2;
+                    }else{
+                        $inputs['status'] = 3;
+                    }
+                }elseif ($pengembangMateri->pm_assign->reviewer_id == $user->id_dosen || $status == 'reviewer') {
 
                     $inputs = [
                                 'reviewer_commen' => $request->reviewer_commen,
@@ -156,19 +169,6 @@ class ReviewOrService
                         $inputs['status'] = 3;
                     }
 
-                }elseif($pengembangMateri->pm_assign->approval_id == $user->id_dosen || $status == 'approv'){
-
-                    $inputs = [
-                                'approv_commen' => $request->approv_commen,
-                                'approv_date' => date("Y-m-d H:i:s"),
-                                'approv_user' => $user->id_dosen
-                    ];
-
-                    if ($request->status == 1) {
-                        $inputs['status'] = 2;
-                    }else{
-                        $inputs['status'] = 3;
-                    }
                 }
 
                 $model->update($inputs);
