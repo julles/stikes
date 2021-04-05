@@ -64,7 +64,6 @@ class AssignDosenService
             ];
 
             $pemberiMateri = PengembangMateri::create($pengembangMateriInputs);
-
             $pmAssignInputs = [
                 "id_pm" => $pemberiMateri->id_pm,
                 "sme_id" => $request->sme_id,
@@ -73,13 +72,15 @@ class AssignDosenService
                 "create_date" => date("Y-m-d H:i:s"),
                 "create_user" => auth()->user()->id,
             ];
-
             PmAssign::create($pmAssignInputs);
+
+            // sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
             dd($e->getMessage());
         }
+        sendEmail($pemberiMateri['id_pm'],'assign','assign',$request->sme_id);
     }
 
     public function update(Request $request, int $id)

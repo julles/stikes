@@ -126,6 +126,8 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
         $typeCaption = 'RPS';
     }elseif ($type == 'or') {
         $typeCaption = 'OR';
+    }elseif ($type == 'assign') {
+        $typeCaption = 'Assign';
     }
     
     $as = 'sme';
@@ -147,12 +149,14 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
 
     $msgContent .= "Dengan data Text Book sebagai berikut ini:<br>";
 
-    $msgContent .= "<br><strong>Judul : </strong>".$textbookData['title'];
-    $msgContent .= "<br><strong>Pengarang : </strong>".$textbookData['author'];
-    $msgContent .= "<br><strong>Tahun Terbit : </strong>".$textbookData['tahun'];
-    $msgContent .= "<br><strong>Kategori : </strong>".$textbookData['kategori'];
+    if ($textbookData) {
+        $msgContent .= "<br><strong>Judul : </strong>".$textbookData['title'];
+        $msgContent .= "<br><strong>Pengarang : </strong>".$textbookData['author'];
+        $msgContent .= "<br><strong>Tahun Terbit : </strong>".$textbookData['tahun'];
+        $msgContent .= "<br><strong>Kategori : </strong>".$textbookData['kategori'];
+    }
     
-
+    $det = false;
     if ($type == 'text-book') {
         $det = $textbookData;
     }elseif ($type == 'rps') {
@@ -161,18 +165,20 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
         $det = OrModel::where('id',$pmId)->first();
     }
 
-    if ($det['reviewer_commen']) {
-        $msgContent .= "<br><br><hr><br>";
-        $msgContent .= "Komentar <strong>Reviewer :</strong><br>";
-        $msgContent .= "<small> Oleh : ".ucwords($d['reviewer_nama'])." | ".$d['reviewer_nip']."</small><br>";
-        $msgContent .= "<p>".$det['reviewer_commen']."</p>";
-    }
+    if ($det) {
+        if ($det['reviewer_commen']) {
+            $msgContent .= "<br><br><hr><br>";
+            $msgContent .= "Komentar <strong>Reviewer :</strong><br>";
+            $msgContent .= "<small> Oleh : ".ucwords($d['reviewer_nama'])." | ".$d['reviewer_nip']."</small><br>";
+            $msgContent .= "<p>".$det['reviewer_commen']."</p>";
+        }
 
-    if ($det['approv_commen']) {
-        $msgContent .= "<br><br><hr><br>";
-        $msgContent .= "Komentar <strong>Kajur :</strong><br>";
-        $msgContent .= "<small> Oleh : ".ucwords($d['approv_nama'])." | ".$d['approv_nip']."</small><br>";
-        $msgContent .= "<p>".$det['approv_commen']."</p>";
+        if ($det['approv_commen']) {
+            $msgContent .= "<br><br><hr><br>";
+            $msgContent .= "Komentar <strong>Kajur :</strong><br>";
+            $msgContent .= "<small> Oleh : ".ucwords($d['approv_nama'])." | ".$d['approv_nip']."</small><br>";
+            $msgContent .= "<p>".$det['approv_commen']."</p>";
+        }
     }
 
 
@@ -318,6 +324,24 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
                 Mail::to($d['approv_email'])
                       ->send(new Notification($mailData));
             }
+    
+    }elseif ($status == 'assign') {
+
+        $msg = 'Terdapat data text book yang harus diisi';
+        
+        // send to SME
+
+            $mailData = [
+                  'name'=> $d['sme_nama'],
+                  'message' => $msg,
+                  'btn_caption' => 'Input Text book',
+                  'link' => env('APP_URL').'/input-text-book'
+                ];
+
+        if($d['sme_email'] != null){
+            Mail::to($d['sme_email'])
+                  ->send(new Notification($mailData));
+        }
     }
 
 
