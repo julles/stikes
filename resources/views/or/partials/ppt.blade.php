@@ -3,8 +3,8 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Topic</th>
-                    <th>File <small>*Each topic can consists of ppt & pdf</small></th>
+                    <th>Topic <small>*Each topic can consists of ppt & pdf</small></th>
+                    <th>File</th>
                     <th></th>
                 </tr>
             </thead>
