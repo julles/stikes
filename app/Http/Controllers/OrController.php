@@ -289,7 +289,6 @@ class OrController extends Controller
                         $no = 1;
                         foreach ($orFile['or_ppt'] as $key => $v) {
                             $html .= '<tr>';
-                                $html .= '<td>'.$no++.'</td>';
                                 $html .= '<td>'.$v['topic'].'</td>';
                                 $html .= '<td>';
                                     $html .= '<a href="'.Storage::url(contents_path().'or_ppt/'.$v->file).'">';
