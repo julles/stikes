@@ -97,7 +97,7 @@ class OrService
         $date = DATE('Y-m-d H:i:s');
 
         if ($check) {
-            
+            // dd($request->all());
             // if review / approve
 
             // update File    
@@ -187,7 +187,6 @@ class OrService
                                  ->where('type','or_materi_pendukung')
                                  ->whereNotIn('id',$request->old_materi_pendukung)
                                  ->select('file');
-
                     foreach ($delete->get() as $key => $v) {
                         \Storage::delete(contents_path('or_materi_pendukung/'.$v->file));
                     }
@@ -227,7 +226,7 @@ class OrService
                                           ];
                     }
 
-                    OrFileModel::insert($fileData);
+                    OrFileModel::insert(array_values($fileData));
                 }
 
             // LN
@@ -249,7 +248,7 @@ class OrService
                                           ];
                     }
 
-                    OrFileModel::insert($fileData);
+                    OrFileModel::insert(array_values($fileData));
                 }
 
             // VIDEO
@@ -272,7 +271,7 @@ class OrService
                                           ];
                     }
 
-                    OrFileModel::insert($fileData);
+                    OrFileModel::insert(array_values($fileData));
                 }
 
             // Materi Pendukung
@@ -301,7 +300,7 @@ class OrService
                                           ];
                     }
 
-                    OrFileModel::insert($fileData);
+                    OrFileModel::insert(array_values($fileData));
                 }
 
                 return true;
@@ -338,7 +337,7 @@ class OrService
                                           ];
                     }
 
-                    OrFileModel::insert($fileData);
+                    OrFileModel::insert(array_values($fileData));
                 }
 
             // LN
@@ -360,7 +359,7 @@ class OrService
                                           ];
                     }
 
-                    OrFileModel::insert($fileData);
+                    OrFileModel::insert(array_values($fileData));
                 }
 
             // VIDEO
@@ -383,7 +382,7 @@ class OrService
                                           ];
                     }
 
-                    OrFileModel::insert($fileData);
+                    OrFileModel::insert(array_values($fileData));
                 }
 
             // Materi Pendukung
@@ -411,8 +410,8 @@ class OrService
                                             'file' => $fileName,
                                           ];
                     }
-
-                    OrFileModel::insert($fileData);
+                    
+                    OrFileModel::insert(array_values($fileData));
                 }
 
             $save = OrModel::insert($payload);
