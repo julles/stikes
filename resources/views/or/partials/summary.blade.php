@@ -61,7 +61,7 @@
                     data: $("#ppt_tbody :input").serialize(),
                     success: function(res){
 
-                        // console.log(res);
+                        console.log(topicIndex, res);
                         var html = "";
                         html += '<div class="row">';
                             html += '<h3>PPT</h3>';
@@ -72,6 +72,14 @@
                                         html += '<th>Topic</th>';
                                         html += '<th>File</th>';
                                     html += '</tr>';
+
+                                        $.each( res.old_ppt_topic, function( key, value ) {
+
+                                            html += '<tr>';
+                                                html += '<td>'+topicIndex[value]+'</td>';
+                                                html += '<td><i class="fa fa-file"></i> View</td>';
+                                            html += '</tr>';
+                                        });
 
                                         $.each( res.ppt, function( key, value ) {
 
@@ -107,6 +115,14 @@
                                         html += '<th>File</th>';
                                     html += '</tr>';
 
+                                        $.each( res.old_ln_topic, function( key, value ) {
+
+                                            html += '<tr>';
+                                                html += '<td>'+topicIndex[value]+'</td>';
+                                                html += '<td><i class="fa fa-file"></i> View</td>';
+                                            html += '</tr>';
+                                        });
+
                                         $.each( res.ln, function( key, value ) {
 
                                             html += '<tr>';
@@ -140,6 +156,14 @@
                                         html += '<th>Topic</th>';
                                         html += '<th>File</th>';
                                     html += '</tr>';
+
+                                        $.each( res.old_video_topic, function( key, value ) {
+
+                                            html += '<tr>';
+                                                html += '<td>'+topicIndex[value]+'</td>';
+                                                html += '<td><i class="fa fa-file"></i> View</td>';
+                                            html += '</tr>';
+                                        });
 
                                         $.each( res.video, function( key, value ) {
 
@@ -177,6 +201,17 @@
                                         html += '<th>Sumber</th>';
                                         html += '<th>File</th>';
                                     html += '</tr>';
+
+                                        $.each( res.old_mp_data, function( key, value ) {
+
+                                            html += '<tr>';
+                                                html += '<td>'+topicIndex[value.topic]+'</td>';
+                                                html += '<td>'+value.title+'</td>';
+                                                html += '<td>'+value.link+'</td>';
+                                                html += '<td>'+value.source+'</td>';
+                                                html += '<td><i class="fa fa-file"></i> View</td>';
+                                            html += '</tr>';
+                                        });
 
                                         $.each( res.materi_pendukung, function( key, value ) {
 

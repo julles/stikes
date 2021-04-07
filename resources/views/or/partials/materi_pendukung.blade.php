@@ -17,6 +17,9 @@
                         <tr id="Ror_materi_pendukung-{{$key}}">
                             <td>
                                 <input type="hidden" name="old_materi_pendukung[]" value="{{$v['id']}}">
+
+                                <input type="hidden" name="old_mp_data[{{$key}}][topic]" value="{{$v['topic_id']}}">
+                                
                                 <select class = 'form-control' disabled style="width:100%">
                                     @foreach($topic as $keyT => $t)
                                         <option value="{{ $t['id_topic'] }}"
@@ -28,13 +31,13 @@
                                 </select>
                             </td>
                             <td class="row-index" > 
-                                <input type="text" class="form-control" readonly value="{{ $v['title'] }}">
+                                <input type="text" name="old_mp_data[{{$key}}][title]" class="form-control" readonly value="{{ $v['title'] }}">
                             </td> 
                             <td class="row-index" > 
-                                <input type="text" class="form-control" readonly value="{{ $v['link'] }}">
+                                <input type="text" name="old_mp_data[{{$key}}][link]" class="form-control" readonly value="{{ $v['link'] }}">
                             </td> 
                             <td class="row-index" > 
-                                <input type="text" class="form-control" readonly value="{{ $v['source'] }}">
+                                <input type="text" name="old_mp_data[{{$key}}][source]" class="form-control" readonly value="{{ $v['source'] }}">
                             </td> 
                             <td class="text-center" width="15%"> 
                                 <a href="{{ Storage::url(contents_path().'or_materi_pendukung/'.$v['file']) }}" target="_blank" class="btn btn-block btn-outline-warning mt-2 btn-sm">
