@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use App\Models\Dosen;
 use Illuminate\Support\Facades\DB;
+use VerumConsilium\Browsershot\Facades\PDF;
 
 Route::view('/', 'auth.login');
 
@@ -35,6 +36,12 @@ Route::post('/password/reset', function (Request $request) {
 
 })->middleware('guest')->name('password.update');
 
+Route::get('/test-print', function (Request $request) {
+    $data = [123];
+    return PDF::loadView('pdf.textbook', $data)
+                ->margins(20, 0, 0, 20)
+                ->download();
+});
 
 Route::get('/home', 'HomeController@home')->name('home')->middleware('auth');
 
