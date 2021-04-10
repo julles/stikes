@@ -17,9 +17,9 @@
                     <table class="table table-bordered" id = "table">
                         <thead>
                             <tr>
-                                <th width = "20%%">Component</th>
-                                <th width = "30%">Weight Teori</th>
-                                <th width = "30%">Weight Praktikum</th>
+                                <th width = "20%%">Komponen</th>
+                                <th width = "30%">Bobot Teori</th>
+                                <th width = "30%">Bobot Praktikum</th>
                                 <th width = "10%">Action</th>
                             </tr>
                         </thead>

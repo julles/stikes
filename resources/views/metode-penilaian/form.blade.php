@@ -16,11 +16,11 @@
             {!! Form::model($model,["id" =>"form","method"=>"post","files"=>true]) !!}
             <div class="box-body">
                 <div class="form-group">
-                    {!! Form::label("Component") !!}
+                    {!! Form::label("Komponen") !!}
                     {!! Form::text("component",null,["class"=>"form-control"]) !!}
                 </div>
-                <div class="col-md-12">
-                    <h4 class="text-center">Weight (%)</h4>
+                <div class="row">
+                    <h4 class="text-center">Bobot (%)</h4>
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label("Teori") !!}

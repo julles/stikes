@@ -16,9 +16,17 @@
         </div> -->
         <!-- /.login-logo -->
         <div class="login-box-body">
-            <p class="login-box-msg">
-                <img src="{{ asset('logo.png') }}" width="250px" class="mb-2"><br>
-                {{ __('adminlte::adminlte.login_message') }}
+            <p class="login-box-msg pb-0">
+                <img src="{{ asset('logo.png') }}" width="250px" class="mb-0">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h4>CONTENT MANAGEMENT SYSTEM (CMS)</h4>
+                    </div>
+                </div>
+                
+                @if(__('adminlte::adminlte.login_message') != 'Sign in to start your session')
+                    {{ __('adminlte::adminlte.login_message') }}
+                @endif
 
                 @if(Session::has('message'))
                     <div class="alert alert-{{ Session::get('type') }}">
