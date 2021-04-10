@@ -42,7 +42,7 @@ $(function() {
     var table = $('#table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ $__route.'/data' }}",
+        ajax: "{{ $__route.'/data?filterStatus='.($request['filterStatus'] ?? '') }}",
         "createdRow": function( row, data, dataIndex){
             console.log(data)
             if( data.active == "0"){

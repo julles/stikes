@@ -47,6 +47,15 @@ class InputTextBookService
             if ($thisRole == 0 || ($thisRole != 1 && $thisRole != 63)) {
                 $model->whereIn('pengembang_materi.id_pm',$pm);
             }
+
+            if (isset($request['filterStatus']) && !empty($request['filterStatus'])) {
+                if ($request['filterStatus'] == 'input') {
+                    $model->where('text_book.title',null);
+                }else{
+                    $model->where('text_book.status',$request['filterStatus']);
+                }
+            }
+
             $model->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
             ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")
             ->leftJoin("text_book", "text_book.id_pm", "=", "pengembang_materi.id_pm");

@@ -28,9 +28,9 @@ class InputTextBookController extends Controller
         return $this->service->getData($request);
     }
 
-    public function getIndex()
+    public function getIndex(Request $request)
     {
-        return view("input-text-book.index");
+        return view("input-text-book.index")->with('request',$request->all());
     }
 
     public function getDetail($id)
