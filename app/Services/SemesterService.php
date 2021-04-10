@@ -25,8 +25,8 @@ class SemesterService
 
     public function getData(Request $request)
     {
-        $model = Semester::select('id_semester', 'nama_semester', 'from', 'to')
-            ->orderBy("id_semester", "desc");
+        $model = Semester::select('id_semester', 'nama_semester', 'from', 'to');
+            // ->orderBy("id_semester", "desc");
 
         return \Table::of($model)
             ->addColumn('action', function ($model) {

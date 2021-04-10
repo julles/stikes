@@ -70,7 +70,8 @@ $(function() {
                 $(row).addClass('danger');
             }
         },
-        ordering:false,
+        ordering:true,
+        order: [[ 0, "asc" ]],
         columns: [
             { data: 'nama_semester', name: 'nama_semester' },
             { name: 'from', data: 'from', render: $.fn.dataTable.render.moment( 'DD-MMM-YYYY' ) },

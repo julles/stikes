@@ -58,9 +58,9 @@ class OrService
             $model->join("rps", "rps.id", "=", "pengembang_materi.id_pm")
             ->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
             ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")
-            ->leftJoin("text_book", "text_book.id_pm", "=", "pengembang_materi.id_pm")
-            ->orderBy("pengembang_materi.status", "desc")
-            ->orderBy("id_pm", "desc");
+            ->leftJoin("text_book", "text_book.id_pm", "=", "pengembang_materi.id_pm");
+            // ->orderBy("pengembang_materi.status", "desc")
+            // ->orderBy("id_pm", "desc");
 
         return \Table::of($model)
             ->addColumn('status', function ($model) {

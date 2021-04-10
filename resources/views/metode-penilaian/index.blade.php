@@ -46,7 +46,8 @@ $(function() {
                 $(row).addClass('danger');
             }
         },
-        ordering:false,
+        ordering:true,
+        order: [[ 0, "asc" ]],
         columns: [
             { data: 'component', name: 'component' },
             { data: 'weight_percent', name: 'weight_percent' },

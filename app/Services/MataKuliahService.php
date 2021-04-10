@@ -24,8 +24,8 @@ class MataKuliahService
 
     public function getData(Request $request)
     {
-        $model = MataKuliah::select('id_matakuliah', 'mk_kode', 'mk_nama','sks_praktikum','sks_tatap_muka')
-            ->orderBy("id_matakuliah", "desc");
+        $model = MataKuliah::select('id_matakuliah', 'mk_kode', 'mk_nama','sks_praktikum','sks_tatap_muka');
+            // ->orderBy("id_matakuliah", "desc");
 
         return \Table::of($model)
             ->addColumn('action', function ($model) {

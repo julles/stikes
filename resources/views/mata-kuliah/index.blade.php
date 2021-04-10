@@ -47,7 +47,8 @@ $(function() {
                 $(row).addClass('danger');
             }
         },
-        ordering:false,
+        ordering:true,
+        order: [[ 0, "asc" ]],
         columns: [
             { data: 'mk_kode', name: 'mk_kode' },
             { data: 'mk_nama', name: 'mk_nama' },

@@ -26,8 +26,8 @@ class DosenService
     public function getData(Request $request)
     {
         $model = Dosen::select('id_dosen', 'nip', 'nama', 'email', 'telepon')
-            ->where("is_dosen", 1)
-            ->orderBy("id_dosen", "desc");
+            ->where("is_dosen", 1);
+            // ->orderBy("id_dosen", "desc");
 
         return \Table::of($model)
             ->addColumn('action', function ($model) {

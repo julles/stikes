@@ -52,9 +52,9 @@ class ReviewTextBookService
 
             $model->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
             ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")
-            ->join("text_book", "text_book.id_pm", "=", "pengembang_materi.id_pm")
-            ->orderBy("pengembang_materi.status", "asc")
-            ->orderBy("id_pm", "desc");
+            ->join("text_book", "text_book.id_pm", "=", "pengembang_materi.id_pm");
+            // ->orderBy("pengembang_materi.status", "asc")
+            // ->orderBy("id_pm", "desc");
 
         return \Table::of($model)
             ->addColumn('status', function ($model) {
