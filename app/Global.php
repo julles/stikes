@@ -327,7 +327,7 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
     
     }elseif ($status == 'assign') {
 
-        $msg = 'Terdapat data text book yang harus diisi';
+        $msg = 'Saat ini Bapak/Ibu telah ditugaskan sebagai Dosen Pengembang Materi Terdapat data text book yang harus diisi.';
         
         // send to SME
 
