@@ -48,7 +48,7 @@ $(function() {
                 $(row).addClass('danger');
             }
         },
-        ordering:false,
+        ordering:true,
         columns: [
             { data: 'nama_semester', name: 'semester.nama_semester' },
             { data: 'mk_nama', name: 'matakuliah.mk_nama' },
