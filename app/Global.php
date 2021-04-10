@@ -201,12 +201,12 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
 
         // send to approv
 
-            $mailData['name'] = $d['approv_nama'];
+            // $mailData['name'] = $d['approv_nama'];
             
-            if($d['approv_email'] != null){
-                Mail::to($d['approv_email'])
-                      ->send(new Notification($mailData));
-            }
+            // if($d['approv_email'] != null){
+            //     Mail::to($d['approv_email'])
+            //           ->send(new Notification($mailData));
+            // }
 
     }elseif ($status == 'reject') {
         $msg = 'Pengajuan untuk '.$typeCaption.' berikut ini <strong>Ditolak</strong>,<br>
