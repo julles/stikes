@@ -28,10 +28,23 @@ class AssignDosenService
 
     public function getData(Request $request)
     {
-        $model = PengembangMateri::select('id_pm', 'nama_semester', 'mk_nama')
+        $model = PengembangMateri::selectRaw('pengembang_materi.id_pm,nama_semester,mk_nama,
+
+                    sme.nama as sme_nama,
+                    sme.nip as sme_nip,
+                    sme.email as sme_email,
+
+                    CONCAT(sme.nip," | ",sme.nama) as sme,
+                    CONCAT(rev.nip," | ",rev.nama) as reviewer,
+                    CONCAT(app.nip," | ",app.nama) as approver'
+                    )
+            ->leftJoin('pm_assign','pengembang_materi.id_pm','=','pm_assign.id_pm')
+            ->leftJoin('dosen as sme','sme.id_dosen','=','pm_assign.sme_id')
+            ->leftJoin('dosen as rev','rev.id_dosen','=','pm_assign.reviewer_id')
+            ->leftJoin('dosen as app','app.id_dosen','=','pm_assign.approval_id')
             ->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
-            ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")
-            ->orderBy("id_pm", "desc");
+            ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah");
+            // ->orderBy("pengembang_materi.id_pm", "desc");
 
         return \Table::of($model)
             ->addColumn('action', function ($model) {

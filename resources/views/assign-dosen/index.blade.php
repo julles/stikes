@@ -17,9 +17,12 @@
                     <table class="table table-bordered" id = "table">
                         <thead>
                             <tr>
-                                <th width = "40%">Semester</th>
-                                <th width = "40%">Mata Kuliah</th>
-                                <th width = "20%">Action</th>
+                                <th>Semester</th>
+                                <th>Mata Kuliah</th>
+                                <th>SME</th>
+                                <th>Reviewer</th>
+                                <th>Approver</th>
+                                <th width = "8%">Action</th>
                             </tr>
                         </thead>
                         <tbody id = "tbody">
@@ -49,6 +52,9 @@ $(function() {
         columns: [
             { data: 'nama_semester', name: 'semester.nama_semester' },
             { data: 'mk_nama', name: 'matakuliah.mk_nama' },
+            { data: 'sme', name: 'sme' },
+            { data: 'reviewer', name: 'reviewer' },
+            { data: 'approver', name: 'approver' },
             { data: 'action', name: 'action' ,searchable:false}
         ]
     });
