@@ -59,6 +59,12 @@ class InputTextBookService
                 $ret = "Belum diinput";
                 if ($check) {
                     $ret = statusCaption($check->status);
+                    $userStatus = $this->userStatus($model->id_pm);
+                    if ($check->status == 0 && ($userStatus == 'reviewer' || $userStatus == 'approv')) {
+                        $ret = $ret." ".ucfirst($userStatus == 'approv' ? 'approver' : $userStatus)." to Approved";
+                    }elseif ($check->status == 0) {
+                        $ret = $ret." Approval";
+                    }
                 }                
                 return $ret;
             })
@@ -117,5 +123,30 @@ class InputTextBookService
             $user = Auth::user();
             sendEmail($id,'text-book','input',$user->id_dosen);
         }
+    }
+
+    public function userStatus($id)
+    {
+        $user = Auth::user();
+        $pengembangMateri = PengembangMateri::findOrFail($id);
+        $status = false;
+        
+        $thisRole = session()->get('user.dosen')->role_id;
+        
+        if ($thisRole ) {
+            if ($thisRole == 3 || $thisRole == 63) {
+                $status = 'approv';
+            }elseif($thisRole == 2){
+                $status = 'reviewer';
+            }
+        }else{
+            if ($pengembangMateri->pm_assign->approval_id == $user->id_dosen) {
+                $status = 'approv';
+            }elseif($pengembangMateri->pm_assign->reviewer_id == $user->id_dosen){
+                $status = 'reviewer';
+            }
+        }
+
+        return $status;
     }
 }

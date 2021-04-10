@@ -67,6 +67,12 @@ class ReviewRpsService
                 $ret = "RPS Belum diinput";
                 if ($check) {
                     $ret = statusCaption($check->status);
+                    $userStatus = $this->userStatus($model->id_pm);
+                    if ($check->status == 0 && ($userStatus == 'reviewer' || $userStatus == 'approv')) {
+                        $ret = $ret." ".ucfirst($userStatus == 'approv' ? 'approver' : $userStatus)." to Approved";
+                    }elseif ($check->status == 0) {
+                        $ret = $ret." Approval";
+                    }
                 }                
                 return $ret;
             })

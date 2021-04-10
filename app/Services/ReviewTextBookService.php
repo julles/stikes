@@ -59,10 +59,20 @@ class ReviewTextBookService
         return \Table::of($model)
             ->addColumn('status', function ($model) {
                 $check = TextBook::where("id_pm", $model->id_pm)->first();
+                
+
                 $ret = "Belum diinput";
                 if ($check) {
                     $ret = statusCaption($check->status);
-                }                
+                    
+                    $userStatus = $this->userStatus($model->id_pm);
+                    if ($check->status == 0 && ($userStatus == 'reviewer' || $userStatus == 'approv')) {
+                        $ret = $ret." ".ucfirst($userStatus == 'approv' ? 'approver' : $userStatus)." to Approved";
+                    }elseif ($check->status == 0) {
+                        $ret = $ret." Approval";
+                    }
+                }
+
                 return $ret;
             })
             ->addColumn('action', function ($model) {
