@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\MetodePenilaian;
+use App\Models\Rps;
 use App\Singleton\Component;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,7 @@ class MetodePenilaianService
     public function getData(Request $request)
     {
         $model = MetodePenilaian::selectRaw('id,component,CONCAT(weight,"%") as weight_percent,CONCAT(weight_praktikum,"%") as weight_praktikum_percent')
-            ->orderBy("weight", "asc");
+            ->orderBy("component", "asc");
 
         return \Table::of($model)
             ->addColumn('action', function ($model) {
@@ -59,10 +60,18 @@ class MetodePenilaianService
 
     public function delete($model)
     {
-        try {
-            $model->delete();
-        } catch (\Exception $e) {
-            dd($e->getMessage());
+        $check = Rps::where('metode_penilaian','LIKE','%"'.$model->id.'"%')->exists();
+
+        if (!$check) {
+            try {
+                $model->delete();
+            } catch (\Exception $e) {
+                dd($e->getMessage());
+            }
+
+            return true;
         }
+
+        return false;
     }
 }
