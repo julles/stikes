@@ -122,7 +122,7 @@
                                         @if($rps->approv_commen)
                                             <div class="row mb-3">
                                                 <div class="col-md-12">
-                                                    {!! Form::label("Kajur Notes") !!}
+                                                    {!! Form::label("Approver Notes") !!}
                                                     <p>{{ $rps->approv_commen }}</p>
                                                 </div>
                                             </div>
@@ -154,7 +154,7 @@
                                 @if($rps->status < 2)
                                     <div class="row">
                                         <div class="col">
-                                            {!! Form::label("Kajur Note") !!}
+                                            {!! Form::label("Approver Notes") !!}
                                             {!! Form::textarea("approv_commen",$rps->approv_commen ?? '',["class"=>"form-control","row"=>"5"]) !!}
                                         </div>
                                     </div>

@@ -51,7 +51,7 @@
                         @if($model->approv_commen)
                             <div class="row mb-3">
                                 <div class="col">
-                                    {!! Form::label("Kajur Notes") !!}
+                                    {!! Form::label("Approver Notes") !!}
                                     {!! Form::textarea("approv_commen",null,["class"=>"form-control","row"=>"10",'readonly'=>true]) !!}
                                 </div>
                             </div>
