@@ -47,7 +47,7 @@ $(function() {
                 $(row).addClass('danger');
             }
         },
-        ordering:false,
+        ordering:true,
         columns: [
             { data: 'nip', name: 'nip' },
             { data: 'nama', name: 'nama' },
