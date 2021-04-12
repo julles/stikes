@@ -40,7 +40,8 @@
                             <!-- <li><a href="#maping-topic">Mapping Topik</a></li> -->
                         @endif
 
-                        <li><a onclick="openTab('exercise', false)" id="exercise_btn" href="#exercise">Exercise / Kuis</a></li>
+                        <li><a onclick="openTab('exercise', false)" id="exercise_btn" href="#exercise">Exercise</a></li>
+                        <li><a onclick="openTab('kuis', false)" id="kuis_btn" href="#kuis">Kuis</a></li>
                         <li><a id="summary_btn" onclick = "return summary();" href="#summary">Summary</a></li>
                     </ul>
 
@@ -61,6 +62,9 @@
                     </div>
                     <div id="exercise">
                         @include("or.partials.exercise")
+                    </div>
+                    <div id="kuis">
+                        @include("or.partials.kuis")
                     </div>
                     
                     <div id="summary">
@@ -121,13 +125,22 @@
                         <a href="javascript:void(0)" onclick="openTab('materi-pendukung')" class="btn btn-default btn-sm">
                             Back
                         </a>
+                        <button type="button" onclick="openTab('kuis')" class="btn btn-primary btn-sm">
+                            Next
+                        </button>
+                    </div>
+
+                    <div class="actionBtn" id="act_kuis">
+                        <a href="javascript:void(0)" onclick="openTab('exercise')" class="btn btn-default btn-sm">
+                            Back
+                        </a>
                         <button type="button" onclick="openTab('summary')" class="btn btn-primary btn-sm">
                             Next
                         </button>
                     </div>
 
                     <div class="actionBtn" id="act_summary">
-                        <a href="javascript:void(0)" onclick="openTab('exercise')" class="btn btn-default btn-sm">
+                        <a href="javascript:void(0)" onclick="openTab('kuis')" class="btn btn-default btn-sm">
                             Back
                         </a>
                         <button type="submit" class="btn btn-primary btn-sm">

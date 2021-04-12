@@ -66,6 +66,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/or/detail/{id}/question', 'OrController@questionStore');
     Route::delete('/or/detail/{id}/question', 'OrController@deleteQuestion');
     Route::patch('/or/detail/{id}/question', 'OrController@updateQuestion');
+
+    // OR Question Latihan
+    Route::get('/or/detail/{id}/question-exercise', 'OrController@questionExercise');
+    Route::post('/or/detail/{id}/question-exercise', 'OrController@questionStoreExercise');
+    Route::delete('/or/detail/{id}/question-exercise', 'OrController@deleteQuestionExercise');
+    Route::patch('/or/detail/{id}/question-exercise', 'OrController@updateQuestionExercise');
     
     Route::get('/or/detail/{id}/summary', 'OrController@summary');
 

@@ -15,20 +15,20 @@
                     @endif
                 </tr>
             </thead>
-            <tbody id="tabel_exercise">
+            <tbody id="html_tabel_kuis">
             </tbody>
         </table>
         @if(!isset($or) || ((isset($or) && $or['status'] == 0) || (isset($or) && $or['status'] == 3)))
             <div class="col-md-12 text-center">
-                <span onclick="ExerciseaddQ()" class="btn btn-success">+ Add Question</span>
+                <span onclick="addQ()" class="btn btn-success">+ Add Question</span>
             </div>
         @endif
 
-        <div class="modal fade" id="exercise_questionSetModal" tabindex="-1" role="dialog" aria-labelledby="exercise_questionSetModalLabel" aria-hidden="true">
+        <div class="modal fade" id="questionSetModal" tabindex="-1" role="dialog" aria-labelledby="questionSetModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exercise_questionSetModalLabel">Add Question</h5>
+                <h5 class="modal-title" id="questionSetModalLabel">Add Question</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -38,19 +38,19 @@
                     <div class="col-md-2">     
                         <div class="form-group">
                             {!! Form::label("Set Number") !!}
-                            <div id="exercise_variant"></div>
+                            <div id="html_varian_kuis"></div>
                         </div>
                     </div>
                     <div class="col-md-2">     
                         <div class="form-group">
                             {!! Form::label("Duration (menit)") !!}
-                            {!! Form::number(null,null,["class"=>"form-control","id"=>"exercise_durasi"]) !!}
+                            {!! Form::number(null,null,["class"=>"form-control",'id'=>'durasi']) !!}
                         </div>
                     </div>
                     <div class="col-md-8">     
                         <div class="form-group">
                             {!! Form::label("Topic") !!}
-                            <div id="ExercisetopicSelect"></div>
+                            <div id="topicSelect"></div>
                         </div>
                     </div>
                 </div>
@@ -58,40 +58,40 @@
                     <div class="col-md-12">  
                         {!! Form::label("Question") !!} 
 
-                            <input type="hidden" id="exercise_question_id">
-                        {!! Form::textarea(null,null,["class"=>"form-control","id"=>"exercise_isi_soal"]) !!}
+                            <input type="hidden" id="question_id">
+                        {!! Form::textarea(null,null,["class"=>"form-control","id"=>"isi_soal"]) !!}
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">  
                         {!! Form::label("Answer A") !!} 
-                        {!! Form::textarea(null,null,["class"=>"form-control","id"=>"exercise_pilihan_a"]) !!}
+                        {!! Form::textarea(null,null,["class"=>"form-control","id"=>"pilihan_a"]) !!}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">  
                         {!! Form::label("Answer B") !!} 
-                        {!! Form::textarea(null,null,["class"=>"form-control","id"=>"exercise_pilihan_b"]) !!}
+                        {!! Form::textarea(null,null,["class"=>"form-control","id"=>"pilihan_b"]) !!}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">  
                         {!! Form::label("Answer C") !!} 
-                        {!! Form::textarea(null,null,["class"=>"form-control","id"=>"exercise_pilihan_c"]) !!}
+                        {!! Form::textarea(null,null,["class"=>"form-control","id"=>"pilihan_c"]) !!}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">  
                         {!! Form::label("Answer D") !!} 
-                        {!! Form::textarea(null,null,["class"=>"form-control","id"=>"exercise_pilihan_d"]) !!}
+                        {!! Form::textarea(null,null,["class"=>"form-control","id"=>"pilihan_d"]) !!}
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-4"> 
                         {!! Form::label("Correct Answer") !!}
-                        <select class="form-control" id="exercise_jawaban">
+                        <select class="form-control" id="jawaban">
                             <option>A</option>
                             <option>B</option>
                             <option>C</option>
@@ -102,14 +102,14 @@
                 <div class="row mt-3">
                     <div class="col-md-12">  
                         {!! Form::label("Explanation") !!} 
-                        {!! Form::textarea(null,null,["class"=>"form-control","id"=>"exercise_penjelasan_jwb"]) !!}
+                        {!! Form::textarea(null,null,["class"=>"form-control","id"=>"penjelasan_jwb"]) !!}
                     </div>
                 </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button id="exercise_footer_create" type="button" class="btn btn-primary" onclick="ExercisesaveQuestion()" >Create</button>
-                <button id="exercise_footer_save" type="button" class="btn btn-success" onclick="ExerciseupdateQuestion()" >Save</button>
+                <button id="footer_create" type="button" class="btn btn-primary" onclick="saveQuestion()" >Create</button>
+                <button id="footer_save" type="button" class="btn btn-success" onclick="updateQuestion()" >Save</button>
               </div>
             </div>
           </div>
@@ -121,14 +121,14 @@
 <script src="{{ asset('vendor/summernote/dist/summernote.min.js')}}"></script>
 <script>
     $(document).ready(function(){
-        ExerciseGetQuestion();
+        getQuestion();
     });
     // Get Question
 
     var topicArr = @json($topic);
     
     var selects = `<select style="width:100%" 
-    class = 'form-control select2' id = 'exercise_id_topic_question'>`;
+    class = 'form-control select2' id = 'id_topic_question'>`;
     
     $.each( topicArr, function( key, value ) {
         selects += "<option value = '"+value.id_topic+"'>"+value.topic+"</option>";
@@ -136,13 +136,13 @@
 
     selects += "</select>";
 
-    $("#ExercisetopicSelect").html(selects);
+    $("#topicSelect").html(selects);
 
-    var exercise_data = [];
+    var kuis_data = [];
 
-    function ExerciseGetQuestion() {
+    function getQuestion() {
 
-        const url = "{!! URL::to('/or/detail/'.$model['id_pm'].'/question-exercise') !!}";
+        const url = "{!! URL::to('/or/detail/'.$model['id_pm'].'/question') !!}";
         let data  = new Object();
 
         var form    = new URLSearchParams(data);
@@ -157,31 +157,31 @@
         fetch(request)
         .then(response => response.json())
         .then(function(data) {
-            $('#tabel_exercise').html(data.html_tabel_exercise);
-            $('#exercise_variant').html(data.html_varian_exercise);
-            exercise_data = data.exercise_data;
+            $('#html_tabel_kuis').html(data.html_tabel_kuis);
+            $('#html_varian_kuis').html(data.html_varian_kuis);
+            kuis_data = data.kuis_data;
         })
         .catch(function(error) {
             console.log(error);
         });
     }
 
-    function ExercisesaveQuestion() {
+    function saveQuestion() {
 
-        const url = "{!! URL::to('/or/detail/'.$model['id_pm'].'/question-exercise') !!}";
+        const url = "{!! URL::to('/or/detail/'.$model['id_pm'].'/question') !!}";
         let data  = new Object();
 
         data = {
-            varian_latihan:$('#exercise_varian_latihan').val(),
-            durasi:$('#exercise_durasi').val(),
-            isi_soal:$('#exercise_isi_soal').val(),
-            pilihan_a:$('#exercise_pilihan_a').val(),
-            pilihan_b:$('#exercise_pilihan_b').val(),
-            pilihan_c:$('#exercise_pilihan_c').val(),
-            pilihan_d:$('#exercise_pilihan_d').val(),
-            penjelasan_jwb:$('#exercise_penjelasan_jwb').val(),
-            jawaban:$('#exercise_jawaban').val(),
-            id_topic:$('#exercise_id_topic_question').val(),
+            varian_latihan:$('#varian_latihan').val(),
+            durasi:$('#durasi').val(),
+            isi_soal:$('#isi_soal').val(),
+            pilihan_a:$('#pilihan_a').val(),
+            pilihan_b:$('#pilihan_b').val(),
+            pilihan_c:$('#pilihan_c').val(),
+            pilihan_d:$('#pilihan_d').val(),
+            penjelasan_jwb:$('#penjelasan_jwb').val(),
+            jawaban:$('#jawaban').val(),
+            id_topic:$('#id_topic_question').val(),
         };
 
         var form    = new URLSearchParams(data);
@@ -198,18 +198,18 @@
         fetch(request)
         .then(response => response.json())
         .then(function(data) {
-            ExerciseGetQuestion();
-            ExerciseresetInput();
-            $('#exercise_questionSetModal').modal('hide');
+            getQuestion();
+            resetInput();
+            $('#questionSetModal').modal('hide');
         })
         .catch(function(error) {
             console.log(error);
         });
     }
 
-    function ExerciseDelQ(id) {
+    function delQ(id) {
 
-        const url = "{!! URL::to('/or/detail/'.$model['id_pm'].'/question-exercise') !!}";
+        const url = "{!! URL::to('/or/detail/'.$model['id_pm'].'/question') !!}";
         let data  = new Object();
 
         data = {
@@ -230,63 +230,63 @@
         fetch(request)
         .then(response => response.json())
         .then(function(data) {
-            ExerciseGetQuestion();
+            getQuestion();
         })
         .catch(function(error) {
             console.log(error);
         });
     }
 
-    function ExerciseEditQ(id) {
-        var edata = exercise_data[id];
+    function editQ(id) {
+        var edata = kuis_data[id];
         console.log(edata);
-        // varian_latihan:$('#exercise_varian_latihan').val(),
-        $('#exercise_durasi').val(edata.durasi);
+        // varian_latihan:$('#varian_latihan').val(),
+        $('#durasi').val(edata.durasi);
         
-        $('#exercise_question_id').val(id);
-        $('#exercise_isi_soal').summernote("code",edata.isi_soal);
-        $('#exercise_pilihan_a').summernote("code",edata.pilihan_a);
-        $('#exercise_pilihan_b').summernote("code",edata.pilihan_b);
-        $('#exercise_pilihan_c').summernote("code",edata.pilihan_c);
-        $('#exercise_pilihan_d').summernote("code",edata.pilihan_d);
-        $('#exercise_penjelasan_jwb').summernote("code",edata.penjelasan_jwb);
+        $('#question_id').val(id);
+        $('#isi_soal').summernote("code",edata.isi_soal);
+        $('#pilihan_a').summernote("code",edata.pilihan_a);
+        $('#pilihan_b').summernote("code",edata.pilihan_b);
+        $('#pilihan_c').summernote("code",edata.pilihan_c);
+        $('#pilihan_d').summernote("code",edata.pilihan_d);
+        $('#penjelasan_jwb').summernote("code",edata.penjelasan_jwb);
 
-        $('#exercise_jawaban').val(edata.jawaban);
-        $('#exercise_id_topic_question').val(edata.id_topic).trigger('change');
-        $('#exercise_varian_latihan').val(edata.varian_latihan).trigger('change');
+        $('#jawaban').val(edata.jawaban);
+        $('#id_topic_question').val(edata.id_topic).trigger('change');
+        $('#varian_latihan').val(edata.varian_latihan).trigger('change');
 
-        $('#exercise_questionSetModal').modal('show');
+        $('#questionSetModal').modal('show');
 
-        $('#exercise_questionSetModalLabel').html('Edit Question');
-        $('#exercise_footer_create').hide();
-        $('#exercise_footer_save').show();
+        $('#questionSetModalLabel').html('Edit Question');
+        $('#footer_create').hide();
+        $('#footer_save').show();
     }
 
-    function ExerciseaddQ() {
-        ExerciseresetInput();
-        $('#exercise_questionSetModalLabel').html('Add Question');
-        $('#exercise_footer_create').show();
-        $('#exercise_footer_save').hide();
-        $('#exercise_questionSetModal').modal('show');
+    function addQ() {
+        resetInput();
+        $('#questionSetModalLabel').html('Add Question');
+        $('#footer_create').show();
+        $('#footer_save').hide();
+        $('#questionSetModal').modal('show');
     }
 
-    function ExerciseupdateQuestion() {
+    function updateQuestion() {
         
-        const url = "{!! URL::to('/or/detail/'.$model['id_pm'].'/question-exercise') !!}";
+        const url = "{!! URL::to('/or/detail/'.$model['id_pm'].'/question') !!}";
         let data  = new Object();
 
         data = {
-            varian_latihan:$('#exercise_varian_latihan').val(),
-            question_id:$('#exercise_question_id').val(),
-            durasi:$('#exercise_durasi').val(),
-            isi_soal:$('#exercise_isi_soal').val(),
-            pilihan_a:$('#exercise_pilihan_a').val(),
-            pilihan_b:$('#exercise_pilihan_b').val(),
-            pilihan_c:$('#exercise_pilihan_c').val(),
-            pilihan_d:$('#exercise_pilihan_d').val(),
-            penjelasan_jwb:$('#exercise_penjelasan_jwb').val(),
-            jawaban:$('#exercise_jawaban').val(),
-            id_topic:$('#exercise_id_topic_question').val()
+            varian_latihan:$('#varian_latihan').val(),
+            question_id:$('#question_id').val(),
+            durasi:$('#durasi').val(),
+            isi_soal:$('#isi_soal').val(),
+            pilihan_a:$('#pilihan_a').val(),
+            pilihan_b:$('#pilihan_b').val(),
+            pilihan_c:$('#pilihan_c').val(),
+            pilihan_d:$('#pilihan_d').val(),
+            penjelasan_jwb:$('#penjelasan_jwb').val(),
+            jawaban:$('#jawaban').val(),
+            id_topic:$('#id_topic_question').val()
         };
 
         var form    = new URLSearchParams(data);
@@ -303,33 +303,33 @@
         fetch(request)
         .then(response => response.json())
         .then(function(data) {
-            ExerciseGetQuestion();
-            $('#exercise_questionSetModal').modal('hide');
+            getQuestion();
+            $('#questionSetModal').modal('hide');
         })
         .catch(function(error) {
             console.log(error);
         });
-        ExerciseresetInput();
+        resetInput();
     }
 
-    function ExerciseresetInput() {
-        $('#exercise_question_id').val("");
-        $('#exercise_durasi').val("");
-        $('#exercise_jawaban').val("A");
-        $('#exercise_isi_soal').summernote("code","");
-        $('#exercise_pilihan_a').summernote("code","");
-        $('#exercise_pilihan_b').summernote("code","");
-        $('#exercise_pilihan_c').summernote("code","");
-        $('#exercise_pilihan_d').summernote("code","");
-        $('#exercise_penjelasan_jwb').summernote("code","");
+    function resetInput() {
+        $('#question_id').val("");
+        $('#durasi').val("");
+        $('#jawaban').val("A");
+        $('#isi_soal').summernote("code","");
+        $('#pilihan_a').summernote("code","");
+        $('#pilihan_b').summernote("code","");
+        $('#pilihan_c').summernote("code","");
+        $('#pilihan_d').summernote("code","");
+        $('#penjelasan_jwb').summernote("code","");
     }
 
-    $('#exercise_isi_soal').summernote({ height: 150 });
-    $('#exercise_pilihan_a').summernote({ height: 150 });
-    $('#exercise_pilihan_b').summernote({ height: 150 });
-    $('#exercise_pilihan_c').summernote({ height: 150 });
-    $('#exercise_pilihan_d').summernote({ height: 150 });
-    $('#exercise_penjelasan_jwb').summernote({ height: 150 });
+    $('#isi_soal').summernote({ height: 150 });
+    $('#pilihan_a').summernote({ height: 150 });
+    $('#pilihan_b').summernote({ height: 150 });
+    $('#pilihan_c').summernote({ height: 150 });
+    $('#pilihan_d').summernote({ height: 150 });
+    $('#penjelasan_jwb').summernote({ height: 150 });
 
 </script>
 @endpush
