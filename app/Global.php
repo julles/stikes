@@ -293,7 +293,7 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
                   'name'=> $d['sme_nama'],
                   'message' => $msg.$msgContent,
                   'btn_caption' => 'Lihat Detail '.$typeCaption,
-                  'link' => env('APP_URL').'/'.$type.'/detail/'.$d['id_pm']
+                  'link' => env('APP_URL').'/review-'.$type.'/detail/'.$d['id_pm']
                 ];
 
             if ($type == 'text-book') {

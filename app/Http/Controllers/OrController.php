@@ -616,9 +616,24 @@ class OrController extends Controller
                                 'varian_latihan'
                                )
                       ->orderBy('varian_latihan','ASC')
-                      ->orderBy('id_lat','ASC')
-                      ->get();
+                      ->orderBy('id_lat','ASC');
 
+        $kuis = Kuis::where('id_pm',$id)
+                      ->select(
+                                'id_kuis',
+                                'durasi',
+                                'isi_soal',
+                                'jawaban',
+                                'pilihan_a',
+                                'pilihan_b',
+                                'pilihan_c',
+                                'pilihan_d',
+                                'penjelasan_jwb',
+                                'varian_latihan'
+                               )
+                      ->orderBy('varian_latihan','ASC')
+                      ->orderBy('id_kuis','ASC');
+                      
         if ($kuis->count() > 0) {
             
             $html .= '<div class="row">';
@@ -639,23 +654,6 @@ class OrController extends Controller
                 $html .= '</div>';
             $html .= '</div>';
         }
-
-        $kuis = Kuis::where('id_pm',$id)
-                      ->select(
-                                'id_kuis',
-                                'durasi',
-                                'isi_soal',
-                                'jawaban',
-                                'pilihan_a',
-                                'pilihan_b',
-                                'pilihan_c',
-                                'pilihan_d',
-                                'penjelasan_jwb',
-                                'varian_latihan'
-                               )
-                      ->orderBy('varian_latihan','ASC')
-                      ->orderBy('id_kuis','ASC')
-                      ->get();
 
         if ($kuis->count() > 0) {
             

@@ -41,7 +41,7 @@ class ReviewTextBookService
                     'text_book.kategori',
                     'text_book.tahun'
                    )
-            ->whereIn('text_book.status',[0,1,2]);
+            ->whereIn('text_book.status',[0,1,2,3]);
 
             // Akes untuk assign dan role Reviewer & Approve saja
     

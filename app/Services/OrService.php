@@ -315,6 +315,9 @@ class OrService
                     OrFileModel::insert(array_values($fileData));
                 }
 
+                $check->status = 0;
+                $check->save();
+                
                 if ($sendRevisionNotif) {
                     sendEmail($id,'or','revision',$user->id_dosen);
                 }
