@@ -104,6 +104,13 @@ class RpsService
             // if update    
 
             $data = Rps::find($id);
+
+            $sendRevisionNotif = false;
+
+            if ($data['status'] == 3) {
+                $sendRevisionNotif = true;                
+            }
+
             $data->strategi_pembelajaran = $request['strategi_pembelajaran'];
             $data->deskripsi_mata_kuliah = $request['deskripsi_mata_kuliah'];
             $data->media_pembelajaran = $request['media_pembelajaran'];
@@ -161,6 +168,9 @@ class RpsService
 
                 Topic::insert($payload);
 
+                if ($sendRevisionNotif) {
+                    sendEmail($id,'rps','revision',$user->id_dosen);
+                }
                 return true;
         }else{
             // if create

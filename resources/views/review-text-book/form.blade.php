@@ -63,7 +63,7 @@
                         @endif
 
                         @if($userStatus == 'reviewer')
-                            @if($model->status < 2)
+                            @if($model->status == 0)
                                 <div class="row">
                                     <div class="col-md-12">
                                         {!! Form::label("Reviewer Notes") !!}
@@ -83,7 +83,7 @@
                             @endif
 
                         @elseif($userStatus == 'approv')
-                            @if($model->status < 2)
+                            @if($model->status == 1)
                                 <div class="row">
                                     <div class="col-md-12">
                                         {!! Form::label("Approver Notes") !!}
@@ -106,7 +106,12 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label("Status") !!}
-                            <p>{!! statusCaption($model->status, true) !!}</p>
+                            <p>
+                                @if($model->status == 0) 
+                                    <span class="label label-primary">Waiting Approval</span> 
+                                @else
+                                    {!! statusCaption($model->status, true) !!} </p>
+                                @endif
                         </div>
                         <div class="form-group">
                             {!! Form::label("Mata Kuliah") !!}

@@ -141,7 +141,7 @@
                             <td bgcolor="#ffffff" align="left">
                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
-                                        <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">
+                                        <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 30px 30px;">
                                             <table border="0" cellspacing="0" cellpadding="0">
                                                 <tr>
                                                     <td align="center" style="border-radius: 3px;" bgcolor="#004e6b">
@@ -158,6 +158,11 @@
                             </td>
                         </tr> <!-- COPY -->
                     @endif
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <p style="margin-top: 0;">Terima Kasih</p>
+                        </td>
+                    </tr>
                 </table>
             </td>
         </tr>

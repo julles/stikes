@@ -124,7 +124,7 @@ class ReviewOrService
         
         $statusApp = 'approve';
 
-        if ($request->status == 3) {
+        if ($request->status == 0) {
             $statusApp = 'reject';
         }
         

@@ -175,7 +175,7 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
 
         if ($det['approv_commen']) {
             $msgContent .= "<br><br><hr><br>";
-            $msgContent .= "Komentar <strong>Kajur :</strong><br>";
+            $msgContent .= "Komentar <strong>Approver :</strong><br>";
             $msgContent .= "<small> Oleh : ".ucwords($d['approv_nama'])." | ".$d['approv_nip']."</small><br>";
             $msgContent .= "<p>".$det['approv_commen']."</p>";
         }
@@ -183,13 +183,16 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
 
 
     if ($status == 'input') {
-        $msg = 'Terdapat <strong>Pengajuan '.$typeCaption.'</strong> oleh:';
 
         // send to reviewer
+        // $msg = 'Terdapat <strong>Pengajuan '.$typeCaption.'</strong> oleh:';
+        $msg = 'Saat ini Bapak/Ibu telah ditugaskan sebagai Reviewer. Terdapat data '.$typeCaption.' yang harus direview.';
+
 
             $mailData = [
                   'name'=> $d['reviewer_nama'],
-                  'message' => $msg.$msgContent,
+                  // 'message' => $msg.$msgContent,
+                  'message' => $msg,
                   'btn_caption' => 'Lihat Detail '.$typeCaption,
                   'link' => env('APP_URL').'/review-'.$type.'/detail/'.$d['id_pm']
                 ];
@@ -209,8 +212,13 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
             // }
 
     }elseif ($status == 'reject') {
-        $msg = 'Pengajuan untuk '.$typeCaption.' berikut ini <strong>Ditolak</strong>,<br>
-        silahkan baca komentar dari reviewer / kajur.';
+
+        $recejctBy = 'Approver';
+        if ($as == 'reviewer') {
+            $recejctBy = 'Reviewer';
+        }
+
+        $msg = 'Pengajuan untuk '.$typeCaption.' berikut ini <strong>Belum Disetujui Oleh '.$recejctBy.'.</strong>';
         // send to SME
 
             $mailData = [
@@ -229,40 +237,42 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
                       ->send(new Notification($mailData));
             }
 
-            if ($type == 'text-book') {
-                $mailData['link'] = env('APP_URL').'/review-'.$type.'/detail/'.$d['id_pm'];
-            }
+            // if ($type == 'text-book') {
+            //     $mailData['link'] = env('APP_URL').'/review-'.$type.'/detail/'.$d['id_pm'];
+            // }
         // send to ?
-        if ($as == 'reviewer') {
+        // if ($as == 'reviewer') {
 
-            $mailData['name'] = $d['approv_nama'];
+        //     $mailData['name'] = $d['approv_nama'];
 
-            if($d['approv_email'] != null){
-                Mail::to($d['approv_email'])
-                      ->send(new Notification($mailData));
-            }
+        //     if($d['approv_email'] != null){
+        //         Mail::to($d['approv_email'])
+        //               ->send(new Notification($mailData));
+        //     }
             
-        }elseif($as == 'approve'){
+        // }elseif($as == 'approve'){
 
-            $mailData['name'] = $d['reviewer_nama'];
+        //     $mailData['name'] = $d['reviewer_nama'];
 
-            if($d['reviewer_email'] != null){
-                Mail::to($d['reviewer_email'])
-                      ->send(new Notification($mailData));
-            }
-        }
+        //     if($d['reviewer_email'] != null){
+        //         Mail::to($d['reviewer_email'])
+        //               ->send(new Notification($mailData));
+        //     }
+        // }
 
     }elseif ($status == 'approve') {
-        $msg = 'Pengajuan untuk '.$typeCaption.' berikut ini telah <strong>Disetujui oleh Kajur.</strong>';
+
+        $msgSME = 'Pengajuan untuk '.$typeCaption.' berikut ini telah <strong>Disetujui oleh Approver.</strong>';
 
         if ($as == 'reviewer') {
-            $msg = 'Pengajuan untuk '.$typeCaption.' berikut ini telah <strong>Direview dan Disetujui Oleh Reviewer.</strong>';
+            $msgSME = 'Pengajuan untuk '.$typeCaption.' berikut ini telah <strong>Direview dan Disetujui Oleh Reviewer.</strong>';
+            $msg = 'Saat ini Bapak/Ibu telah ditugaskan sebagai Approver. Terdapat data '.$typeCaption.' yang harus disetujui.';
         }
         // send to SME
 
             $mailData = [
                   'name'=> $d['sme_nama'],
-                  'message' => $msg.$msgContent,
+                  'message' => $msgSME.$msgContent,
                   'btn_caption' => 'Lihat Detail '.$typeCaption,
                   'link' => env('APP_URL').'/'.$type.'/detail/'.$d['id_pm']
                 ];
@@ -276,12 +286,19 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
                       ->send(new Notification($mailData));
             }
 
+        // send to ?
+        if ($as == 'reviewer') {
+
+            $mailData = [
+                  'name'=> $d['sme_nama'],
+                  'message' => $msg.$msgContent,
+                  'btn_caption' => 'Lihat Detail '.$typeCaption,
+                  'link' => env('APP_URL').'/'.$type.'/detail/'.$d['id_pm']
+                ];
+
             if ($type == 'text-book') {
                 $mailData['link'] = env('APP_URL').'/review-'.$type.'/detail/'.$d['id_pm'];
             }
-
-        // send to ?
-        if ($as == 'reviewer') {
 
             $mailData['name'] = $d['approv_nama'];
             if($d['approv_email'] != null){
@@ -289,15 +306,16 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
                       ->send(new Notification($mailData));
             }
             
-        }elseif($as == 'approve'){
-
-            $mailData['name'] = $d['reviewer_nama'];
-
-            if($d['reviewer_email'] != null){
-                Mail::to($d['reviewer_email'])
-                      ->send(new Notification($mailData));
-            }
         }
+        // elseif($as == 'approve'){
+
+        //     $mailData['name'] = $d['reviewer_nama'];
+
+        //     if($d['reviewer_email'] != null){
+        //         Mail::to($d['reviewer_email'])
+        //               ->send(new Notification($mailData));
+        //     }
+        // }
 
     }elseif ($status == 'revision') {
         $msg = 'Terdapat <strong>Pengajuan Revisi '.$typeCaption.'</strong> oleh:';
@@ -318,16 +336,16 @@ function sendEmail($pmId, $type = 'text-book' , $status = 'input', $from)
 
         // send to approv
 
-            $mailData['name'] = $d['approv_nama'];
+            // $mailData['name'] = $d['approv_nama'];
 
-            if($d['approv_email'] != null){
-                Mail::to($d['approv_email'])
-                      ->send(new Notification($mailData));
-            }
+            // if($d['approv_email'] != null){
+            //     Mail::to($d['approv_email'])
+            //           ->send(new Notification($mailData));
+            // }
     
     }elseif ($status == 'assign') {
 
-        $msg = 'Saat ini Bapak/Ibu telah ditugaskan sebagai Dosen Pengembang Materi Terdapat data text book yang harus diisi.';
+        $msg = 'Saat ini Bapak/Ibu telah ditugaskan sebagai Dosen Pengembang Materi. Terdapat data text book yang harus diisi.';
         
         // send to SME
 

@@ -123,13 +123,20 @@ class InputTextBookService
         unset($inputs["semester"]);
         unset($inputs["mata_kuliah"]);
 
+        $user = Auth::user();
+
         if ($pengembangMateri->text_book()->count() > 0) {
+        
+            if ($model['status'] == 3) {
+                sendEmail($id,'text-book','revision',$user->id_dosen);
+            }
+
             $model->update($inputs);
+        
         } else {
             $model->create($inputs);
 
             // send email
-            $user = Auth::user();
             sendEmail($id,'text-book','input',$user->id_dosen);
         }
     }

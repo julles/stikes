@@ -101,9 +101,15 @@ class OrService
         $check = OrModel::find($id);
 
         $date = DATE('Y-m-d H:i:s');
+        $user = Auth::user();
 
         if ($check) {
-            // dd($request->all());
+
+            $sendRevisionNotif = false;
+
+            if ($check['status'] == 3) {
+                $sendRevisionNotif = true;                
+            }
             // if review / approve
 
             // update File    
@@ -307,6 +313,10 @@ class OrService
                     }
 
                     OrFileModel::insert(array_values($fileData));
+                }
+
+                if ($sendRevisionNotif) {
+                    sendEmail($id,'or','revision',$user->id_dosen);
                 }
 
                 return true;
