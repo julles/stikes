@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Semester;
+use App\Models\PengembangMateri;
 use Illuminate\Support\Str;
 use App\Singleton\Component;
 use Illuminate\Http\Request;
@@ -93,10 +94,18 @@ class SemesterService
 
     public function delete($model)
     {
-        try {
-            $model->delete();
-        } catch (\Exception $e) {
-            dd($e->getMessage());
+        $check = PengembangMateri::where('id_semester',$model['id_semester'])->exists();
+
+        if (!$check) {
+            try {
+                $model->delete();
+            } catch (\Exception $e) {
+                dd($e->getMessage());
+            }
+
+            return true;
         }
+
+        return false;
     }
 }

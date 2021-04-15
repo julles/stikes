@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\MataKuliah;
+use App\Models\PengembangMateri;
 use App\Singleton\Component;
 use Illuminate\Http\Request;
 
@@ -59,10 +60,16 @@ class MataKuliahService
 
     public function delete($model)
     {
-        try {
-            $model->delete();
-        } catch (\Exception $e) {
-            dd($e->getMessage());
+        $check = PengembangMateri::where('id_matakuliah',$model['id_matakuliah'])->exists();
+
+        if (!$check) {
+            try {
+                $model->delete();
+            } catch (\Exception $e) {
+                dd($e->getMessage());
+            }
+
+            return true;
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Dosen;
+use App\Models\PmAssign;
 use Illuminate\Support\Str;
 use App\Singleton\Component;
 use Illuminate\Http\Request;
@@ -93,11 +94,23 @@ class DosenService
 
     public function delete($model)
     {
-        try {
-            \Storage::delete(contents_path($model->foto));
-            $model->delete();
-        } catch (\Exception $e) {
-            dd($e->getMessage());
+
+        $check = PmAssign::where('sme_id',$model['id_dosen'])
+                           ->orWhere('reviewer_id',$model['id_dosen'])
+                           ->orWhere('approval_id',$model['id_dosen'])
+                           ->exists();
+                           
+        if (!$check) {
+            try {
+                \Storage::delete(contents_path($model->foto));
+                $model->delete();
+                return true;
+            } catch (\Exception $e) {
+                dd($e->getMessage());
+            }
         }
+
+        return false;
+
     }
 }

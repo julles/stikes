@@ -63,8 +63,13 @@ class DosenController extends Controller
     public function getDelete($id)
     {
         $model = $this->model->findOrFail($id);
-        $this->service->delete($model);
-        toast('Data telah dihapus', 'success');
+        $del = $this->service->delete($model);
+        
+        if ($del) {
+            toast('Data telah dihapus', 'success');
+        }else{
+            toast('Data tidak bisa dihapus, karena data sudah terpakai', 'warning');
+        }
         return redirect($this->__route);
     }
 }

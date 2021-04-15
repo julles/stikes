@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\PmAssign;
+use App\Models\Rps;
 use Illuminate\Support\Str;
 use App\Singleton\Component;
 use Illuminate\Http\Request;
@@ -130,15 +131,24 @@ class AssignDosenService
 
     public function delete($model)
     {
-        DB::beginTransaction();
 
-        try {
-            $model->pm_assign()->delete();
-            $model->delete();
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollback();
-            dd($e->getMessage());
+        $check = Rps::where('id',$model['id_pm'])->exists();
+
+        if (!$check) {
+
+            DB::beginTransaction();
+
+            try {
+                $model->pm_assign()->delete();
+                $model->delete();
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+                dd($e->getMessage());
+            }
+            return true;
         }
+
+        return false;
     }
 }
