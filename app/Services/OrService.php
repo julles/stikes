@@ -342,6 +342,10 @@ class OrService
                     $fileData = [];
                     foreach ($request->ppt as $key => $v) {
                         
+                        if (!isset($v['file'])) {
+                            continue;
+                        }
+
                         $file = $v['file'];
 
                         $fileName = $id.'-'. generateRandomString(5) . "." . $file->getClientOriginalExtension();
@@ -364,6 +368,10 @@ class OrService
                     $fileData = [];
                     foreach ($request->ln as $key => $v) {
                         
+                        if (!isset($v['file'])) {
+                            continue;
+                        }
+
                         $file = $v['file'];
 
                         $fileName = $id.'-'. generateRandomString(5) . "." . $file->getClientOriginalExtension();
@@ -387,6 +395,10 @@ class OrService
                     $fileData = [];
                     foreach ($request->video as $key => $v) {
                         
+                        if (!isset($v['file'])) {
+                            continue;
+                        }
+
                         $file = $v['file'];
 
                         $fileName = $id.'-'. generateRandomString(5) . "." . $file->getClientOriginalExtension();
