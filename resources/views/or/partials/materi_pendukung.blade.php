@@ -41,7 +41,7 @@
                             </td> 
                             <td class="text-center" width="15%"> 
                                 <a href="{{ Storage::url(contents_path().'or_materi_pendukung/'.$v['file']) }}" target="_blank" class="btn btn-block btn-outline-warning mt-2 btn-sm">
-                                    View Older Materi Pendukung
+                                    View Older File
                                 </a>
                             </td> 
                             <td class="text-center" width="10%"> 
