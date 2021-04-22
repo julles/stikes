@@ -1,5 +1,5 @@
 @if (is_string($item))
-    <li class="header" style="font-size: 16px;">{{ $item }}</li>
+    <li class="header text-white text-center" style="font-size: 16px; color: #fff">{{ $item }}</li>
 @elseif (isset($item['header']))
     <li class="header">{{ $item['header'] }}</li>
 @elseif (isset($item['search']) && $item['search'])
