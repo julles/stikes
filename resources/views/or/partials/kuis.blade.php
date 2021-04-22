@@ -324,12 +324,13 @@
         $('#penjelasan_jwb').summernote("code","");
     }
 
-    $('#isi_soal').summernote({ minHeight: 150 });
-    $('#pilihan_a').summernote({ minHeight: 150 });
-    $('#pilihan_b').summernote({ minHeight: 150 });
-    $('#pilihan_c').summernote({ minHeight: 150 });
-    $('#pilihan_d').summernote({ minHeight: 150 });
-    $('#penjelasan_jwb').summernote({ minHeight: 150 });
-
+    $('#isi_soal').summernote({ minHeight: 150, dialogsInBody: true });
+    $('#pilihan_a').summernote({ minHeight: 150, dialogsInBody: true });
+    $('#pilihan_b').summernote({ minHeight: 150, dialogsInBody: true });
+    $('#pilihan_c').summernote({ minHeight: 150, dialogsInBody: true });
+    $('#pilihan_d').summernote({ minHeight: 150, dialogsInBody: true });
+    $('#penjelasan_jwb').summernote({ minHeight: 150, dialogsInBody: true });
+    
+    $('.modal').css('overflow-y', 'auto');
 </script>
 @endpush

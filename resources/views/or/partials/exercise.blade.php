@@ -324,12 +324,12 @@
         $('#exercise_penjelasan_jwb').summernote("code","");
     }
 
-    $('#exercise_isi_soal').summernote({ minHeight: 150 });
-    $('#exercise_pilihan_a').summernote({ minHeight: 150 });
-    $('#exercise_pilihan_b').summernote({ minHeight: 150 });
-    $('#exercise_pilihan_c').summernote({ minHeight: 150 });
-    $('#exercise_pilihan_d').summernote({ minHeight: 150 });
-    $('#exercise_penjelasan_jwb').summernote({ minHeight: 150 });
+    $('#exercise_isi_soal').summernote({ minHeight: 150, dialogsInBody: true });
+    $('#exercise_pilihan_a').summernote({ minHeight: 150, dialogsInBody: true });
+    $('#exercise_pilihan_b').summernote({ minHeight: 150, dialogsInBody: true });
+    $('#exercise_pilihan_c').summernote({ minHeight: 150, dialogsInBody: true });
+    $('#exercise_pilihan_d').summernote({ minHeight: 150, dialogsInBody: true });
+    $('#exercise_penjelasan_jwb').summernote({ minHeight: 150, dialogsInBody: true });
 
 </script>
 @endpush
