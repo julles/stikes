@@ -100,6 +100,8 @@ class RpsService
 
         $date = DATE('Y-m-d H:i:s');
 
+        $user = Auth::user();
+        
         if ($check) {
             // if update    
 
@@ -234,7 +236,6 @@ class RpsService
             Topic::insert($payload);
 
             // send email
-            $user = Auth::user();
             sendEmail($id,'rps','input',$user->id_dosen);
 
             return true;
