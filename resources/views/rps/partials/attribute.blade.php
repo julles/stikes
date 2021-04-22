@@ -72,8 +72,8 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>Component</th>
-                                        <th>Weight</th>
+                                        <th>Komponen</th>
+                                        <th>Bobot</th>
                                     </tr>
                                 </thead>
                                 <tbody id="metode_tbody">
@@ -102,7 +102,7 @@
                                 <tfoot>
                                     <tr>
                                         <td colspan="2" class="text-right">
-                                            <strong>Weight Total :</strong>
+                                            <strong>Total Bobot :</strong>
                                         </td>
                                         <td>
                                             <strong><span class="weight-total">0</span>%</strong>
@@ -132,8 +132,8 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>Component</th>
-                                        <th>Weight</th>
+                                        <th>Komponen</th>
+                                        <th>Bobot</th>
                                     </tr>
                                 </thead>
                                 <tbody id="metode_praktikum_tbody">
@@ -162,7 +162,7 @@
                                 <tfoot>
                                     <tr>
                                         <td colspan="2" class="text-right">
-                                            <strong>Weight Total :</strong>
+                                            <strong>Total Bobot :</strong>
                                         </td>
                                         <td>
                                             <strong><span class="weight-praktikum-total">0</span>%</strong>
