@@ -65,123 +65,109 @@
                 <div class="col-md-12">
                     <div class="box box-success">
                         <div class="box-header">
-                            <h4>Metode Penilaian Teori</h4>
+                            <h3>KOMPOSISI BOBOT NILAI</h3>
                         </div>
                         <div class="box-body">
-                            <table class="table table-sm table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Komponen</th>
-                                        <th>Bobot</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="metode_tbody">
-                                    @foreach($metodePenilaian as $key => $v)
-                                        <tr>
-                                            <td class="text-center">
-                                                <input type="checkbox" name="metode_penilaian[]" id="mpc-{{$key}}" class="form-check-input metode-penilaian" value="{{ $v['id'] }}" data-weight="{{ $v['weight'] }}"
-                                                @if(in_array($v['id'],$metodePenilaianChecked))
-                                                    checked 
-                                                @endif
-                                                >
-                                            </td>
-                                            <td>
-                                                <label for="mpc-{{$key}}">
-                                                    {{ $v['component'] }}
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label for="mpc-{{$key}}">
-                                                    <span>{{ $v['weight'] }}</span>%
-                                                </label>    
-                                            </td>
-                                        </tr>
-                                    @endforeach()
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="2" class="text-right">
-                                            <strong>Total Bobot :</strong>
-                                        </td>
-                                        <td>
-                                            <strong><span class="weight-total">0</span>%</strong>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">
-                                            <div class="text-right alert-weight" style="display: none;">
-                                                <span class="text-danger">
-                                                    Total bobot tidak boleh lebih dari 100%
-                                                </span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table">
+                                        <tbody class="mp_composition_tbody">
+                                            <tr>
+                                                @foreach(MPCategories() as $Ctotal_category_id => $Ctotal_category)
+                                                    <td>
+                                                        <h5>{{ $Ctotal_category }} (%)</h5>
+                                                        <input 
+                                                         onkeypress="if(event.which < 48 || event.which > 57 ) if(event.which != 8) if(event.keyCode != 9) return false;" 
+                                                         type="number" 
+                                                         class="form-control numberBox {{ 'composition_'.$Ctotal_category_id }} composition_VAL" 
+                                                         data-category="composition" 
+                                                         name="mp[composition][{{$Ctotal_category_id}}]"
+                                                         id="mp_total-{{$Ctotal_category_id}}"
+                                                         value="{{ $metodePenilaianData['composition'][$Ctotal_category_id] ?? 0 }}"
+                                                         >
+                                                    <td>
+                                                @endforeach
+                                                <td>
+                                                    <h5>Total Bobot (%)</h5>
+                                                    <input type="number" max="100" min="0" class="form-control {{ 'composition_TOTAL' }}" id="{{ 'composition_TOTAL' }}" value="0" readonly>
+                                                </td>
+                                            </tr>
+                                            <tr class="{{ 'composition_ALERT' }}" style="display: none;">
+                                                <td colspan="{{ (count(MPCategories())*2)+1 }}" class="text-right text-warning">
+                                                    Total bobot harus 0% atau 100%
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <div class="box box-primary">
-                        <div class="box-header">
-                            <h4>Metode Penilaian Praktikum</h4>
-                        </div>
-                        <div class="box-body">
-                            <table class="table table-sm table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Komponen</th>
-                                        <th>Bobot</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="metode_praktikum_tbody">
-                                    @foreach($metodePenilaian as $key => $v)
-                                        <tr>
-                                            <td class="text-center">
-                                                <input type="checkbox" name="metode_penilaian_praktikum[]" id="mpc-praktikum-{{$key}}" class="form-check-input metode-penilaian-praktikum" value="{{ $v['id'] }}" data-weight="{{ $v['weight_praktikum'] }}"
-                                                @if(in_array($v['id'],$metodePenilaianPraktikumChecked))
-                                                    checked 
-                                                @endif
-                                                >
-                                            </td>
-                                            <td>
-                                                <label for="mpc-praktikum-{{$key}}">
-                                                    {{ $v['component'] }}
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label for="mpc-praktikum-{{$key}}">
-                                                    <span>{{ $v['weight_praktikum'] }}</span>%
-                                                </label>    
-                                            </td>
-                                        </tr>
-                                    @endforeach()
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="2" class="text-right">
-                                            <strong>Total Bobot :</strong>
-                                        </td>
-                                        <td>
-                                            <strong><span class="weight-praktikum-total">0</span>%</strong>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">
-                                            <div class="text-right alert-weight-praktikum" style="display: none;">
-                                                <span class="text-danger">
-                                                    Total bobot tidak boleh lebih dari 100%
-                                                </span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+            </div>
+            <div class="row">
+                @foreach(MPCategories() as $category_id => $category)
+                    <div class="col-md-12">
+                        <div class="box box-success">
+                            <div class="box-header">
+                                <h4>Bobot Penilaian {{$category}}</h4>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-border">
+                                            <thead>
+                                                <tr>
+                                                    <th>Komponen</th>
+                                                    <th colspan="2">Bobot</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="mp_{{ $category_id }}_tbody">
+                                                @foreach($metodePenilaian[$category_id] as $mp => $c)
+                                                    <tr>
+                                                        <td>{{ $c['component'] }}</td>
+                                                        <td width="100">
+                                                            <input 
+                                                             onkeypress="if(event.which < 48 || event.which > 57 ) if(event.which != 8) if(event.keyCode != 9) return false;" 
+                                                             type="number" 
+                                                             data-category="{{ $category_id }}" 
+                                                             class="form-control numberBox {{ $category_id.'_VAL' }}" 
+                                                             name="mp[detail][{{$category_id}}][{{$c['id']}}]"
+                                                             value="{{ $metodePenilaianData['detail'][$category_id][$c['id']] ?? 0 }}"
+                                                             >
+                                                        </td>
+                                                        <td width="10">
+                                                            %
+                                                        </td>
+                                                    </tr>   
+                                                @endforeach()
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td>
+                                                        TOTAL
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control {{ $category_id.'_TOTAL' }}" name="" value="0" readonly>
+                                                    </td>
+                                                    <td width="10">
+                                                        %
+                                                    </td>
+                                                </tr>
+                                                <tr class="{{ $category_id.'_ALERT' }}" style="display: none;">
+                                                    <td colspan="3" class="text-right text-warning">
+                                                        Total bobot harus 0% atau 100%
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endforeach()
+
             </div>
         </div>
     </div>
@@ -189,6 +175,49 @@
 
 @push("js")
     <script>
+
+        var metodePenilaianArr = @json(MPCategories());
+        @if($metodePenilaianData)
+            $.each( metodePenilaianArr, function( keyMP, valueMP ) {
+                numberBoxTotal(keyMP);
+            });
+            numberBoxTotal('composition');
+        @endif
+
+        $( ".numberBox" ).on('change keyup keydown keypress', function() {
+            var category = $(this).attr("data-category");
+            if ($(this).val() > 100)
+            {
+                $(this).val(100);
+            }
+            else if ($(this).val() < 0)
+            {
+                $(this).val(0);
+            }
+            if (category) {
+                numberBoxTotal(category);
+            }
+        });
+
+        function numberBoxTotal(category) {
+            var sum = 0;
+            $('.'+category+'_VAL').each(function(){
+                if (this.value) {
+                    sum += parseFloat(this.value);
+                }
+            });
+            $('.'+category+'_TOTAL').val(sum);
+            $('.summary_'+category+'_TOTAL').html(sum);
+
+            if (sum == 0 || sum == 100) {
+                $('.'+category+'_ALERT').hide();
+                $(".btn-submit").prop('disabled', false);
+            }else{
+                $('.'+category+'_ALERT').show();
+                $(".btn-submit").prop('disabled', true);
+            }
+        }
+
         function getTotalMP() {
             var weightTotal = 0;
             $(".metode-penilaian:checked").map(function () {

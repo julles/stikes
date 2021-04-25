@@ -47,21 +47,9 @@ class MetodePenilaianController extends Controller
     {
         $model = $this->model->findOrfail($id);
 
-        $from = carbon()->parse($model->from);
-        $fromMonth = (int) $from->format("m");
-        $fromYear = (int) $from->format("Y");
-
-        $to = carbon()->parse($model->to);
-        $toMonth = (int) $to->format("m");
-        $toYear = (int) $to->format("Y");
-        
         return view("metode-penilaian.form", [
             "model" => $model,
             "titleAction" => "Edit Data",
-            "fromMonth" => $fromMonth,
-            "fromYear" => $fromYear,
-            "toMonth" => $toMonth,
-            "toYear" => $toYear,
         ]);
     }
 

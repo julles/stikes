@@ -25,7 +25,7 @@ class MetodePenilaianRequest extends FormRequest
     {
         return [
             "component" => "required",
-            "weight" => "required"
+            "category" => "required"
         ];
     }
 }

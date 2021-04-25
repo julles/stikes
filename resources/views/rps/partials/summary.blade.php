@@ -48,72 +48,75 @@
     <div class="col-md-4">
         <div class="row">
             <div class="col-md-12">
-                <strong>Metode Penilaian Teori</strong>
+                <strong>KOMPOSISI BOBOT NILAI</strong>
                 <table class="table table-bordered mt-3">
                     <thead>
                         <tr>
-                            <th>Component</th>
-                            <th>Weight</th>
+                            <th>Metode Penilaian</th>
+                            <th width="50">Bobot</th>
                         </tr>
                     </thead>
-                    <tbody id = "tbody_summary_metode">
-                        
+                    <tbody>
+                        @foreach(MPCategories() as $category_id => $category)
+                            <tr>
+                                <td><strong>{{ $category }}</strong></td>
+                                <td class="text-right" id="summary_mp_composition_{{$category_id}}"></td>
+                            </tr>
+                        @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
                             <td class="text-right">
-                                <strong>Weight Total :</strong>
+                                <strong>Total Bobot :</strong>
                             </td>
-                            <td>
-                                <strong><span class="weight-total">0</span>%</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="text-right alert-weight" style="display: none;">
-                                    <span class="text-danger">
-                                        Total bobot tidak boleh lebih dari 100%
-                                    </span>
-                                </div>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-            <div class="col-md-12">
-                <strong>Metode Penilaian Praktikum</strong>
-                <table class="table table-bordered mt-3">
-                    <thead>
-                        <tr>
-                            <th>Component</th>
-                            <th>Weight</th>
-                        </tr>
-                    </thead>
-                    <tbody id = "tbody_summary_metode_praktikum">
-                        
-                    </tbody>
-                    <tfoot>
-                        <tr>
                             <td class="text-right">
-                                <strong>Weight Total :</strong>
-                            </td>
-                            <td>
-                                <strong><span class="weight-praktikum-total">0</span>%</strong>
+                                <strong><span class="{{ 'summary_composition_TOTAL' }}">0</span>%</strong>
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="text-right alert-weight-praktikum" style="display: none;">
-                                    <span class="text-danger">
-                                        Total bobot tidak boleh lebih dari 100%
-                                    </span>
-                                </div>
+                        <tr class="{{ 'composition_ALERT' }}" style="display: none;">
+                            <td colspan="{{ (count(MPCategories())*2)+1 }}" class="text-right text-warning">
+                                Total bobot harus 0% atau 100%
                             </td>
                         </tr>
                     </tfoot>
                 </table>
+                <hr>
             </div>
         </div>
+        @foreach(MPCategories() as $category_id => $category)
+            <div class="row">
+                <div class="col-md-12">
+                    <strong>Metode Penilaian {{$category}}</strong>
+                    <table class="table table-bordered mt-3">
+                        <thead>
+                            <tr>
+                                <th>Komponen</th>
+                                <th width="50">Bobot</th>
+                            </tr>
+                        </thead>
+                        <tbody id = "summary_mp_{{ $category_id }}_tbody">
+                            
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="text-right">
+                                    <strong>Total Bobot :</strong>
+                                </td>
+                                <td class="text-right">
+                                    <strong><span class="{{ 'summary_'.$category_id.'_TOTAL' }}">0</span>%</strong>
+                                </td>
+                            </tr>
+                            <tr class="{{ $category_id.'_ALERT' }}" style="display: none;">
+                                <td colspan="{{ (count(MPCategories())*2)+1 }}" class="text-right text-warning">
+                                    Total bobot harus 0% atau 100%
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        @endforeach
+
     </div>
 </div>
 
@@ -174,70 +177,89 @@
         });
 
         // Metode
-        var metodePenilaian = @json($metodePenilaian);
-        $.ajax({
-            url: "/parse-str",
-            data: $("#metode_tbody :input").serialize(),
-            success: function(res){
+        // var metodePenilaian = @json($metodePenilaian);
+        // $.ajax({
+        //     url: "/parse-str",
+        //     data: $("#metode_tbody :input").serialize(),
+        //     success: function(res){
 
-                // console.log(res);
-                var metod = "";
-                $.each( metodePenilaian, function( key, value ) {
-                    // console.log(value);
-                    // if ((jQuery.inArray( value.id, res )) >= 0 ) {
-                    //     console.log(value);
-                    // }
-                    // console.log(value.id.toString(),res.metode_penilaian,jQuery.inArray( value.id.toString(), res.metode_penilaian ));
-                    // console.log();
-                    if (jQuery.inArray( value.id.toString(), res.metode_penilaian ) >= 0) {
-                        // console.log(value);
+        //         // console.log(res);
+        //         var metod = "";
+        //         $.each( metodePenilaian, function( key, value ) {
+        //             // console.log(value);
+        //             // if ((jQuery.inArray( value.id, res )) >= 0 ) {
+        //             //     console.log(value);
+        //             // }
+        //             // console.log(value.id.toString(),res.metode_penilaian,jQuery.inArray( value.id.toString(), res.metode_penilaian ));
+        //             // console.log();
+        //             if (jQuery.inArray( value.id.toString(), res.metode_penilaian ) >= 0) {
+        //                 // console.log(value);
+        //                 metod += '<tr>';
+        //                     metod += '<td>';
+        //                         metod += value.component;
+        //                     metod += '</td>';
+        //                     metod += '<td>';
+        //                         metod += value.weight+'%';
+        //                     metod += '</td>';
+        //                 metod += '</tr>';
+        //             }
+        //         });
+        //         $("#tbody_summary_metode").html(metod);
+
+
+        //     },
+        // });
+
+        // Metode
+        var metodePenilaianArr = @json(MPCategories());
+        var metodePenilaian = @json($metodePenilaian)
+
+        $.each( metodePenilaianArr, function( keyMP, valueMP ) {
+        
+            $.ajax({
+                url: "/parse-str",
+                data: $("#mp_"+keyMP+"_tbody :input").serialize(),
+                success: function(res){
+
+                    var metod = "";
+                    $.each( res.mp.detail[keyMP], function( key, value ) {
                         metod += '<tr>';
                             metod += '<td>';
-                                metod += value.component;
+                                metod += metodePenilaian[keyMP][key].component;
                             metod += '</td>';
-                            metod += '<td>';
-                                metod += value.weight+'%';
-                            metod += '</td>';
+                            metod += '<td class="text-right">';
+                                metod += (value || 0);
+                            metod += '%</td>';
                         metod += '</tr>';
-                    }
-                });
-                $("#tbody_summary_metode").html(metod);
+                    });
+                    $("#summary_mp_"+keyMP+"_tbody").html(metod);
 
+                },
+            });
 
-            },
+            $("#summary_mp_composition_"+keyMP).html(($("#mp_total-"+keyMP).val() || 0)+"%");
+
         });
+            // $.ajax({
+            //     url: "/parse-str",
+            //     data: $("#mp_composition_tbody :input").serialize(),
+            //     success: function(res){
+            //         console.log(123, res);
+            //         var metod = "";
+            //         $.each( res.mp.composition, function( key, value ) {
+            //             metod += '<tr>';
+            //                 metod += '<td>asd';
+            //                     // metod += metodePenilaian[keyMP][key].component;
+            //                 metod += '</td>';
+            //                 metod += '<td>';
+            //                     metod += (value || 0);
+            //                 metod += '%</td>';
+            //             metod += '</tr>';
+            //         });
+            //         $("#summary_mp_composition_tbody").html(metod);
 
-        $.ajax({
-            url: "/parse-str",
-            data: $("#metode_praktikum_tbody :input").serialize(),
-            success: function(res){
-
-                // console.log(res);
-                var metod = "";
-                $.each( metodePenilaian, function( key, value ) {
-                    // console.log(value);
-                    // if ((jQuery.inArray( value.id, res )) >= 0 ) {
-                    //     console.log(value);
-                    // }
-                    // console.log(value.id.toString(),res.metode_penilaian,jQuery.inArray( value.id.toString(), res.metode_penilaian ));
-                    // console.log();
-                        console.log(123, value , value.id.toString());
-                    if (jQuery.inArray( value.id.toString(), res.metode_penilaian_praktikum ) >= 0) {
-                        metod += '<tr>';
-                            metod += '<td>';
-                                metod += value.component;
-                            metod += '</td>';
-                            metod += '<td>';
-                                metod += value.weight_praktikum+'%';
-                            metod += '</td>';
-                        metod += '</tr>';
-                    }
-                });
-                $("#tbody_summary_metode_praktikum").html(metod);
-
-
-            },
-        });
+            //     },
+            // });
 
         // Topic
         

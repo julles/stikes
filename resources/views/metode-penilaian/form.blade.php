@@ -13,27 +13,31 @@
             <div class="box-header">
                 {{ $titleAction }}
             </div>
-            {!! Form::model($model,["id" =>"form","method"=>"post","files"=>true]) !!}
+            {!! Form::model($model,["id" =>"form","method"=>"post"]) !!}
             <div class="box-body">
                 <div class="form-group">
                     {!! Form::label("Komponen") !!}
                     {!! Form::text("component",null,["class"=>"form-control"]) !!}
                 </div>
-                <div class="row">
+                <div class="form-group">
+                    {!! Form::label("Kategori") !!}
+                    {!! Form::select("category",MPCategories(),$model->category,["class"=>"form-control"]) !!}
+                </div>
+                <!-- <div class="row">
                     <h4 class="text-center">Bobot (%)</h4>
                     <div class="col-md-6">
                         <div class="form-group">
-                            {!! Form::label("Teori") !!}
-                            {!! Form::number("weight",null,["class"=>"form-control"]) !!}
+                            {{-- Form::label("Teori") --}}
+                            {{-- Form::number("weight",null,["class"=>"form-control"]) --}}
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            {!! Form::label("Praktikum") !!}
-                            {!! Form::number("weight_praktikum",null,["class"=>"form-control"]) !!}
+                            {{-- Form::label("Praktikum") --}}
+                            {{-- Form::number("weight_praktikum",null,["class"=>"form-control"]) --}}
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary btn-sm">
@@ -51,5 +55,5 @@
 @stop
 
 @push("js")
-{!! JsValidator::formRequest('App\Http\Requests\MataKuliahRequest', '#form'); !!}
+{!! JsValidator::formRequest('App\Http\Requests\MetodePenilaianRequest', '#form'); !!}
 @endpush

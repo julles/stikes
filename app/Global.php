@@ -395,3 +395,18 @@ function getMonthData($val = false)
 
     return $arr;
 }
+
+function MPCategories($val = false)
+{
+    $arr = [
+        'TEORI' => 'Teori',
+        'PRAKTEK' => 'Praktikum',
+        'KLINIK' => 'Klinik'
+    ];
+
+    if ($val) {
+        return $arr[$val];
+    }
+
+    return $arr;
+}

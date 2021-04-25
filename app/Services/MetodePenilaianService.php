@@ -25,7 +25,7 @@ class MetodePenilaianService
 
     public function getData(Request $request)
     {
-        $model = MetodePenilaian::selectRaw('id,component,CONCAT(weight,"%") as weight_percent,CONCAT(weight_praktikum,"%") as weight_praktikum_percent');
+        $model = MetodePenilaian::selectRaw('id,component,category');
             // ->orderBy("component", "asc");
 
         return \Table::of($model)
@@ -54,7 +54,6 @@ class MetodePenilaianService
     public function update(Request $request, int $id)
     {
         $model = MetodePenilaian::findOrFail($id);
-
         $model->update($request->all());
     }
 

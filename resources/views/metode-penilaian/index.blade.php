@@ -18,8 +18,7 @@
                         <thead>
                             <tr>
                                 <th width = "20%%">Komponen</th>
-                                <th width = "30%">Bobot Teori</th>
-                                <th width = "30%">Bobot Praktikum</th>
+                                <th width = "30%">Kategori</th>
                                 <th width = "10%">Action</th>
                             </tr>
                         </thead>
@@ -50,8 +49,7 @@ $(function() {
         order: [[ 0, "asc" ]],
         columns: [
             { data: 'component', name: 'component' },
-            { data: 'weight_percent', name: 'weight_percent' },
-            { data: 'weight_praktikum_percent', name: 'weight_praktikum_percent' },
+            { data: 'category', name: 'category' },
             { data: 'action', name: 'action' ,searchable:false}
         ]
     });

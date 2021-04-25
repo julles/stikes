@@ -73,3 +73,7 @@ tambah field source di or_file
 // ----------------------------------------
 
 tabah field metode_penilaian_praktikum
+
+// ----------------------------------------
+
+Tambah field category (char) di tabel metode_penilaian

@@ -52,20 +52,26 @@ class ReviewRpsController extends Controller
         $titleAction = $pm->nama_semester." • ".$pm->mk_kode." • ".$pm->mk_nama;
         $textBook = $this->textBook->where('id_pm',$id)->first();
         $rps = Rps::find($id);
-        $metodePenilaian = MetodePenilaian::get();
+        $rps = Rps::find($id);
+        
+        $metodePenilaianArr = MetodePenilaian::select('id','component','category')->get();
+        
+        $metodePenilaian = [];
 
-        $metodePenilaianChecked = [];
-        $metodePenilaianPraktikumChecked = [];
+        foreach ($metodePenilaianArr as $key => $v) {
+            $metodePenilaian[$v['category']][$v['id']] = $v;
+        }
+
         $capaianPembelajaran = [];
         $topic = [];
+        $metodePenilaianData = [];
         $totalSubTopic = 0;
         if ($rps) {
-            $metodePenilaianChecked = json_decode($rps['metode_penilaian'],true) ?? []; 
-            $metodePenilaianPraktikumChecked = json_decode($rps['metode_penilaian_praktikum'],true) ?? []; 
             $capaianPembelajaran = json_decode($rps['capaian_pembelajaran'],true); 
             $topicArr = Topic::where('id_pm',$id)->get();
             $totalSubTopic = $topicArr->count(); 
             
+            $metodePenilaianData = json_decode($rps['metode_penilaian'],true);
             foreach ($topicArr as $key => $v) {
                 $topic[$v['topic']][] = [
                                             'sesi' => $v['sesi'],
@@ -75,15 +81,14 @@ class ReviewRpsController extends Controller
             }
 
         }
-
+        
         $userStatus = $this->service->userStatus($id);
         
         return view("rps.form", [
             "model" => $textBook,
-            "metodePenilaianChecked" => $metodePenilaianChecked,
-            "metodePenilaianPraktikumChecked" => $metodePenilaianPraktikumChecked,
-            "capaianPembelajaran" => $capaianPembelajaran,
             "metodePenilaian" => $metodePenilaian,
+            "metodePenilaianData" => $metodePenilaianData,
+            "capaianPembelajaran" => $capaianPembelajaran,
             "totalSubTopic" => $totalSubTopic,
             "topic" => $topic,
             "userStatus" => $userStatus,

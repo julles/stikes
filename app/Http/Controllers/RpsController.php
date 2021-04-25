@@ -52,20 +52,25 @@ class RpsController extends Controller
         $titleAction = $pm->nama_semester." • ".$pm->mk_kode." • ".$pm->mk_nama;
         $textBook = $this->textBook->where('id_pm',$id)->first();
         $rps = Rps::find($id);
-        $metodePenilaian = MetodePenilaian::get();
+        
+        $metodePenilaianArr = MetodePenilaian::select('id','component','category')->get();
+        
+        $metodePenilaian = [];
 
-        $metodePenilaianChecked = [];
-        $metodePenilaianPraktikumChecked = [];
+        foreach ($metodePenilaianArr as $key => $v) {
+            $metodePenilaian[$v['category']][$v['id']] = $v;
+        }
+
         $capaianPembelajaran = [];
         $topic = [];
+        $metodePenilaianData = [];
         $totalSubTopic = 0;
         if ($rps) {
-            $metodePenilaianChecked = json_decode($rps['metode_penilaian'],true) ?? []; 
-            $metodePenilaianPraktikumChecked = json_decode($rps['metode_penilaian_praktikum'],true) ?? []; 
             $capaianPembelajaran = json_decode($rps['capaian_pembelajaran'],true); 
             $topicArr = Topic::where('id_pm',$id)->get();
             $totalSubTopic = $topicArr->count(); 
             
+            $metodePenilaianData = json_decode($rps['metode_penilaian'],true);
             foreach ($topicArr as $key => $v) {
                 $topic[$v['topic']][] = [
                                             'sesi' => $v['sesi'],
@@ -78,10 +83,9 @@ class RpsController extends Controller
         
         return view("rps.form", [
             "model" => $textBook,
-            "metodePenilaianChecked" => $metodePenilaianChecked,
-            "metodePenilaianPraktikumChecked" => $metodePenilaianPraktikumChecked,
-            "capaianPembelajaran" => $capaianPembelajaran,
             "metodePenilaian" => $metodePenilaian,
+            "metodePenilaianData" => $metodePenilaianData,
+            "capaianPembelajaran" => $capaianPembelajaran,
             "totalSubTopic" => $totalSubTopic,
             "topic" => $topic,
             "titleAction" => $titleAction,
@@ -89,6 +93,61 @@ class RpsController extends Controller
             "review_stat" => false,
         ]);
     }
+
+    // public function getDetail($id)
+    // {
+
+    //     $pm = PengembangMateri::
+    //         select('pengembang_materi.id_pm', 
+    //                 'semester.nama_semester', 
+    //                 'matakuliah.mk_kode',
+    //                 'matakuliah.mk_nama'
+    //                )
+    //         ->where('pengembang_materi.id_pm',$id)
+    //         ->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
+    //         ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")
+    //         ->first();
+
+    //     $titleAction = $pm->nama_semester." • ".$pm->mk_kode." • ".$pm->mk_nama;
+    //     $textBook = $this->textBook->where('id_pm',$id)->first();
+    //     $rps = Rps::find($id);
+    //     $metodePenilaian = MetodePenilaian::get();
+
+    //     $metodePenilaianChecked = [];
+    //     $metodePenilaianPraktikumChecked = [];
+    //     $capaianPembelajaran = [];
+    //     $topic = [];
+    //     $totalSubTopic = 0;
+    //     if ($rps) {
+    //         $metodePenilaianChecked = json_decode($rps['metode_penilaian'],true) ?? []; 
+    //         $metodePenilaianPraktikumChecked = json_decode($rps['metode_penilaian_praktikum'],true) ?? []; 
+    //         $capaianPembelajaran = json_decode($rps['capaian_pembelajaran'],true); 
+    //         $topicArr = Topic::where('id_pm',$id)->get();
+    //         $totalSubTopic = $topicArr->count(); 
+            
+    //         foreach ($topicArr as $key => $v) {
+    //             $topic[$v['topic']][] = [
+    //                                         'sesi' => $v['sesi'],
+    //                                         'sub_topic' => $v['sub_topic'],
+    //                                         'capaian_pembelajaran' => $v['capaian_pembelajaran'],
+    //                                     ];
+    //         }
+
+    //     }
+        
+    //     return view("rps.form", [
+    //         "model" => $textBook,
+    //         "metodePenilaianChecked" => $metodePenilaianChecked,
+    //         "metodePenilaianPraktikumChecked" => $metodePenilaianPraktikumChecked,
+    //         "capaianPembelajaran" => $capaianPembelajaran,
+    //         "metodePenilaian" => $metodePenilaian,
+    //         "totalSubTopic" => $totalSubTopic,
+    //         "topic" => $topic,
+    //         "titleAction" => $titleAction,
+    //         "rps" => $rps,
+    //         "review_stat" => false,
+    //     ]);
+    // }
 
     public function postDetail(RpsRequest $request, $id)
     {

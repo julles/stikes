@@ -178,14 +178,13 @@ class RpsService
             // if create
 
             // save RPS
-
             $payload = [
                 'id' => $id,
                 'strategi_pembelajaran' => $request['strategi_pembelajaran'],
                 'deskripsi_mata_kuliah' => $request['deskripsi_mata_kuliah'],
                 'media_pembelajaran' => $request['media_pembelajaran'],
                 'capaian_pembelajaran' => json_encode($request['capaian_pembelajaran'],true),
-                'metode_penilaian' => json_encode($request['metode_penilaian'],true),
+                'metode_penilaian' => json_encode($request['mp'],true),
                 'metode_penilaian_praktikum' => json_encode($request['metode_penilaian_praktikum'],true),
                 'status' => 0,
                 'created_at' => $date,
