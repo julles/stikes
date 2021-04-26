@@ -3,7 +3,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Topic <small>*Each topic can consists of ppt & pdf</small></th>
+                    <th>Session & Topic <small>*Each session & topic can consists of ppt & pdf</small></th>
                     <th>File</th>
                     <th></th>
                 </tr>

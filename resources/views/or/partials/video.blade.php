@@ -3,7 +3,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Topic</th>
+                    <th>Session & Topic</th>
                     <th>File</th>
                     <th></th>
                 </tr>

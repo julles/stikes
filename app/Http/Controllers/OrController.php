@@ -63,7 +63,7 @@ class OrController extends Controller
         $topic = [];
         $totalSubTopic = 0;
         $topic = Topic::where('id_pm',$id)
-                            ->selectRaw('id_topic, sesi, CONCAT(topic," - ",sub_topic) as topic')
+                            ->selectRaw('id_topic, sesi, CONCAT("Sesi : ",sesi," • Topik : ",topic," • Sub Topik : ",sub_topic) as topic')
                             ->orderBy('sesi')
                             // ->groupBy('topic')
                             ->orderBy('topic')
@@ -149,6 +149,7 @@ class OrController extends Controller
                                 'kuis.varian_latihan',
                                 'kuis.id_topic',
                                 'topic.topic',
+                                'topic.sesi',
                                 'topic.sub_topic'
                                )
                       ->leftJoin('topic','topic.id_topic','=','kuis.id_topic')
@@ -220,6 +221,11 @@ class OrController extends Controller
                                             $html_tabel .= '</div>';
                                         $html_tabel .= '</div>';
 
+                                        $html_tabel .= '<div class="row">';
+                                            $html_tabel .= '<div class="col-md-12">';
+                                                $html_tabel .= '<h5><b>Sesi : </b>'.$q['sesi'].'</h5>';
+                                            $html_tabel .= '</div>';
+                                        $html_tabel .= '</div>';
                                         $html_tabel .= '<div class="row">';
                                             $html_tabel .= '<div class="col-md-12">';
                                                 $html_tabel .= '<h5><b>Topic : </b>'.$q['topic'].' | '.$q['sub_topic'].'</h5>';
@@ -331,6 +337,7 @@ class OrController extends Controller
                                 'latihan.penjelasan_jwb',
                                 'latihan.varian_latihan',
                                 'latihan.id_topic',
+                                'topic.sesi',
                                 'topic.topic',
                                 'topic.sub_topic'
                                )
@@ -363,6 +370,7 @@ class OrController extends Controller
 
                     $no = 1;
                     $alphabet = ['a','b','c','d'];
+                    dd($v);
                     foreach ($v as $key => $q) {
                         $html_tabel .= '<tr>';
                             $html_tabel .= '<td class="text-center">'.$no++.'</td>';
@@ -403,6 +411,11 @@ class OrController extends Controller
                                             $html_tabel .= '</div>';
                                         $html_tabel .= '</div>';
 
+                                        $html_tabel .= '<div class="row">';
+                                            $html_tabel .= '<div class="col-md-12">';
+                                                $html_tabel .= '<h5><b>Sesi : </b>'.$q['sesi'].'</h5>';
+                                            $html_tabel .= '</div>';
+                                        $html_tabel .= '</div>';
                                         $html_tabel .= '<div class="row">';
                                             $html_tabel .= '<div class="col-md-12">';
                                                 $html_tabel .= '<h5><b>Topic : </b>'.$q['topic'].' | '.$q['sub_topic'].'</h5>';

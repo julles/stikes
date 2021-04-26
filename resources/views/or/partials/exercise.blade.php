@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-md-8">     
                         <div class="form-group">
-                            {!! Form::label("Topic") !!}
+                            {!! Form::label("Session & Topic") !!}
                             <div id="ExercisetopicSelect"></div>
                         </div>
                     </div>
