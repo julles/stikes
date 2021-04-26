@@ -177,45 +177,17 @@
         });
 
         // Metode
-        // var metodePenilaian = @json($metodePenilaian);
-        // $.ajax({
-        //     url: "/parse-str",
-        //     data: $("#metode_tbody :input").serialize(),
-        //     success: function(res){
-
-        //         // console.log(res);
-        //         var metod = "";
-        //         $.each( metodePenilaian, function( key, value ) {
-        //             // console.log(value);
-        //             // if ((jQuery.inArray( value.id, res )) >= 0 ) {
-        //             //     console.log(value);
-        //             // }
-        //             // console.log(value.id.toString(),res.metode_penilaian,jQuery.inArray( value.id.toString(), res.metode_penilaian ));
-        //             // console.log();
-        //             if (jQuery.inArray( value.id.toString(), res.metode_penilaian ) >= 0) {
-        //                 // console.log(value);
-        //                 metod += '<tr>';
-        //                     metod += '<td>';
-        //                         metod += value.component;
-        //                     metod += '</td>';
-        //                     metod += '<td>';
-        //                         metod += value.weight+'%';
-        //                     metod += '</td>';
-        //                 metod += '</tr>';
-        //             }
-        //         });
-        //         $("#tbody_summary_metode").html(metod);
-
-
-        //     },
-        // });
-
-        // Metode
         var metodePenilaianArr = @json(MPCategories());
         var metodePenilaian = @json($metodePenilaian)
 
         $.each( metodePenilaianArr, function( keyMP, valueMP ) {
         
+            if ($('.composition_'+keyMP).val() == 0) {
+                $("."+keyMP+"_VAL").val(0);
+                $('.summary_'+keyMP+'_TOTAL').html(0);
+                $('.'+keyMP+'_TOTAL').val(0);
+            }
+
             $.ajax({
                 url: "/parse-str",
                 data: $("#mp_"+keyMP+"_tbody :input").serialize(),
@@ -240,26 +212,6 @@
             $("#summary_mp_composition_"+keyMP).html(($("#mp_total-"+keyMP).val() || 0)+"%");
 
         });
-            // $.ajax({
-            //     url: "/parse-str",
-            //     data: $("#mp_composition_tbody :input").serialize(),
-            //     success: function(res){
-            //         console.log(123, res);
-            //         var metod = "";
-            //         $.each( res.mp.composition, function( key, value ) {
-            //             metod += '<tr>';
-            //                 metod += '<td>asd';
-            //                     // metod += metodePenilaian[keyMP][key].component;
-            //                 metod += '</td>';
-            //                 metod += '<td>';
-            //                     metod += (value || 0);
-            //                 metod += '%</td>';
-            //             metod += '</tr>';
-            //         });
-            //         $("#summary_mp_composition_tbody").html(metod);
-
-            //     },
-            // });
 
         // Topic
         

@@ -81,6 +81,7 @@
                                                          type="number" 
                                                          class="form-control numberBox {{ 'composition_'.$Ctotal_category_id }} composition_VAL" 
                                                          data-category="composition" 
+                                                         data-category_id="{{$Ctotal_category_id}}" 
                                                          name="mp[composition][{{$Ctotal_category_id}}]"
                                                          id="mp_total-{{$Ctotal_category_id}}"
                                                          value="{{ $metodePenilaianData['composition'][$Ctotal_category_id] ?? 0 }}"
@@ -186,14 +187,25 @@
 
         $( ".numberBox" ).on('change keyup keydown keypress', function() {
             var category = $(this).attr("data-category");
+            var category_id = $(this).attr("data-category_id");
+
+            if (category == 'composition') {
+                $("."+category_id+"_VAL").prop('readonly',false);
+            }
+            
             if ($(this).val() > 100)
             {
                 $(this).val(100);
             }
-            else if ($(this).val() < 0)
+            else if ($(this).val() < 0 || $(this).val() == 0)
             {
                 $(this).val(0);
+                if (category == 'composition') {
+                    console.log(123);
+                    $("."+category_id+"_VAL").prop('readonly',true);
+                }
             }
+
             if (category) {
                 numberBoxTotal(category);
             }
