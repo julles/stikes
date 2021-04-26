@@ -370,7 +370,6 @@ class OrController extends Controller
 
                     $no = 1;
                     $alphabet = ['a','b','c','d'];
-                    dd($v);
                     foreach ($v as $key => $q) {
                         $html_tabel .= '<tr>';
                             $html_tabel .= '<td class="text-center">'.$no++.'</td>';
