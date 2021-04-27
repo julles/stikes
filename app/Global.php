@@ -74,6 +74,16 @@ function statusCaption($val, $badge = false)
     return $arr[$val];
 }
 
+function statusProgressReport($val)
+{
+    $arr = ['Sudah dibuat dan Menunggu Review','Sudah Direview dan Menunggu Approval','Sudah di-Approve','Rejected'];
+    if ($val) {
+        return $arr[$val];
+    }
+
+    return 'Belum dibuat';
+}
+
 function checklistIcon($val)
 {
     $arr = ['<i class="fas fa-times text-danger"></i>' , '<i class="fa fa-check text-success"></i>'];

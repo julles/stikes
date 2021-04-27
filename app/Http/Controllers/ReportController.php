@@ -7,6 +7,7 @@ use App\Models\TextBook;
 use App\Models\Semester;
 use App\Models\MataKuliah;
 use App\Models\Rps;
+use App\Models\OrModel;
 use App\Models\OrFileModel;
 use App\Models\Topic;
 use App\Services\ReportService;
@@ -49,9 +50,57 @@ class ReportController extends Controller
         $mataKuliah = MataKuliah::find($id_matakuliah)['mk_nama'];
 
         $title = $semester.' • '.$mataKuliah;
+
+        //report
+        $pm = PengembangMateri::where('pengembang_materi.id_semester',$id_semester)
+                                  ->where('pengembang_materi.id_matakuliah',$id_matakuliah)
+                                  ->selectRaw('pengembang_materi.id_pm,nama_semester,mk_nama,
+
+                                        sme.nama as sme_nama,
+                                        sme.nip as sme_nip,
+                                        sme.email as sme_email,
+
+                                        CONCAT(sme.nip," | ",sme.nama) as sme,
+                                        CONCAT(rev.nip," | ",rev.nama) as reviewer,
+                                        CONCAT(app.nip," | ",app.nama) as approver'
+                                        )
+                                ->leftJoin('pm_assign','pengembang_materi.id_pm','=','pm_assign.id_pm')
+                                ->leftJoin('dosen as sme','sme.id_dosen','=','pm_assign.sme_id')
+                                ->leftJoin('dosen as rev','rev.id_dosen','=','pm_assign.reviewer_id')
+                                ->leftJoin('dosen as app','app.id_dosen','=','pm_assign.approval_id')
+                                ->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
+                                ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")
+                                ->get();
+
+        $pm_id = $pm->pluck('id_pm');
+        // textbook
+        $textbook = TextBook::whereIn('id_text_book',$pm_id)
+                              ->select('id_text_book as id','status')
+                              ->get()
+                              ->pluck('status','id');
+        // rps
+        $rps = Rps::whereIn('id',$pm_id)
+                              ->select('id','status')
+                              ->get()
+                              ->pluck('status','id');
+
+        // or
+        $or = Rps::whereIn('id',$pm_id)
+                              ->select('id','status')
+                              ->get()
+                              ->pluck('status','id');
         
+        $report = [];
+        foreach ($pm as $key => $v) {
+            $report[$key] = $v;
+            $report[$key]['textbook'] = (isset($textbook[(int)$v['id_pm']]) ? $textbook[(int)$v['id_pm']] : false);
+            $report[$key]['rps'] = (isset($rps[(int)$v['id_pm']]) ? $rps[(int)$v['id_pm']] : false);
+            $report[$key]['or'] = (isset($or[(int)$v['id_pm']]) ? $or[(int)$v['id_pm']] : false);
+        }
+        // dd($report);
         return view('report.kemajuan_perkembangan.detail')
-                    ->with('title',$title);
+                    ->with('title',$title)
+                    ->with('report',$report);
     }
 
     public function statusSilabus()

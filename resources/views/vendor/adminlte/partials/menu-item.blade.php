@@ -33,6 +33,10 @@
                 $show = '';
             }
 
+            if($thisRole == 3 && ($item['when_approv'] ?? 0)){
+                $show = '';
+            }
+
             if($thisRole != 1 && $item['when_reviewer_approv']){
                 $show = '';
             }
