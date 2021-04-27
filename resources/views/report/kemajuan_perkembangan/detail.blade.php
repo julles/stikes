@@ -38,7 +38,11 @@
                             @endif
                             @foreach($report as $key => $v)
                                 <tr>
-                                    <td>{{ $v['sme'] }}</td>
+                                    <td>
+                                        <span data-toggle="tooltip" data-placement="top" title="id pm {{ $v['id_pm'] }}">
+                                            {{ $v['sme'] }}
+                                        </span>
+                                    </td>
                                     <td>{{ $v['reviewer'] }}</td>
                                     <td>{{ $v['approver'] }}</td>
                                     <td>{!! statusProgressReport($v['textbook']) !!}</td>

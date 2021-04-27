@@ -74,8 +74,8 @@ class ReportController extends Controller
 
         $pm_id = $pm->pluck('id_pm');
         // textbook
-        $textbook = TextBook::whereIn('id_text_book',$pm_id)
-                              ->select('id_text_book as id','status')
+        $textbook = TextBook::whereIn('id_pm',$pm_id)
+                              ->select('id_pm as id','status')
                               ->get()
                               ->pluck('status','id');
         // rps
@@ -85,17 +85,18 @@ class ReportController extends Controller
                               ->pluck('status','id');
 
         // or
-        $or = Rps::whereIn('id',$pm_id)
+        $or = OrModel::whereIn('id',$pm_id)
                               ->select('id','status')
                               ->get()
                               ->pluck('status','id');
-        
         $report = [];
+        // dd($or);
         foreach ($pm as $key => $v) {
             $report[$key] = $v;
             $report[$key]['textbook'] = (isset($textbook[(int)$v['id_pm']]) ? $textbook[(int)$v['id_pm']] : false);
             $report[$key]['rps'] = (isset($rps[(int)$v['id_pm']]) ? $rps[(int)$v['id_pm']] : false);
             $report[$key]['or'] = (isset($or[(int)$v['id_pm']]) ? $or[(int)$v['id_pm']] : false);
+
         }
         // dd($report);
         return view('report.kemajuan_perkembangan.detail')

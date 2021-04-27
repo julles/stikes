@@ -47,7 +47,7 @@ class ReviewTextBookService
     
             $thisRole = session()->get('user.dosen')->role_id;
             if ($thisRole == 0 || ($thisRole == 1 && $thisRole != 63)) {
-                $model->whereIn('pengembang_materi.id_pm',$pm);
+                $model->whereIn('text_book.id_pm',$pm);
             }
 
             $model->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")

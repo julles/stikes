@@ -77,7 +77,7 @@ function statusCaption($val, $badge = false)
 function statusProgressReport($val)
 {
     $arr = ['Sudah dibuat dan Menunggu Review','Sudah Direview dan Menunggu Approval','Sudah di-Approve','Rejected'];
-    if ($val) {
+    if ($val || $val === 0) {
         return $arr[$val];
     }
 
