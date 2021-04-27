@@ -21,6 +21,7 @@
                 		<thead>
                 			<tr>
                 				<th>Sesi Ke</th>
+                				<th>Textbook</th>
                 				<th>Topik</th>
                 				<th>Sub Topic</th>
                 				<th>Media Keterangan</th>
@@ -39,9 +40,10 @@
                 			@foreach($report as $key => $v)
                 				<tr>
                 					<td class="text-right">{{ $v['sesi'] }}</td>
+                					<td>{{ $v['text_book'] }}</td>
                 					<td>{{ $v['topic'] }}</td>
-                					<td>{!! checklistIcon($v['media_keterangan']) !!}</td>
                 					<td>{!! checklistIcon($v['sub_topic']) !!}</td>
+                					<td>{!! checklistIcon($v['media_keterangan']) !!}</td>
                 					<td>{!! checklistIcon($v['media_pembelajaran']) !!}</td>
                 					<td>{!! checklistIcon($v['cp']) !!}</td>
                 				</tr>

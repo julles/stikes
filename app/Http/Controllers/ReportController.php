@@ -87,22 +87,22 @@ class ReportController extends Controller
                     ->where('capaian_pembelajaran','!=','')
                     ->pluck('id','id');
 
-        $topic = Topic::whereIn('id_pm',$pm_id)
+        $topic = Topic::whereIn('topic.id_pm',$pm_id)
+                        ->leftJoin("text_book", "text_book.id_pm", "=", "topic.id_pm")
+                        ->select('topic.*','text_book.title as text_book')
+                        ->groupBy('topic')
                         ->orderBy('sesi')
                         ->get();
 
         $subTopicAv = Topic::whereIn('id_pm',$pm_id)
                         ->where('sub_topic','!=','')
                         ->selectRaw('id_topic')
-                        // ->selectRaw('id_pm, id_topic , topic')
-                        // ->selectRaw('id_pm, topic, COUNT(id_topic) as count_subtopic')
-                        ->groupBy('topic')
-                        // ->havingRaw('count_subtopic > 0')
                         ->get()
                         ->pluck('id_topic','id_topic')
                         ->toArray();
 
-        $orFileAV = OrFileModel::whereIn('id_pm',$pm_id)->groupBy('topic_id')->get()
+        $orFileAV = OrFileModel::whereIn('id_pm',$pm_id)
+                        ->get()
                         ->pluck('topic_id','topic_id')
                         ->toArray();
 
@@ -110,9 +110,10 @@ class ReportController extends Controller
         foreach ($topic as $key => $v) {
             $report[$key]['id_topic'] = $v['id_topic'];
             $report[$key]['sesi'] = $v['sesi'];
+            $report[$key]['text_book'] = $v['text_book'];
             $report[$key]['topic'] = $v['topic'];
-            $report[$key]['sub_topic'] = (isset($subTopicAv[$v['id_topic']]) ? 1 : 0);
-            $report[$key]['media_keterangan'] = (isset($orFileAV[$v['id_topic']]) ? 1 : 0);
+            $report[$key]['sub_topic'] = (isset($subTopicAv[(int)$v['id_topic']]) ? 1 : 0);
+            $report[$key]['media_keterangan'] = (isset($orFileAV[(int)$v['id_topic']]) ? 1 : 0);
             $report[$key]['media_pembelajaran'] = (isset($mediaPembelajaranAV[(int)$v['id_pm']]) ? 1 : 0);
             $report[$key]['cp'] = (isset($CPAV[(int)$v['id_pm']]) ? 1 : 0);
             
