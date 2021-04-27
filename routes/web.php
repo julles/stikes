@@ -76,6 +76,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/or/detail/{id}/summary', 'OrController@summary');
 
     Route::get('/rps/view-pdf/{type}/{file}', 'RpsController@viewPdf');
+
+    // report
+    Route::get('/report/kemajuan-perkembangan', 'ReportController@kemajuanPerkembangan');
+    Route::get('/report/kemajuan-perkembangan/data', 'ReportController@kemajuanPerkembanganData');
+    Route::get('/report/kemajuan-perkembangan/{id_semester}/{id_matakuliah}', 'ReportController@kemajuanPerkembanganDetail');
+
+    Route::get('/report/status-silabus', 'ReportController@statusSilabus');
+    Route::get('/report/status-silabus/data', 'ReportController@statusSilabusData');
+    Route::get('/report/status-silabus/{id_semester}/{id_matakuliah}', 'ReportController@statusSilabusDetail');
 });
 
 Route::get("parse-str", function () {

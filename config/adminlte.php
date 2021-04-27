@@ -174,6 +174,31 @@ return [
             ],
         ],
         [
+            'text'    => 'Report',
+            'icon' => false,
+            'admin_only' => true,
+            'when_sme' => false,
+            'when_reviewer_approv' => true,
+            'submenu' => [
+                [
+                    'text' => 'Kemajuan Pengembangan',
+                    'url'  => '/report/kemajuan-perkembangan',
+                    'icon' => false,
+                    'admin_only' => true,
+                    'when_sme' => false,
+                    'when_reviewer_approv' => true,
+                ],
+                [
+                    'text' => 'Status Silabus',
+                    'url'  => '/report/status-silabus',
+                    'icon' => false,
+                    'admin_only' => true,
+                    'when_sme' => false,
+                    'when_reviewer_approv' => true,
+                ],
+            ],
+        ],
+        [
             'text' => 'Assign Dosen',
             'url'  => 'assign-dosen',
             'icon' => false,

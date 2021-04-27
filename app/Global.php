@@ -74,6 +74,12 @@ function statusCaption($val, $badge = false)
     return $arr[$val];
 }
 
+function checklistIcon($val)
+{
+    $arr = ['<i class="fas fa-times text-danger"></i>' , '<i class="fa fa-check text-success"></i>'];
+    return $arr[$val];
+}
+
 function detailPmA($id)
 {
     $data = PmAssign::
