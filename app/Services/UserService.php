@@ -7,6 +7,7 @@ use App\Models\PmAssign;
 use Illuminate\Support\Str;
 use App\Singleton\Component;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
@@ -87,6 +88,8 @@ class UserService
         $inputs = $request->all();
         $inputs["foto"] = $fotoName;
         $inputs["is_dosen"] = 0;
+        $inputs["password_plain"] = $request->password;
+        $inputs["password"] = Hash::make($request->password);
 
         $model->update($inputs);
     }
