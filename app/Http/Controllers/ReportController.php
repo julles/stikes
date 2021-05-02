@@ -10,6 +10,8 @@ use App\Models\Rps;
 use App\Models\OrModel;
 use App\Models\OrFileModel;
 use App\Models\Topic;
+use App\Models\Latihan;
+use App\Models\Kuis;
 use App\Services\ReportService;
 use Illuminate\Http\Request;
 use Storage;
@@ -156,6 +158,67 @@ class ReportController extends Controller
                         ->pluck('topic_id','topic_id')
                         ->toArray();
 
+        // Peta Kompetensi, 
+        $peta_kompetensi = Rps::whereIn('id',$pm_id)
+                    ->select(
+                             'id',
+                             'peta_kompetensi'
+                            )
+                    ->where('peta_kompetensi','!=','')
+                    ->pluck('id','id');
+
+        // Rubrik Penilaian, 
+        $rubrik_penilaian = Rps::whereIn('id',$pm_id)
+                    ->select(
+                             'id',
+                             'rubrik_penilaian'
+                            )
+                    ->where('rubrik_penilaian','!=','')
+                    ->pluck('id','id');
+
+        // PPT, 
+        $orFilePPT = OrFileModel::whereIn('id_pm',$pm_id)
+                        ->where('type','or_ppt')
+                        ->get()
+                        ->pluck('id_pm','id_pm')
+                        ->toArray();
+
+        // LN, 
+        $orFileLN = OrFileModel::whereIn('id_pm',$pm_id)
+                        ->where('type','or_ln')
+                        ->get()
+                        ->pluck('id_pm','id_pm')
+                        ->toArray();
+
+        // Video, 
+        $orFileVideo = OrFileModel::whereIn('id_pm',$pm_id)
+                        ->where('type','or_video')
+                        ->get()
+                        ->pluck('id_pm','id_pm')
+                        ->toArray();
+
+        // Materi Pendukung, 
+        $orFileMateriPendukung = OrFileModel::whereIn('id_pm',$pm_id)
+                        ->where('type','or_materi_pendukung')
+                        ->get()
+                        ->pluck('id_pm','id_pm')
+                        ->toArray();
+
+        // Exercise, 
+        $Exercise = Latihan::whereIn('id_pm',$pm_id)
+                        ->groupBy('id_pm')
+                        ->get()
+                        ->pluck('id_pm','id_pm')
+                        ->toArray();
+
+
+        // Kuis
+        $Kuis = Kuis::whereIn('id_pm',$pm_id)
+                        ->groupBy('id_pm')
+                        ->get()
+                        ->pluck('id_pm','id_pm')
+                        ->toArray();
+
         $report = [];
         foreach ($topic as $key => $v) {
             $report[$key]['id_topic'] = $v['id_topic'];
@@ -166,6 +229,30 @@ class ReportController extends Controller
             $report[$key]['media_keterangan'] = (isset($orFileAV[(int)$v['id_topic']]) ? 1 : 0);
             $report[$key]['media_pembelajaran'] = (isset($mediaPembelajaranAV[(int)$v['id_pm']]) ? 1 : 0);
             $report[$key]['cp'] = (isset($CPAV[(int)$v['id_pm']]) ? 1 : 0);
+
+            // Peta Kompetensi, 
+            $report[$key]['peta_kompetensi'] = (isset($peta_kompetensi[(int)$v['id_pm']]) ? 1 : 0);
+
+            // Rubrik Penilaian, 
+            $report[$key]['rubrik_penilaian'] = (isset($rubrik_penilaian[(int)$v['id_pm']]) ? 1 : 0);
+            
+            // PPT, 
+            $report[$key]['orFilePPT'] = (isset($orFilePPT[(int)$v['id_pm']]) ? 1 : 0);
+            
+            // LN, 
+            $report[$key]['orFileLN'] = (isset($orFileLN[(int)$v['id_pm']]) ? 1 : 0);
+            
+            // Video, 
+            $report[$key]['orFileVideo'] = (isset($orFileVideo[(int)$v['id_pm']]) ? 1 : 0);
+            
+            // Materi Pendukung, 
+            $report[$key]['orFileMateriPendukung'] = (isset($orFileMateriPendukung[(int)$v['id_pm']]) ? 1 : 0);
+            
+            // Exercise, 
+            $report[$key]['exercise'] = (isset($Exercise[(int)$v['id_pm']]) ? 1 : 0);
+            
+            // Kuis
+            $report[$key]['kuis'] = (isset($Kuis[(int)$v['id_pm']]) ? 1 : 0);
             
         }
 

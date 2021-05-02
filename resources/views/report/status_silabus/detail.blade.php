@@ -21,18 +21,26 @@
                 		<thead>
                 			<tr>
                 				<th width="60px">Sesi Ke</th>
-                				<th>Textbook</th>
+                				<th>Text Book</th>
                 				<th>Topik</th>
                 				<th>Sub Topic</th>
                 				<th>Media Pembelajaran</th>
                 				<th>Materi Pembelajaran</th>
                 				<th>Capaian Pembelajaran</th>
+                                <th>Peta Kompetensi</th> 
+                                <th>Rubrik Penilaian</th> 
+                                <th>PPT</th> 
+                                <th>LN</th> 
+                                <th>Video</th> 
+                                <th>Materi Pendukung</th> 
+                                <th>Exercise</th> 
+                                <th>Kuis</th>
                 			</tr>
                 		</thead>
                 		<tbody>
                 			@if(count($report) < 1 )
                 				<tr>
-                					<td colspan="6" class="text-center">
+                					<td colspan="15" class="text-center">
                 						Tidak ada data
                 					</td>
                 				</tr>
@@ -45,7 +53,15 @@
                 					<td>{!! checklistIcon($v['sub_topic']) !!}</td>
                 					<td>{!! checklistIcon($v['media_keterangan']) !!}</td>
                 					<td>{!! checklistIcon($v['media_pembelajaran']) !!}</td>
-                					<td>{!! checklistIcon($v['cp']) !!}</td>
+                                    <td>{!! checklistIcon($v['cp']) !!}</td>
+                                    <td>{!! checklistIcon($v['peta_kompetensi']) !!}</td>
+                                    <td>{!! checklistIcon($v['rubrik_penilaian']) !!}</td>
+                                    <td>{!! checklistIcon($v['orFilePPT']) !!}</td>
+                                    <td>{!! checklistIcon($v['orFileLN']) !!}</td>
+                                    <td>{!! checklistIcon($v['orFileVideo']) !!}</td>
+                                    <td>{!! checklistIcon($v['orFileMateriPendukung']) !!}</td>
+                                    <td>{!! checklistIcon($v['exercise']) !!}</td>
+                                    <td>{!! checklistIcon($v['kuis']) !!}</td>
                 				</tr>
                 			@endforeach
                 		</tbody>
