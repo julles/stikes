@@ -29,7 +29,7 @@ class AssignDosenService
 
     public function getData(Request $request)
     {
-        $model = PengembangMateri::selectRaw('pengembang_materi.id_pm,nama_semester,mk_nama,
+        $model = PengembangMateri::selectRaw('pengembang_materi.id_pm,nama_semester,mk_nama,mk_kode,
 
                     sme.nama as sme_nama,
                     sme.nip as sme_nip,

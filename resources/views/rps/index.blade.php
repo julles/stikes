@@ -18,6 +18,7 @@
                         <thead>
                             <tr>
                                 <th width = "20%">Semester</th>
+                                <th width = "10%">Kode Matkul</th>
                                 <th width = "20%">Mata Kuliah</th>
                                 <th width = "10%">Kategori</th>
                                 <th width = "20%">Judul Buku</th>
@@ -53,6 +54,7 @@ $(function() {
         ordering:true,
         columns: [
             { data: 'nama_semester', name: 'semester.nama_semester' },
+            { data: 'mk_kode', name: 'matakuliah.mk_kode' },
             { data: 'mk_nama', name: 'matakuliah.mk_nama' },
             { data: 'kategori', name: 'text_book.kategori' },
             { data: 'title', name: 'text_book.title' },

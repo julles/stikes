@@ -35,6 +35,7 @@ class InputTextBookService
             select('pengembang_materi.id_pm', 
                     'semester.nama_semester', 
                     'matakuliah.mk_nama',
+                    'matakuliah.mk_kode',
                     'text_book.title',
                     'text_book.kategori',
                     'text_book.tahun'

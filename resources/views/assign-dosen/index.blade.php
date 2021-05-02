@@ -18,6 +18,7 @@
                         <thead>
                             <tr>
                                 <th>Semester</th>
+                                <th>Kode Matkul</th>
                                 <th>Mata Kuliah</th>
                                 <th>SME</th>
                                 <th>Reviewer</th>
@@ -51,6 +52,7 @@ $(function() {
         ordering:true,
         columns: [
             { data: 'nama_semester', name: 'semester.nama_semester' },
+            { data: 'mk_kode', name: 'matakuliah.mk_kode' },
             { data: 'mk_nama', name: 'matakuliah.mk_nama' },
             { data: 'sme', name: 'sme' },
             { data: 'reviewer', name: 'reviewer' },

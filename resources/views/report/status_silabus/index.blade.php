@@ -17,6 +17,7 @@
                         <thead>
                             <tr>
                                 <th>Semester</th>
+                                <th width = "10%">Kode Matkul</th>
                                 <th>Mata Kuliah</th>
                                 <th width = "8%">Action</th>
                             </tr>
@@ -47,6 +48,7 @@ $(function() {
         ordering:true,
         columns: [
             { data: 'nama_semester', name: 'semester.nama_semester' },
+            { data: 'mk_kode', name: 'matakuliah.mk_kode' },
             { data: 'mk_nama', name: 'matakuliah.mk_nama' },
             { data: 'action', name: 'action' ,searchable:false}
         ]

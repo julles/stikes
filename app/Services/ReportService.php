@@ -33,7 +33,7 @@ class ReportService
                                               nama_semester,
                                               pengembang_materi.id_semester,
                                               pengembang_materi.id_matakuliah,
-                                              mk_nama')
+                                              mk_nama,mk_kode')
             ->leftJoin('pm_assign','pengembang_materi.id_pm','=','pm_assign.id_pm')
             ->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
             ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")
@@ -59,7 +59,7 @@ class ReportService
                                               nama_semester,
                                               pengembang_materi.id_semester,
                                               pengembang_materi.id_matakuliah,
-                                              mk_nama')
+                                              mk_nama,mk_kode')
             ->leftJoin('pm_assign','pengembang_materi.id_pm','=','pm_assign.id_pm')
             ->join("semester", "semester.id_semester", "=", "pengembang_materi.id_semester")
             ->join("matakuliah", "matakuliah.id_matakuliah", "=", "pengembang_materi.id_matakuliah")

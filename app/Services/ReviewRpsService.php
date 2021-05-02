@@ -41,6 +41,7 @@ class ReviewRpsService
         $model = PengembangMateri::
             select('pengembang_materi.id_pm', 
                     'semester.nama_semester', 
+                    'matakuliah.mk_kode',
                     'matakuliah.mk_nama',
                     'text_book.title',
                     'text_book.kategori',
