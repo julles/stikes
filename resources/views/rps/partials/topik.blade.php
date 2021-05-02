@@ -18,10 +18,10 @@
                     @foreach($topic as $key => $topicVal)
                         <tr id="T{$i}"> 
                             <td class="row-index text-center"> 
-                                <input type = "text" class = "form-control" value="{{ $topicVal[0]['sesi'] }}" name = "topic[{{$i}}][sesi]" />
+                                <input type = "text" class = "form-control" value="{{ $topicVal[0]['sesi'] }}" name = "topic[{{$i}}][sesi]" required />
                             </td> 
                             <td class="row-index text-center"> 
-                                <input type = "text" class = "form-control" value="{{ $key }}" name = "topic[{{$i}}][topic]" />
+                                <input type = "text" required class = "form-control" value="{{ $key }}" name = "topic[{{$i}}][topic]" />
                             </td> 
                             <td class="row-index text-center">
                                 <div class="row"> 
@@ -117,10 +117,10 @@
 
            $('#topik_tbody').append(`<tr id="T${rowIdx}"> 
                     <td class="row-index text-center"> 
-                        <input type = "text" class = "form-control" name = "topic[${rowIdx}][sesi]" />
+                        <input type = "text" class = "form-control" required name = "topic[${rowIdx}][sesi]" />
                     </td> 
                     <td class="row-index text-center"> 
-                        <input type = "text" class = "form-control" name = "topic[${rowIdx}][topic]" />
+                        <input type = "text" class = "form-control" required name = "topic[${rowIdx}][topic]" />
                     </td> 
                     <td class="row-index text-center">
                         <div class="row"> 

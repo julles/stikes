@@ -3,7 +3,7 @@
 @extends('adminlte::page')
 
 @section('content_header')
-    <h1>{{ $__menu }} Status Silabus</h1>
+    <h1>{{ $__menu }} Status Kelengkapan Materi</h1>
 @stop
 
 @section('content')
@@ -20,13 +20,13 @@
                 	<table class="table table-border">
                 		<thead>
                 			<tr>
-                				<th>Sesi Ke</th>
+                				<th width="60px">Sesi Ke</th>
                 				<th>Textbook</th>
                 				<th>Topik</th>
                 				<th>Sub Topic</th>
-                				<th>Media Keterangan</th>
+                				<th>Media Pembelajaran</th>
                 				<th>Materi Pembelajaran</th>
-                				<th>Capaian Keterangan</th>
+                				<th>Capaian Pembelajaran</th>
                 			</tr>
                 		</thead>
                 		<tbody>
@@ -39,7 +39,7 @@
                 			@endif
                 			@foreach($report as $key => $v)
                 				<tr>
-                					<td class="text-right">{{ $v['sesi'] }}</td>
+                					<td class="text-center">{{ $v['sesi'] }}</td>
                 					<td>{{ $v['text_book'] }}</td>
                 					<td>{{ $v['topic'] }}</td>
                 					<td>{!! checklistIcon($v['sub_topic']) !!}</td>

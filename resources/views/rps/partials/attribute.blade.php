@@ -72,9 +72,13 @@
                                 <div class="col-md-12">
                                     <table class="table">
                                         <tbody class="mp_composition_tbody">
+                                            @php
+                                                $longCol = ROUND(100 / (count(MPCategories()) + 1));
+                                            @endphp
+
                                             <tr>
                                                 @foreach(MPCategories() as $Ctotal_category_id => $Ctotal_category)
-                                                    <td>
+                                                    <td width="{{ $longCol }}%">
                                                         <h5>{{ $Ctotal_category }} (%)</h5>
                                                         <input 
                                                          onkeypress="if(event.which < 48 || event.which > 57 ) if(event.which != 8) if(event.keyCode != 9) return false;" 
@@ -86,16 +90,18 @@
                                                          id="mp_total-{{$Ctotal_category_id}}"
                                                          value="{{ $metodePenilaianData['composition'][$Ctotal_category_id] ?? 0 }}"
                                                          >
-                                                    <td>
+                                                         <input type="hidden" value="0" class="mp_check" id="mp_check-{{$Ctotal_category_id}}">
+                                                    </td>
                                                 @endforeach
-                                                <td>
+                                                <td width="{{ $longCol }}%">
                                                     <h5>Total Bobot (%)</h5>
+                                                    <input type="hidden" value="0" class="mp_check" id="mp_check-COMPOSITION">
                                                     <input type="number" max="100" min="0" class="form-control {{ 'composition_TOTAL' }}" id="{{ 'composition_TOTAL' }}" value="0" readonly>
                                                 </td>
                                             </tr>
                                             <tr class="{{ 'composition_ALERT' }}" style="display: none;">
                                                 <td colspan="{{ (count(MPCategories())*2)+1 }}" class="text-right text-warning">
-                                                    Total bobot harus 0% atau 100%
+                                                    Total bobot harus 100%
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -176,7 +182,6 @@
 
 @push("js")
     <script>
-
         var metodePenilaianArr = @json(MPCategories());
         @if($metodePenilaianData)
             $.each( metodePenilaianArr, function( keyMP, valueMP ) {
@@ -193,6 +198,9 @@
                 $("."+category_id+"_VAL").prop('readonly',false);
             }
             
+            var removeZero = $(this).val().replace(/^0+/, '');
+            $(this).val(removeZero);
+
             if ($(this).val() > 100)
             {
                 $(this).val(100);
@@ -201,7 +209,6 @@
             {
                 $(this).val(0);
                 if (category == 'composition') {
-                    console.log(123);
                     $("."+category_id+"_VAL").prop('readonly',true);
                 }
             }
@@ -220,60 +227,42 @@
             });
             $('.'+category+'_TOTAL').val(sum);
             $('.summary_'+category+'_TOTAL').html(sum);
+            var composition_TOTAL = $('.composition_TOTAL').val();
 
-            if (sum == 0 || sum == 100) {
-                $('.'+category+'_ALERT').hide();
-                $(".btn-submit").prop('disabled', false);
+            if (category === 'composition') {
+                if (sum == 100) {
+                    $('.'+category+'_ALERT').hide();
+                    $('#mp_check-'+category).val(1);
+                }else{
+                    $('.'+category+'_ALERT').show();
+                    $('#mp_check-'+category).val(0);
+                }
             }else{
-                $('.'+category+'_ALERT').show();
-                $(".btn-submit").prop('disabled', true);
+                if (sum == 0 || sum == 100) {
+                    $('.'+category+'_ALERT').hide();
+                    $('#mp_check-'+category).val(1);
+                }else{
+                    $('.'+category+'_ALERT').show();
+                    $('#mp_check-'+category).val(0);
+                }
             }
-        }
 
-        function getTotalMP() {
-            var weightTotal = 0;
-            $(".metode-penilaian:checked").map(function () {
-                weightTotal = weightTotal + $(this).data('weight');
+            if (composition_TOTAL == 100) {
+                $('.composition_ALERT').hide();
+                $('#mp_check-COMPOSITION').val(1);
+            }else{
+                $('.composition_ALERT').show();
+                $('#mp_check-COMPOSITION').val(0);
+            }
+
+            $.each( metodePenilaianArr, function( keyMP, valueMP ) {
+                // console.log($('#mp_total-'+keyMP).val(), keyMP);
+                if ($('#mp_total-'+keyMP).val() == 0) {
+                    $("."+keyMP+"_VAL").prop('readonly',true);
+                }
             });
-
-            if (weightTotal > 100) {
-                $(".alert-weight").show();
-                $(".btn-submit").prop('disabled', true);
-            }else{
-                $(".alert-weight").hide();
-                $(".btn-submit").prop('disabled', false);
-            }
-
-            $(".weight-total").html(weightTotal);
         }
-        getTotalMP();
+        numberBoxTotal('composition');
 
-        $(".metode-penilaian").on('change click',function(e) {
-            getTotalMP();            
-        })
-
-        // praktikum
-
-        function getTotalMPpraktikum() {
-            var weightTotal = 0;
-            $(".metode-penilaian-praktikum:checked").map(function () {
-                weightTotal = weightTotal + $(this).data('weight');
-            });
-
-            if (weightTotal > 100) {
-                $(".alert-weight-praktikum").show();
-                $(".btn-submit").prop('disabled', true);
-            }else{
-                $(".alert-weight-praktikum").hide();
-                $(".btn-submit").prop('disabled', false);
-            }
-
-            $(".weight-praktikum-total").html(weightTotal);
-        }
-
-        $(".metode-penilaian-praktikum").on('change click',function(e) {
-            getTotalMPpraktikum();            
-        })
-        getTotalMPpraktikum();
     </script>
 @endpush

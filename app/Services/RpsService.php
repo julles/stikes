@@ -152,23 +152,25 @@ class RpsService
                 Topic::where('id_pm',$id)->delete();
 
                 // insert topic
-                $payload = [];
-                $i = 0;
-                foreach ($request['topic'] as $key => $v) {
+                if (isset($request['topic'])) {  
+                    $payload = [];
+                    $i = 0;
+                    foreach ($request['topic'] as $key => $v) {
 
-                    $subTopic = $v['sub_topik'];
-                    unset($v['sub_topik']);
-                    foreach ($subTopic as $subTopickey => $subTopicVal) {
-                        $payload[$i] = $v;
-                        $payload[$i]['sub_topic'] = $subTopicVal;
-                        $payload[$i]['id_pm'] = $id;
-                        $payload[$i]['status'] = 0;                       
-                       $i++; 
+                        $subTopic = $v['sub_topik'];
+                        unset($v['sub_topik']);
+                        foreach ($subTopic as $subTopickey => $subTopicVal) {
+                            $payload[$i] = $v;
+                            $payload[$i]['sub_topic'] = $subTopicVal;
+                            $payload[$i]['id_pm'] = $id;
+                            $payload[$i]['status'] = 0;                       
+                           $i++; 
+                        }
+
                     }
 
+                    Topic::insert($payload);
                 }
-
-                Topic::insert($payload);
 
                 if ($sendRevisionNotif) {
                     sendEmail($id,'rps','revision',$user->id_dosen);
@@ -216,23 +218,25 @@ class RpsService
             $save = Rps::insert($payload);
 
             // insert topic
-            $payload = [];
-            $i = 0;
-            foreach ($request['topic'] as $key => $v) {
+            if (isset($request['topic'])) {            
+                $payload = [];
+                $i = 0;
+                foreach ($request['topic'] as $key => $v) {
 
-                $subTopic = $v['sub_topik'];
-                unset($v['sub_topik']);
-                foreach ($subTopic as $subTopickey => $subTopicVal) {
-                    $payload[$i] = $v;
-                    $payload[$i]['sub_topic'] = $subTopicVal;
-                    $payload[$i]['id_pm'] = $id;
-                    $payload[$i]['status'] = 0;                       
-                   $i++; 
+                    $subTopic = $v['sub_topik'];
+                    unset($v['sub_topik']);
+                    foreach ($subTopic as $subTopickey => $subTopicVal) {
+                        $payload[$i] = $v;
+                        $payload[$i]['sub_topic'] = $subTopicVal;
+                        $payload[$i]['id_pm'] = $id;
+                        $payload[$i]['status'] = 0;                       
+                       $i++; 
+                    }
+
                 }
 
+                Topic::insert($payload);
             }
-
-            Topic::insert($payload);
 
             // send email
             sendEmail($id,'rps','input',$user->id_dosen);

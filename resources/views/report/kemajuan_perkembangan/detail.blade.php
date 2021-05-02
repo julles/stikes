@@ -3,7 +3,7 @@
 @extends('adminlte::page')
 
 @section('content_header')
-    <h1>{{ $__menu }} Kemajuan Perkembangan</h1>
+    <h1>{{ $__menu }} Status Materi</h1>
 @stop
 
 @section('content')
@@ -23,7 +23,7 @@
                                 <th>Dosen SME</th>
                                 <th>Dosen Reviewer</th>
                                 <th>Dosen Approver</th>
-                                <th>Status Materi</th>
+                                <th>Status Text Book</th>
                                 <th>Status RPS</th>
                                 <th>Status OR</th>
                             </tr>

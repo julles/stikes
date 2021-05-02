@@ -20,7 +20,7 @@ class InputTextBookController extends Controller
         $this->pengembangMateri = $pengembangMateri;
         $this->textBook = $textBook;
         view()->share("__route", $this->__route);
-        view()->share("__menu", "Input Text Book");
+        view()->share("__menu", "Entry Text Book");
     }
 
     public function getData(Request $request)

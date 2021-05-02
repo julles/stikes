@@ -75,7 +75,7 @@
                         </tr>
                         <tr class="{{ 'composition_ALERT' }}" style="display: none;">
                             <td colspan="{{ (count(MPCategories())*2)+1 }}" class="text-right text-warning">
-                                Total bobot harus 0% atau 100%
+                                Total bobot harus 100%
                             </td>
                         </tr>
                     </tfoot>
@@ -180,12 +180,15 @@
         var metodePenilaianArr = @json(MPCategories());
         var metodePenilaian = @json($metodePenilaian)
 
+        var disableBtn = false;
+
         $.each( metodePenilaianArr, function( keyMP, valueMP ) {
         
             if ($('.composition_'+keyMP).val() == 0) {
                 $("."+keyMP+"_VAL").val(0);
                 $('.summary_'+keyMP+'_TOTAL').html(0);
                 $('.'+keyMP+'_TOTAL').val(0);
+                $('.'+keyMP+'_ALERT').hide();
             }
 
             $.ajax({
@@ -211,7 +214,17 @@
 
             $("#summary_mp_composition_"+keyMP).html(($("#mp_total-"+keyMP).val() || 0)+"%");
 
+            if ($('#mp_check-'+keyMP).val() == 0 && $('#mp_total-'+keyMP).val() > 0) {
+                disableBtn = true;
+            }
+
         });
+
+        if ($('#mp_check-COMPOSITION').val() == 0) {
+            disableBtn = true;
+        }
+
+        $(".btn-submit").prop('disabled', disableBtn);
 
         // Topic
         

@@ -25,7 +25,7 @@
                 @else
                     <tr id="R0"> 
                         <td class="row-index text-center"> 
-                            <input type = "text" class = "form-control" name = "capaian_pembelajaran[]" class = "cp_text" />
+                            <input required type = "text" class = "form-control" name = "capaian_pembelajaran[]" class = "cp_text" />
                         </td> 
                         <td class="text-center"> 
                             
@@ -51,7 +51,7 @@
         $("#button_cp").on("click",function(){
            $('#cp_tbody').append(`<tr id="R${++rowIdx}"> 
                     <td class="row-index text-center"> 
-                        <input type = "text" class = "form-control" name = "capaian_pembelajaran[]" class = "cp_text" />
+                        <input type = "text" class = "form-control" required name = "capaian_pembelajaran[]" class = "cp_text" />
                     </td> 
                     <td class="text-center"> 
                         <button type = "button" class = "btn btn-danger btn-sm remove_cp">X</button>

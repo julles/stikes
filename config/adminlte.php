@@ -182,7 +182,7 @@ return [
             'when_reviewer_approv' => false,
         ],
         [
-            'text' => 'Input Text Book',
+            'text' => 'Entry Text Book',
             'url'  => 'input-text-book',
             'icon' => false,
             'admin_only' => false,
@@ -246,7 +246,7 @@ return [
             'when_approv' => true,
             'submenu' => [
                 [
-                    'text' => 'Kemajuan Pengembangan',
+                    'text' => 'Status Materi',
                     'url'  => '/report/kemajuan-perkembangan',
                     'icon' => false,
                     'admin_only' => true,
@@ -255,7 +255,7 @@ return [
                     'when_approv' => true,
                 ],
                 [
-                    'text' => 'Status Silabus',
+                    'text' => 'Status Kelengkapan Materi',
                     'url'  => '/report/status-silabus',
                     'icon' => false,
                     'admin_only' => true,
