@@ -103,6 +103,8 @@ class RpsService
 
         $user = Auth::user();
         
+        $save_draft = $request['save_draft'];
+
         if ($check) {
             // if update    
 
@@ -110,17 +112,22 @@ class RpsService
 
             $sendRevisionNotif = false;
 
-            if ($data['status'] == 3) {
-                $sendRevisionNotif = true;                
+            if ($save_draft == 1) {
+                $data->status = 4;
+            }else{
+                if ($data['status'] == 3) {
+                    $sendRevisionNotif = true;                
+                }
+                $data->status = 0;
             }
 
             $data->strategi_pembelajaran = $request['strategi_pembelajaran'];
             $data->deskripsi_mata_kuliah = $request['deskripsi_mata_kuliah'];
             $data->media_pembelajaran = $request['media_pembelajaran'];
             $data->capaian_pembelajaran = json_encode($request['capaian_pembelajaran'],true);
-            $data->metode_penilaian = json_encode($request['metode_penilaian'],true);
+            $data->metode_penilaian = json_encode($request['mp'],true);
             $data->metode_penilaian_praktikum = json_encode($request['metode_penilaian_praktikum'],true);
-            $data->status = 0;
+
             $data->updated_at = $date;
 
             // upload file
@@ -173,8 +180,11 @@ class RpsService
                     Topic::insert($payload);
                 }
 
-                if ($sendRevisionNotif) {
+                if ($sendRevisionNotif && $save_draft == 0) {
                     sendEmail($id,'rps','revision',$user->id_dosen);
+                }elseif ($data->status == 0 && $save_draft == 0) {
+                    // send email create
+                    sendEmail($id,'rps','input',$user->id_dosen);
                 }
                 return true;
         }else{
@@ -189,10 +199,16 @@ class RpsService
                 'capaian_pembelajaran' => json_encode($request['capaian_pembelajaran'],true),
                 'metode_penilaian' => json_encode($request['mp'],true),
                 'metode_penilaian_praktikum' => json_encode($request['metode_penilaian_praktikum'],true),
-                'status' => 0,
                 'created_at' => $date,
                 'updated_at' => $date
             ];
+
+            if ($save_draft == 1) {
+                $payload["status"] = 4;
+            }else{
+                $payload["status"] = 0;
+            }
+            
 
             // upload file
 
@@ -239,8 +255,10 @@ class RpsService
                 Topic::insert($payload);
             }
 
-            // send email
-            sendEmail($id,'rps','input',$user->id_dosen);
+            if ($save_draft == 0) {
+                // send email
+                sendEmail($id,'rps','input',$user->id_dosen);
+            }
 
             return true;
         }

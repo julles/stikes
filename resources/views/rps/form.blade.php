@@ -98,7 +98,13 @@
                         <a href="javascript:void(0)" onclick="openTab('topik')" class="btn btn-default btn-sm">
                             Back
                         </a>
-                        <button type="submit" class="btn btn-primary btn-sm btn-submit">
+                        
+                        @if(!isset($rps->status) || $rps->status == 4)
+                            <button type="submit" name="save_draft" value="1" class="btn btn-success btn-sm">
+                                Save to Draft
+                            </button>
+                        @endif
+                        <button type="submit" name="save_draft" value="0" class="btn btn-primary btn-sm">
                             Submit
                         </button>
                     </div>
@@ -151,7 +157,7 @@
                                 @endif
 
                             @elseif($userStatus == 'approv')
-                                @if($rps->status == 1)
+                                @if($rps->status == 1 || $thisRole == 63)
                                     <div class="row">
                                         <div class="col">
                                             {!! Form::label("Approver Notes") !!}

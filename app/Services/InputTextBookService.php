@@ -116,10 +116,19 @@ class InputTextBookService
             $gbr_cover->storeAs("public/contents", $fotoName);
         }
 
+        $save_draft = $request['save_draft'];
+
         $inputs = $request->all();
         $inputs["gbr_cover"] = $fotoName;
         $inputs["id_pm"] = $id;
-        $inputs["status"] = 0;
+
+        if ($save_draft == 1) {
+            $inputs["status"] = 4;
+        }else{
+            $inputs["status"] = 0;
+        }
+        
+        unset($inputs["save_draft"]);
         unset($inputs["delete_gbr_cover"]);
         unset($inputs["semester"]);
         unset($inputs["mata_kuliah"]);
@@ -129,16 +138,23 @@ class InputTextBookService
         if ($pengembangMateri->text_book()->count() > 0) {
         
             if ($model['status'] == 3) {
+                // send email revision
                 sendEmail($id,'text-book','revision',$user->id_dosen);
+            }
+
+            if ($save_draft == 0 && $model['status'] == 4) {
+                // send email create
+                sendEmail($id,'text-book','input',$user->id_dosen);
             }
 
             $model->update($inputs);
         
         } else {
             $model->create($inputs);
-
-            // send email
-            sendEmail($id,'text-book','input',$user->id_dosen);
+            if ($save_draft == 0) {
+                // send email create
+                sendEmail($id,'text-book','input',$user->id_dosen);
+            }
         }
     }
 

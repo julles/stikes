@@ -25,9 +25,9 @@ class InputTextBookRequest extends FormRequest
     {
         return [
             "title" => "required|max:100",
-            "author" => "required|max:100",
-            "isbn" => "required|max:100",
-            "tahun" => "required|max:4",
+            // "author" => "required|max:100",
+            // "isbn" => "required|max:100",
+            // "tahun" => "required|max:4",
             "kategori" => "max:15",
         ];
     }

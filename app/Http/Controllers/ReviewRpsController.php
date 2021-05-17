@@ -83,6 +83,7 @@ class ReviewRpsController extends Controller
         }
         
         $userStatus = $this->service->userStatus($id);
+        $thisRole = session()->get('user.dosen')->role_id;
         
         return view("rps.form", [
             "model" => $textBook,
@@ -91,6 +92,7 @@ class ReviewRpsController extends Controller
             "capaianPembelajaran" => $capaianPembelajaran,
             "totalSubTopic" => $totalSubTopic,
             "topic" => $topic,
+            "thisRole" => $thisRole,
             "userStatus" => $userStatus,
             "review_stat" => true,
             "titleAction" => $titleAction,

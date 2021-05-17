@@ -39,10 +39,12 @@ class ReviewTextBookController extends Controller
         $model = $pengembangMateri->text_book()->count() > 0 ? $pengembangMateri->text_book : $this->textBook;
 
         $userStatus = $this->service->userStatus($id);
+        $thisRole = session()->get('user.dosen')->role_id;
         
         return view("review-text-book.form", [
             "pengembangMateri" => $pengembangMateri,
             "model" => $model,
+            "thisRole" => $thisRole,
             "userStatus" => $userStatus,
             "titleAction" => "Text Book",
         ]);

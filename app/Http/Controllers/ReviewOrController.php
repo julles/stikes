@@ -77,6 +77,7 @@ class ReviewOrController extends Controller
         }
         
         $userStatus = $this->service->userStatus($id);
+        $thisRole = session()->get('user.dosen')->role_id;
         
         return view("or.form", [
             "model" => $textBook,
@@ -85,6 +86,7 @@ class ReviewOrController extends Controller
             "metodePenilaian" => $metodePenilaian,
             "totalSubTopic" => $totalSubTopic,
             "topic" => $topic,
+            "thisRole" => $thisRole,
             "userStatus" => $userStatus,
             "orFile" => $orFile,
             "titleAction" => $titleAction,

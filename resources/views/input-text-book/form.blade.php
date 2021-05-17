@@ -83,7 +83,12 @@
                 </div>
             </div>
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary btn-sm">
+                @if(!isset($model->status) || $model->status == 4)
+                    <button type="submit" name="save_draft" value="1" class="btn btn-success btn-sm">
+                        Save to Draft
+                    </button>
+                @endif
+                <button type="submit" name="save_draft" value="0" class="btn btn-primary btn-sm">
                     Save
                 </button>
 

@@ -104,12 +104,19 @@ class OrService
         $date = DATE('Y-m-d H:i:s');
         $user = Auth::user();
 
+        $save_draft = $request['save_draft'];
+
         if ($check) {
 
             $sendRevisionNotif = false;
 
-            if ($check['status'] == 3) {
-                $sendRevisionNotif = true;                
+            if ($save_draft == 1) {
+                $check->status = 4;
+            }else{
+                if ($check['status'] == 3) {
+                    $sendRevisionNotif = true;                
+                }
+                $check->status = 0;
             }
             // if review / approve
 
@@ -316,11 +323,18 @@ class OrService
                     OrFileModel::insert(array_values($fileData));
                 }
 
-                $check->status = 0;
+                if ($save_draft == 1) {
+                    $check->status = 4;
+                }else{
+                    $check->status = 0;
+                }
+
                 $check->save();
                 
-                if ($sendRevisionNotif) {
+                if ($sendRevisionNotif && $save_draft == 0) {
                     sendEmail($id,'or','revision',$user->id_dosen);
+                }elseif ($check->status == 0 && $save_draft == 0) {
+                    sendEmail($id,'or','input',$user->id_dosen);
                 }
 
                 return true;
@@ -331,10 +345,15 @@ class OrService
 
             $payload = [
                 'id' => $id,
-                'status' => 0,
                 'created_at' => $date,
                 'updated_at' => $date
             ];
+
+            if ($save_draft == 1) {
+                $payload["status"] = 4;
+            }else{
+                $payload["status"] = 0;
+            }
             
             // upload file
 
@@ -450,7 +469,9 @@ class OrService
 
             // send email
             $user = Auth::user();
-            sendEmail($id,'or','input',$user->id_dosen);
+            if ($save_draft == 0) {
+                sendEmail($id,'or','input',$user->id_dosen);
+            }
 
             return true;
         }

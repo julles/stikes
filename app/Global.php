@@ -65,10 +65,11 @@ function statusCaption($val, $badge = false)
                 '<span class="label label-primary">Waiting </span>',
                 '<span class="label label-info">Reviewed / Waiting Approval</span>',
                 '<span class="label label-success">Approved</span>',
-                '<span class="label label-danger">Reject</span>'
+                '<span class="label label-danger">Reject</span>',
+                '<span class="label label-info">Draft</span>'
                ];
     }else{
-        $arr = ['Waiting ','Reviewed / Waiting Approval','Approved','Reject'];
+        $arr = ['Waiting ','Reviewed / Waiting Approval','Approved','Reject','Draft'];
     }
 
     return $arr[$val];
@@ -76,7 +77,7 @@ function statusCaption($val, $badge = false)
 
 function statusProgressReport($val)
 {
-    $arr = ['Sudah dibuat dan Menunggu Review','Sudah Direview dan Menunggu Approval','Sudah di-Approve','Rejected'];
+    $arr = ['Sudah dibuat dan Menunggu Review','Sudah Direview dan Menunggu Approval','Sudah di-Approve','Rejected','Draft'];
     if ($val || $val === 0) {
         return $arr[$val];
     }

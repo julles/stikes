@@ -18,7 +18,7 @@
             <tbody id="tabel_exercise">
             </tbody>
         </table>
-        @if(!isset($or) || ((isset($or) && $or['status'] == 0) || (isset($or) && $or['status'] == 3)))
+        @if(!isset($or) || ((isset($or) && $or['status'] == 0) || (isset($or) && ($or['status'] == 3 || $or['status'] == 4))))
             <div class="col-md-12 text-center">
                 <span onclick="ExerciseaddQ()" class="btn btn-success">+ Add Question</span>
             </div>

@@ -47,6 +47,7 @@ class ReviewRpsService
                     'text_book.kategori',
                     'text_book.tahun'
                    )
+            ->where('rps.status','!=',4)
             ->where('text_book.status',2);
             
             // Akes untuk assign dan role Reviewer & Approve saja

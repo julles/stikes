@@ -49,6 +49,7 @@ class ReviewOrService
                     'text_book.tahun'
                    )
             ->where('text_book.status',2)
+            ->where('or.status','!=',4)
             ->where('rps.status',2);
             
             // Akes untuk assign dan role Reviewer & Approve saja

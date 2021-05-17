@@ -83,7 +83,7 @@
                             @endif
 
                         @elseif($userStatus == 'approv')
-                            @if($model->status == 1)
+                            @if($model->status == 1 || $thisRole == 63)
                                 <div class="row">
                                     <div class="col-md-12">
                                         {!! Form::label("Approver Notes") !!}
