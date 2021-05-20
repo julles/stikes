@@ -8,7 +8,7 @@ use App\Models\PmAssign;
 use App\Models\Semester;
 use App\Models\TextBook;
 use Illuminate\Http\Request;
-use App\services\InputTextBookService;
+use App\Services\InputTextBookService;
 
 class InputTextBookController extends Controller
 {
