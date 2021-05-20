@@ -77,3 +77,7 @@ tabah field metode_penilaian_praktikum
 // ----------------------------------------
 
 Tambah field category (char) di tabel metode_penilaian
+
+// ----------------------------------------
+
+Tabel text_book Not null author, isbn, tahun

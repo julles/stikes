@@ -8,7 +8,7 @@ use App\Models\PmAssign;
 use App\Models\Semester;
 use App\Models\TextBook;
 use Illuminate\Http\Request;
-use App\services\ReviewTextBookService;
+use App\Services\ReviewTextBookService;
 
 class ReviewTextBookController extends Controller
 {
