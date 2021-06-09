@@ -144,7 +144,7 @@ class ReviewOrService
 
             // if review / approv
 
-            if (isset($request->reviewer_commen) || isset($request->approv_commen)) {
+            // if (isset($request->reviewer_commen) || isset($request->approv_commen)) {
 
                 $user = Auth::user();
                 $pengembangMateri = PengembangMateri::with('pm_assign')->findOrFail($id);
@@ -179,13 +179,13 @@ class ReviewOrService
                     }
 
                 }
-
+                
                 $model->update($inputs);
                 
                 sendEmail($id,'or',$statusApp,$user->id_dosen);
                 
                 return true;
-            }
+            // }
 
         }else{
             // if create
