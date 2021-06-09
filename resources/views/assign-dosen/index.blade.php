@@ -54,9 +54,9 @@ $(function() {
             { data: 'nama_semester', name: 'semester.nama_semester' },
             { data: 'mk_kode', name: 'matakuliah.mk_kode' },
             { data: 'mk_nama', name: 'matakuliah.mk_nama' },
-            { data: 'sme', name: 'sme' },
-            { data: 'reviewer', name: 'reviewer' },
-            { data: 'approver', name: 'approver' },
+            { data: 'sme', name: 'sme.nama' },
+            { data: 'reviewer', name: 'rev.nama' },
+            { data: 'approver', name: 'app.nama' },
             { data: 'action', name: 'action' ,searchable:false}
         ]
     });
