@@ -20,7 +20,7 @@
                 <img src="{{ asset('logo.png') }}" width="250px" class="mb-0">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <h4>CONTENT MANAGEMENT SYSTEM (CMS)</h4>
+                        <h4>CONTENT MANAGEMENT SYSTEM ( CMS )</h4>
                     </div>
                 </div>
                 
