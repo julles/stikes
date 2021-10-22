@@ -67,20 +67,37 @@ class RpsController extends Controller
         $totalSubTopic = 0;
         if ($rps) {
             $capaianPembelajaran = json_decode($rps['capaian_pembelajaran'],true); 
+            foreach ($capaianPembelajaran as $key => $value) {
+                $capaianPembelajaran[$key] = trim(preg_replace('/\t+/', '', $value));
+            }
             $topicArr = Topic::where('id_pm',$id)->get();
             $totalSubTopic = $topicArr->count(); 
             
             $metodePenilaianData = json_decode($rps['metode_penilaian'],true);
             foreach ($topicArr as $key => $v) {
+
+                // key selected
+                $keyCP = 0;
+                foreach ($capaianPembelajaran as $keyC => $vC) {
+
+                    if (strtolower(str_replace(' ', '', $vC)) == strtolower(str_replace(' ', '', $v['capaian_pembelajaran']))) {
+                        $keyCP = $keyC;
+                        break;
+                    }
+                }
+
                 $topic[$v['topic']][] = [
                                             'sesi' => $v['sesi'],
                                             'sub_topic' => $v['sub_topic'],
-                                            'capaian_pembelajaran' => $v['capaian_pembelajaran'],
+                                            'capaian_pembelajaran' => trim(preg_replace('/\t+/', '', $v['capaian_pembelajaran'])),
+                                            'key_cp' => $keyCP,
                                         ];
             }
 
         }
-        
+
+        // dd($topic);
+
         return view("rps.form", [
             "model" => $textBook,
             "metodePenilaian" => $metodePenilaian,

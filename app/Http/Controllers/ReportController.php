@@ -143,7 +143,8 @@ class ReportController extends Controller
                         ->leftJoin("text_book", "text_book.id_pm", "=", "topic.id_pm")
                         ->select('topic.*','text_book.title as text_book')
                         ->groupBy('topic')
-                        ->orderBy('sesi')
+                        // ->orderBy('sesi')
+                        ->orderByRaw('CONVERT(sesi, SIGNED) asc')
                         ->get();
 
         $subTopicAv = Topic::whereIn('id_pm',$pm_id)

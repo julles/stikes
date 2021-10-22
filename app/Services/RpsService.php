@@ -158,13 +158,11 @@ class RpsService
 
                 // delete topic pm
                 Topic::where('id_pm',$id)->delete();
-
                 // insert topic
                 if (isset($request['topic'])) {  
                     $payload = [];
                     $i = 0;
                     foreach ($request['topic'] as $key => $v) {
-
                         $subTopic = $v['sub_topik'];
                         unset($v['sub_topik']);
                         foreach ($subTopic as $subTopickey => $subTopicVal) {

@@ -29,7 +29,7 @@
                                         <div id="cpSelect-{{$i}}">
                                             <select id="cpArr-{{$i}}" class = 'form-control' name = 'topic[{{$i}}][capaian_pembelajaran]'>
                                                 @foreach($capaianPembelajaran as $CPkey => $CPv)
-                                                    <option>{{ $CPv }}</option>
+                                                    <option @if($CPkey == $topicVal[0]['key_cp']) selected @endif >{{ $CPv }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
