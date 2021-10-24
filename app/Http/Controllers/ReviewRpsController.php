@@ -72,16 +72,26 @@ class ReviewRpsController extends Controller
             $totalSubTopic = $topicArr->count(); 
             
             $metodePenilaianData = json_decode($rps['metode_penilaian'],true);
+
             foreach ($topicArr as $key => $v) {
+                // key selected
+                $keyCP = 0;
+                foreach ($capaianPembelajaran as $keyC => $vC) {
+                    if (strtolower(str_replace(' ', '', $vC)) == strtolower(str_replace(' ', '', $v['capaian_pembelajaran']))) {
+                        $keyCP = $keyC;
+                        break;
+                    }
+                }
                 $topic[$v['topic']][] = [
                                             'sesi' => $v['sesi'],
                                             'sub_topic' => $v['sub_topic'],
                                             'capaian_pembelajaran' => $v['capaian_pembelajaran'],
+                                            'key_cp' => $keyCP,
                                         ];
             }
 
         }
-        
+
         $userStatus = $this->service->userStatus($id);
         $thisRole = session()->get('user.dosen')->role_id;
         
