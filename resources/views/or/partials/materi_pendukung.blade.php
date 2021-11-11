@@ -19,6 +19,7 @@
                                 <input type="hidden" name="old_materi_pendukung[]" value="{{$v['id']}}">
 
                                 <input type="hidden" name="old_mp_data[{{$key}}][topic]" value="{{$v['topic_id']}}">
+                                <input type="hidden" name="old_mp_data[{{$key}}][file]" value="{{$v['file']}}">
                                 
                                 <select class = 'form-control' disabled style="width:100%">
                                     @foreach($topic as $keyT => $t)
@@ -93,7 +94,7 @@
                         <input type="text" class="form-control" name="materi_pendukung[${rowIdx}][source]">
                     </td> 
                     <td class="text-center" width="15%"> 
-                        <input type="file" class="form-control" name="materi_pendukung[${rowIdx}][file]" required>
+                        <input type="file" class="form-control" name="materi_pendukung[${rowIdx}][file]" id="file-mp-${rowIdx}" required>
                     </td> 
                     <td class="text-center" width="10%"> 
                         <button type = "button" class = "btn btn-danger btn-sm remove_or_materi_pendukung">X</button>

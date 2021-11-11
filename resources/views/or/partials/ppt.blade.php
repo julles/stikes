@@ -13,7 +13,7 @@
                     @foreach($orFile['or_ppt'] as $key => $v)
                         <tr id="Rppt-{{$key}}">
                             <td>
-                                <input type="hidden" name="old_ppt[]" value="{{$v['id']}}">
+                                <input type="hidden" name="old_ppt[]" value="{{$v['file']}}">
                                 <input type="hidden" name="old_ppt_topic[]" value="{{$v['topic_id']}}">
                                 <select class = 'form-control' disabled>
                                     @foreach($topic as $keyT => $t)
@@ -71,7 +71,7 @@
                         ${selects}
                     </td> 
                     <td class="text-center" width="30%"> 
-                        <input type="file" class="form-control" name="ppt[${rowIdx}][file]" required>
+                        <input type="file" class="form-control" name="ppt[${rowIdx}][file]" id="file-ppt-${rowIdx}" required>
                     </td> 
                     <td class="text-center" width="10%"> 
                         <button type = "button" class = "btn btn-danger btn-sm remove_ppt">X</button>

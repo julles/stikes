@@ -151,7 +151,7 @@
                         @endif
 
                         <button type="submit" value="0" class="btn btn-primary btn-sm">
-                            {{ isset($or->id) ? 'Save' : 'Submit'}}
+                            {{ (isset($or->id) && $or->status == 0) ? 'Save' : 'Submit'}}
                         </button>
                     </div>
                 @else

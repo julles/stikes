@@ -13,7 +13,7 @@
                     @foreach($orFile['or_video'] as $key => $v)
                         <tr id="Rvid-{{$key}}">
                             <td>
-                                <input type="hidden" name="old_video[]" value="{{$v['id']}}">
+                                <input type="hidden" name="old_video[]" value="{{$v['file']}}">
                                 <input type="hidden" name="old_video_topic[]" value="{{$v['topic_id']}}">
                                 <select class = 'form-control' disabled>
                                     @foreach($topic as $keyT => $t)
@@ -69,7 +69,7 @@
                         ${selects}
                     </td> 
                     <td class="text-center" width="15%"> 
-                        <input type="file" class="form-control" name="video[${rowIdx}][file]" required>
+                        <input type="file" class="form-control" name="video[${rowIdx}][file]" id="file-video-${rowIdx}" required>
                     </td> 
                     <td class="text-center" width="10%"> 
                         <button type = "button" class = "btn btn-danger btn-sm remove_video">X</button>
