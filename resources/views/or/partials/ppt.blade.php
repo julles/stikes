@@ -38,6 +38,7 @@
                 @endif()
             </tbody>
         </table>
+
         <div class="row">
             <div class="col text-center">
                 <button type = "button" class = "btn btn-success btn-sm" id = "button_ppt">
@@ -45,6 +46,7 @@
                 </button>  
             </div>
         </div>
+        {!! alertMaxSize() !!}
     </div>
 </div>
 
