@@ -144,7 +144,7 @@
                             Back
                         </a>
 
-                        @if(!isset($or->status) || $or->status == 4)
+                        @if(!isset($or->status) || $or->status >= 3)
                             <button type="submit" name="save_draft" value="1" class="btn btn-success btn-sm">
                                 Save to Draft
                             </button>
