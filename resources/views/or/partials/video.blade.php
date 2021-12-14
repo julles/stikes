@@ -13,7 +13,7 @@
                     @foreach($orFile['or_video'] as $key => $v)
                         <tr id="Rvid-{{$key}}">
                             <td>
-                                <input type="hidden" name="old_video[]" value="{{$v['file']}}">
+                                <input type="hidden" name="old_video[]" value="{{$v['id']}}">
                                 <input type="hidden" name="old_video_topic[]" value="{{$v['topic_id']}}">
                                 <select class = 'form-control' disabled>
                                     @foreach($topic as $keyT => $t)

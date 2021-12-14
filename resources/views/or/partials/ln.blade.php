@@ -13,7 +13,7 @@
                     @foreach($orFile['or_ln'] as $key => $v)
                         <tr id="Rln-{{$key}}">
                             <td>
-                                <input type="hidden" name="old_ln[]" value="{{$v['file']}}">
+                                <input type="hidden" name="old_ln[]" value="{{$v['id']}}">
                                 <input type="hidden" name="old_ln_topic[]" value="{{$v['topic_id']}}">
                                 <select class = 'form-control' disabled>
                                     @foreach($topic as $keyT => $t)

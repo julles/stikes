@@ -13,7 +13,7 @@
                     @foreach($orFile['or_ppt'] as $key => $v)
                         <tr id="Rppt-{{$key}}">
                             <td>
-                                <input type="hidden" name="old_ppt[]" value="{{$v['file']}}">
+                                <input type="hidden" name="old_ppt[]" value="{{$v['id']}}">
                                 <input type="hidden" name="old_ppt_topic[]" value="{{$v['topic_id']}}">
                                 <select class = 'form-control' disabled>
                                     @foreach($topic as $keyT => $t)
