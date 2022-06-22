@@ -10,9 +10,10 @@
                     <th>Set</th>
                     <th>No.</th>
                     <th>Soal</th>
-                    @if(!isset($or) || ((isset($or) && $or['status'] == 0) || (isset($or) && $or['status'] == 3)))
+                    <th>Action</th>
+                    {{-- @if(!isset($or) || ((isset($or) && $or['status'] == 0) || (isset($or) && $or['status'] == 3)))
                         <th>Action</th>
-                    @endif
+                    @endif --}}
                 </tr>
             </thead>
             <tbody id="tabel_exercise">
@@ -35,19 +36,19 @@
               </div>
               <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-2">     
+                    <div class="col-md-2">
                         <div class="form-group">
                             {!! Form::label("Set Number") !!}
                             <div id="exercise_variant"></div>
                         </div>
                     </div>
-                    <div class="col-md-2">     
+                    <div class="col-md-2">
                         <div class="form-group">
                             {!! Form::label("Duration (menit)") !!}
                             {!! Form::number(null,null,["class"=>"form-control","id"=>"exercise_durasi"]) !!}
                         </div>
                     </div>
-                    <div class="col-md-8">     
+                    <div class="col-md-8">
                         <div class="form-group">
                             {!! Form::label("Session & Topic") !!}
                             <div id="ExercisetopicSelect"></div>
@@ -55,8 +56,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">  
-                        {!! Form::label("Question") !!} 
+                    <div class="col-md-12">
+                        {!! Form::label("Question") !!}
 
                             <input type="hidden" id="exercise_question_id">
                         {!! Form::textarea(null,null,["class"=>"form-control","id"=>"exercise_isi_soal"]) !!}
@@ -64,44 +65,44 @@
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-md-12">  
-                        {!! Form::label("Answer A") !!} 
+                    <div class="col-md-12">
+                        {!! Form::label("Answer A") !!}
                         {!! Form::textarea(null,null,["class"=>"form-control","id"=>"exercise_pilihan_a"]) !!}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">  
-                        {!! Form::label("Answer B") !!} 
+                    <div class="col-md-12">
+                        {!! Form::label("Answer B") !!}
                         {!! Form::textarea(null,null,["class"=>"form-control","id"=>"exercise_pilihan_b"]) !!}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">  
-                        {!! Form::label("Answer C") !!} 
+                    <div class="col-md-12">
+                        {!! Form::label("Answer C") !!}
                         {!! Form::textarea(null,null,["class"=>"form-control","id"=>"exercise_pilihan_c"]) !!}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">  
-                        {!! Form::label("Answer D") !!} 
+                    <div class="col-md-12">
+                        {!! Form::label("Answer D") !!}
                         {!! Form::textarea(null,null,["class"=>"form-control","id"=>"exercise_pilihan_d"]) !!}
                     </div>
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-md-4"> 
+                    <div class="col-md-4">
                         {!! Form::label("Correct Answer") !!}
                         <select class="form-control" id="exercise_jawaban">
                             <option>A</option>
                             <option>B</option>
                             <option>C</option>
                             <option>D</option>
-                        </select> 
+                        </select>
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-12">  
-                        {!! Form::label("Explanation") !!} 
+                    <div class="col-md-12">
+                        {!! Form::label("Explanation") !!}
                         {!! Form::textarea(null,null,["class"=>"form-control","id"=>"exercise_penjelasan_jwb"]) !!}
                     </div>
                 </div>
@@ -126,10 +127,10 @@
     // Get Question
 
     var topicArr = @json($topic);
-    
-    var selects = `<select style="width:100%" 
+
+    var selects = `<select style="width:100%"
     class = 'form-control select2' id = 'exercise_id_topic_question'>`;
-    
+
     $.each( topicArr, function( key, value ) {
         selects += "<option value = '"+value.id_topic+"'>"+value.topic+"</option>";
     });
@@ -242,7 +243,7 @@
         console.log(edata);
         // varian_latihan:$('#exercise_varian_latihan').val(),
         $('#exercise_durasi').val(edata.durasi);
-        
+
         $('#exercise_question_id').val(id);
         $('#exercise_isi_soal').summernote("code",edata.isi_soal);
         $('#exercise_pilihan_a').summernote("code",edata.pilihan_a);
@@ -271,7 +272,7 @@
     }
 
     function ExerciseupdateQuestion() {
-        
+
         const url = "{!! URL::to('/or/detail/'.$model['id_pm'].'/question-exercise') !!}";
         let data  = new Object();
 
